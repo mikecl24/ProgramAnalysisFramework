@@ -1,0 +1,51 @@
+%{
+open System
+open Types
+%}
+
+%token <string> VAR
+%token <string> NUM
+%token <string> OPA
+%token <string> OPAU
+%token <string> OPBA
+%token <string> OPBU
+%token <string> OPB
+%token EOF
+%token ASSIGN SKIP 
+%token COMMA TRUE FALSE IF FI THEN ELSE WHILE DO OD LPAR RPAR LBRA RBRA
+%left OPA
+
+// start
+%start start
+%type <Statement list> start
+
+%%
+
+start: command EOF						{$1}
+
+command: 
+| command COMMA command					{ $1 @ $3 }
+| VAR ASSIGN aexp						{ [{text = $1+":="+$3; s_type = S_VarAssignment}] }
+| SKIP									{ [{text = "skip"; s_type = S_Skip}] }
+| IF bexp THEN command ELSE command	FI	{ [{text = $2; s_type = S_IfBool}] @ $4 @ [{text = "!("+$2+")"; s_type = S_IfElse}] @ $6 @ [{text = "FI"; s_type = S_IfFi}] }
+| WHILE bexp DO command OD				{ [{text = $2; s_type = S_DoBool}] @ $4 @ [{text = "!("+$2+")"; s_type = S_DoOd}] }
+| VAR LBRA aexp RBRA ASSIGN aexp        { [{text = $1+"["+$3+"]"+":="+$6; s_type = S_ArrAssignment}] }
+ 
+aexp:
+| LPAR aexp RPAR                        { "("+$2+")"}
+| VAR LBRA aexp RBRA                    { $1+"["+$3+"]" }
+| VAR									{ $1 }
+| NUM									{ $1 }
+| aexp OPA aexp							{ $1+$2+$3 }
+| aexp OPAU aexp						{ $1+$2+$3 }
+| OPAU aexp								{ $1+$2 }
+
+bexp:
+| LPAR bexp RPAR                        { "("+$2+")" }
+| TRUE									{ "true" }
+| FALSE									{ "false" }
+| aexp OPBA aexp						{ $1+$2+$3 }
+| OPBU bexp								{ $1+$2 }
+| bexp OPB bexp							{ $1+$2+$3 }
+
+%%

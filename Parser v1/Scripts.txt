@@ -1,0 +1,24 @@
+Intalling FsLexYacc:
+Left click solution -> Manage NuGet Packages
+Browse -> FsLexYacc -> Install
+use in cmd from package
+
+Adding enviroment paths:
+cd ..\..\Users\0x18\Documents\F18\Thesis\F#\Parser\
+$env:Path += ";C:\Users\0x18\Documents\Visual Studio 2017\Projects\Parser\packages\FsLexYacc.7.0.6\build"
+$env:Path += ";C:\Program Files (x86)\Microsoft SDKs\F#\4.1\Framework\v4.0"
+
+Rebuilding the parser:
+rm MicroC*.fs; rm *.fsi; fslex.exe .\MicroCLexer.fsl --unicode; fsyacc.exe .\MicroCParser.fsp --module MicroCParser;fsi.exe .\ParsingTest.fsx
+
+
+TypeNrs:
+
+1: Assignment
+2: skip
+3: if boolean
+4: else boolean
+5: fi (temporary for merge)
+6: do boolean
+7: od boolean
+8: Array Assignment
