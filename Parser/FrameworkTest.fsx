@@ -19,9 +19,6 @@ open Parser                         // Program String -> Statement List
 #load "Grapher.fs"                  // Graph Generator:
 open Grapher                        // Statement List -> Program Graph 
 
-#load "Analysis.fs"
-open Analysis
-
 let programString = "
 skip;
 x[1]:=10
@@ -32,6 +29,35 @@ let stmtList = ParseString programString
 // Statement List -> Program Graph 
 let Edges = GraphStatements stmtList
 
+
+
+// Nodes: This should come from the graph generation (Hint: range(0,largest nr found))
+let Nodes = [0; 1; 2]
+
+// Variables: This should come from the parser
+let Variables = ["x"]
+
+// MetaL Parser -> Generate Domain
+// Quickchecking?
+
+#load "Domain.fs"                   // Domain Specification Generated code
+open Domain                         // Q -> Domain variable + types
+
+// Pause
+// TF class generation
+
+#load "TransferFunctions.fs"        // Transfer Function Specification
+open TransferFunctions              // iota, init
+
+// Completeness + Correctness Check
+// QuickChecking Module
+
+#load "Analysis.fs"                 // Analysis Implementation:
+open Analysis                       // Program Graph -> Analysis Result
+
+
+
+// Program Graph -> Analysis Result
 let Analysis = AnalyseEdges Edges
 
 printfn "Result"
