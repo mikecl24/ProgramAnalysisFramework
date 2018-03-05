@@ -3,24 +3,24 @@ module Domain
 //Generated Code Section: Domain type
 // Q -> P( Var * (Q U {?}) * Q )
 
-// elem1 = {?}
-type elem1 =
-    | E_QM_
+// List1 = {QM}
+type List1 =
+    | L1_QM
 
-// union1 = Q2 U {?}
-type union1 = 
-    | Q of int
-    | List of elem1 // if it is "?"
+// Union1 = Q3 U {QM}
+type Union1 = 
+    | Q2 of int
+    | U1_List1 of List1 // if it is "?"
 
-// sigma = Var1 * union1 * Q1
-type sigma =
-    {Var : string;
-    Q1 : union1;
-    Q2 : int
+// Record1 = Var1 * Union1 * Q2
+type Record1 =
+    {VAR1 : string;
+    R1_Union1 : Union1;
+    Q1 : int
     }
 
-// Domain = P( sigma )
-type Sigma = sigma Set
+// Set1 = P( Record1 )
+type Set1 = Record1 Set
 
-//  Q -> Domain
-let AnalysisResult = new Dictionary<int, Sigma>()
+//  Q -> Set1
+let AnalysisResult = new Dictionary<int, Set1>()

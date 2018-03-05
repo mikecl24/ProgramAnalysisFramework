@@ -1,13 +1,17 @@
 open System
 
-type elem1 = 
-    | E_QM_
+type Node = 
+ | N1
+ | N2
+ | N3
+ | B_1a
 
-type testing = 
-    {
-        Num : int;
-        Elem : elem1
-    }
+let _mapTest1 = Map.empty.Add(N1, Set.empty.Add(1)).Add(N2,  Set.empty.Add(2))
+let _mapTest2 = Map.empty.Add(N1,  Set.empty.Add(1)).Add(N2,  Set.empty.Add(2))
 
-let x = { Num = 10; Elem = E_QM_ }
-printfn "%A" x
+
+printfn "%A" _mapTest1
+
+_mapTest1 |> Map.toList |> Set.ofList |> printfn "%A"
+
+//let isSqSubset a b =

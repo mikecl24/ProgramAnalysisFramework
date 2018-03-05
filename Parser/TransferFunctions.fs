@@ -4,7 +4,7 @@ module TransferFunctions
 let rec genIota vars oldIota =
     match vars with
     | [] -> oldIota
-    | var::next -> genIota next (Set.union oldIota (Set.empty.Add({Var = var; Q1 = Val(E_QM_); Q2 = 0})))
+    | var::next -> genIota next (Set.union oldIota (Set.empty.Add({VAR1 = var; R1_Union1 = U1_List1(L1_QM); Q1 = 0})))
     
 let iota = genIota Variables Set.empty
 let init = Set.empty
@@ -17,13 +17,13 @@ let TF_Boolean inSigma edge= inSigma
 let rec remove inSet outSet killCond = 
     match inSet with
     | [] -> outSet
-    | x::xs when x.Var=killCond -> remove xs outSet killCond
+    | x::xs when x.VAR1=killCond -> remove xs outSet killCond
     | x::xs -> remove xs (Set.union outSet (Set.empty.Add(x))) killCond
 
-let TF_Assignment (inSigma:sigma Set) (edge:Edge) = (Set.union (Set.empty.Add({Var = (edge.Action.Split ':').[0]; Q1 = Q(edge.Q1) ;Q2 = edge.Q2})) (remove (Set.toList inSigma) Set.empty (edge.Action.Split ':').[0]))
+let TF_Assignment (inSigma:Record1 Set) (edge:Edge) = (Set.union (Set.empty.Add({VAR1 = (edge.Action.Split ':').[0]; R1_Union1 = Q2(edge.Q1);Q1 = edge.Q2})) (remove (Set.toList inSigma) Set.empty (edge.Action.Split ':').[0]))
 
 let TF_Skip inSigma edge = inSigma
 
 // May not kill in arrays
-let TF_ArrayAssignment (inSigma:sigma Set) (edge:Edge) = (Set.union (Set.empty.Add({Var = (edge.Action.Split '[').[0]; Q1 = Q(edge.Q1) ;Q2 = edge.Q2})) inSigma)
+let TF_ArrayAssignment (inSigma:Record1 Set) (edge:Edge) = (Set.union (Set.empty.Add({VAR1 = (edge.Action.Split '[').[0]; R1_Union1 = Q2(edge.Q1) ;Q1 = edge.Q2})) inSigma)
 
