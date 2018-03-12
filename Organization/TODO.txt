@@ -12,3 +12,8 @@ Add functionality for iota in the last node instead of in the start?
 enforce type output and input everywhere
 Allow must analyses (Switch condition and result in Analysis!)
 Allow backward analyses
+
+DomainGen: Make map work?
+Domain tests: P(Q) - singleton powersets?
+              P(Q)*P(Q)
+

@@ -1,7 +1,13 @@
 module Domain
 
 //Generated Code Section: Domain type
-// Q -> P( Var * (Q U {QM}) * Q )
+// Q -> P( Var * [Q U {QM}] * Q )
+(* TotalFunctionSpaceDom
+  (QSet,
+   PowersetDom
+     (CartesianSet
+        (CartesianSet (VARSet, UnionSet (QSet, ListSet (Element "QM"))), QSet)))
+*)
 
 // List1 = {QM}
 type List1 =

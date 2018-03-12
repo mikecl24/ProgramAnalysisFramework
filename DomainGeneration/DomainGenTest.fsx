@@ -4,26 +4,26 @@ open Microsoft.FSharp.Text.Lexing   // Lexing Library
 open System
 open System.Collections.Generic
 
+#load "DomainTypes.fs"
+open DomainTypes                    // Types: AST
+
+#load "MetaLParser.fs"
+open MetaLParser                    // Generated Parser
+
+#load "MetaLLexer.fs"
+open MetaLLexer                     //Generated Lexer
+
 #load "DomainParser.fs"
-open DomainParser                   // Generated Parser
+open DomainParser                   // Domain String -> Domain AST
 
-#load "DomainLexer.fs"
-open DomainLexer                    //Generated Lexer
+#load "DomainGenerator.fs"
+open DomainGenerator                // Domain AST -> Code
 
-let DomainString = "
-Q -> P( VAR * [Q U {QM}] * Q )
-"
+let DomainString = "P( VAR * [Q U {QM}] * Q )"
 
-let parse input =
-    let lexbuf = LexBuffer<char>.FromString input
-    let result = DomainParser.start DomainLexer.tokenize lexbuf
-    result
+// Domain String -> Domain AST
+let domainAST = ParseString (DomainString)
+printfn "%s" (domainAST.ToString())
 
-let ParseString inputString =
-    try
-    parse inputString 
-    with e -> failwith "Error parsing program: Invalid domain input"
-
-// Domain String -> ?
-let something = ParseString DomainString
-printfn "%A" something
+let code = evaluateAST domainAST DomainString
+printfn "%s" code

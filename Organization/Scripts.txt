@@ -15,10 +15,10 @@ Rebuilding the parser:
 rm MicroC*.fs; rm *.fsi; fslex.exe .\MicroCLexer.fsl --unicode; fsyacc.exe .\MicroCParser.fsp --module MicroCParser;
 fsi.exe .\FrameworkTest.fsx
 
-fslex.exe .\DomainLexer.fsl --unicode; fsyacc.exe .\DomainParser.fsp --module DomainParser;
+fslex.exe .\MetaLLexer.fsl --unicode; fsyacc.exe .\MetaLParser.fsp --module MetaLParser;
 fsi.exe .\DomainGenTest.fsx
 
-
+Git VC:
 git add *
 git commit -m "Something"
 git push -u master master

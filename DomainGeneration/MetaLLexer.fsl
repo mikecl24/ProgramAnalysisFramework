@@ -1,8 +1,8 @@
 ﻿{
-module DomainLexer
+module MetaLLexer
 
 open System
-open DomainParser
+open MetaLParser
 open Microsoft.FSharp.Text.Lexing
 open System.Text
 

@@ -1,4 +1,4 @@
-# 1 ".\DomainLexer.fsl"
+# 1 ".\MetaLLexer.fsl"
  
 module MetaLLexer
 
@@ -8,7 +8,7 @@ open Microsoft.FSharp.Text.Lexing
 open System.Text
 
 
-# 11 ".\DomainLexer.fs"
+# 11 ".\MetaLLexer.fs"
 let trans : uint16[] array = 
     [| 
     (* State 0 *)
@@ -65,90 +65,90 @@ and tokenize  (lexbuf : Microsoft.FSharp.Text.Lexing.LexBuffer<_>) = _fslex_toke
 and _fslex_tokenize  _fslex_state lexbuf =
   match _fslex_tables.Interpret(_fslex_state,lexbuf) with
   | 0 -> ( 
-# 18 ".\DomainLexer.fsl"
+# 18 ".\MetaLLexer.fsl"
                                  tokenize lexbuf 
-# 70 ".\DomainLexer.fs"
+# 70 ".\MetaLLexer.fs"
           )
   | 1 -> ( 
-# 19 ".\DomainLexer.fsl"
+# 19 ".\MetaLLexer.fsl"
                                  lexbuf.EndPos <- lexbuf.EndPos.NextLine; tokenize lexbuf; 
-# 75 ".\DomainLexer.fs"
+# 75 ".\MetaLLexer.fs"
           )
   | 2 -> ( 
-# 20 ".\DomainLexer.fsl"
+# 20 ".\MetaLLexer.fsl"
                                  POWERSET 
-# 80 ".\DomainLexer.fs"
+# 80 ".\MetaLLexer.fs"
           )
   | 3 -> ( 
-# 21 ".\DomainLexer.fsl"
+# 21 ".\MetaLLexer.fsl"
                                  LBRA 
-# 85 ".\DomainLexer.fs"
+# 85 ".\MetaLLexer.fs"
           )
   | 4 -> ( 
-# 22 ".\DomainLexer.fsl"
+# 22 ".\MetaLLexer.fsl"
                                  RBRA 
-# 90 ".\DomainLexer.fs"
+# 90 ".\MetaLLexer.fs"
           )
   | 5 -> ( 
-# 23 ".\DomainLexer.fsl"
+# 23 ".\MetaLLexer.fsl"
                                  TFS 
-# 95 ".\DomainLexer.fs"
+# 95 ".\MetaLLexer.fs"
           )
   | 6 -> ( 
-# 24 ".\DomainLexer.fsl"
+# 24 ".\MetaLLexer.fsl"
                                  CART 
-# 100 ".\DomainLexer.fs"
+# 100 ".\MetaLLexer.fs"
           )
   | 7 -> ( 
-# 25 ".\DomainLexer.fsl"
+# 25 ".\MetaLLexer.fsl"
                                  VARSET 
-# 105 ".\DomainLexer.fs"
+# 105 ".\MetaLLexer.fs"
           )
   | 8 -> ( 
-# 26 ".\DomainLexer.fsl"
+# 26 ".\MetaLLexer.fsl"
                                  QSET 
-# 110 ".\DomainLexer.fs"
+# 110 ".\MetaLLexer.fs"
           )
   | 9 -> ( 
-# 27 ".\DomainLexer.fsl"
+# 27 ".\MetaLLexer.fsl"
                                  LSQ 
-# 115 ".\DomainLexer.fs"
+# 115 ".\MetaLLexer.fs"
           )
   | 10 -> ( 
-# 28 ".\DomainLexer.fsl"
+# 28 ".\MetaLLexer.fsl"
                                  RSQ 
-# 120 ".\DomainLexer.fs"
+# 120 ".\MetaLLexer.fs"
           )
   | 11 -> ( 
-# 29 ".\DomainLexer.fsl"
+# 29 ".\MetaLLexer.fsl"
                                  UNION 
-# 125 ".\DomainLexer.fs"
+# 125 ".\MetaLLexer.fs"
           )
   | 12 -> ( 
-# 30 ".\DomainLexer.fsl"
+# 30 ".\MetaLLexer.fsl"
                                  LCURL 
-# 130 ".\DomainLexer.fs"
+# 130 ".\MetaLLexer.fs"
           )
   | 13 -> ( 
-# 31 ".\DomainLexer.fsl"
+# 31 ".\MetaLLexer.fsl"
                                  RCURL 
-# 135 ".\DomainLexer.fs"
+# 135 ".\MetaLLexer.fs"
           )
   | 14 -> ( 
-# 32 ".\DomainLexer.fsl"
+# 32 ".\MetaLLexer.fsl"
                                  SCOL 
-# 140 ".\DomainLexer.fs"
+# 140 ".\MetaLLexer.fs"
           )
   | 15 -> ( 
-# 33 ".\DomainLexer.fsl"
+# 33 ".\MetaLLexer.fsl"
                           let str = LexBuffer<_>.LexemeString lexbuf in ELEM(str) 
-# 145 ".\DomainLexer.fs"
+# 145 ".\MetaLLexer.fs"
           )
   | 16 -> ( 
-# 34 ".\DomainLexer.fsl"
+# 34 ".\MetaLLexer.fsl"
                                  EOF 
-# 150 ".\DomainLexer.fs"
+# 150 ".\MetaLLexer.fs"
           )
   | _ -> failwith "tokenize"
 
-# 3000000 ".\DomainLexer.fs"
+# 3000000 ".\MetaLLexer.fs"

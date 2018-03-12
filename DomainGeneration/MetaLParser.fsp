@@ -1,0 +1,39 @@
+%{
+open System
+open DomainTypes
+
+
+%}
+
+%token <string> ELEM
+%token POWERSET LBRA RBRA TFS CART VARSET QSET LSQ RSQ UNION LCURL RCURL SCOL EOF
+
+//left OPA
+
+
+// start
+%start start
+%type <domain> start
+
+%left POWERSET TFS CART
+%%
+
+start: domain EOF						{$1}
+
+domain: 
+| POWERSET LBRA set RBRA                { PowersetDom($3) }
+| set TFS domain                        { TotalFunctionSpaceDom($1,$3) }
+| domain CART domain                    { CartesianDom($1,$3) }
+ 
+set:
+| set CART set                          { CartesianSet($1,$3) }
+| VARSET                                { VARSet }
+| QSET                                  { QSet }
+| LSQ set UNION set RSQ                 { UnionSet($2,$4) }
+| LCURL elist RCURL                     { ListSet($2) }
+
+elist:
+| ELEM                                  { Element($1) }
+| ELEM SCOL elist                       { LargerList($1,$3) }
+
+%%
