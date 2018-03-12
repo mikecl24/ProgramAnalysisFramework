@@ -3,11 +3,20 @@ Left click solution -> Manage NuGet Packages
 Browse -> FsLexYacc -> Install
 use in cmd from package
 
+
 Adding enviroment paths:
-cd ..\..\Users\0x18\Documents\F18\Thesis\F#\Parser\
 $env:Path += ";C:\Users\0x18\Documents\Visual Studio 2017\Projects\Parser\packages\FsLexYacc.7.0.6\build"
-$env:Path += ";C:\Program Files (x86)\Microsoft SDKs\F#\4.1\Framework\v4.0"
+$env:Path += ";C:\Program Files (x86)\Microsoft SDKs\F#\10.1\Framework\v4.0"
+
+cd ..\..\Users\0x18\Documents\F18\Thesis\F#\Parser\
+cd ..\..\Users\0x18\Documents\F18\Thesis\F#\DomainGeneration\
 
 Rebuilding the parser:
-rm MicroC*.fs; rm *.fsi; fslex.exe .\MicroCLexer.fsl --unicode; fsyacc.exe .\MicroCParser.fsp --module MicroCParser;fsi.exe .\FrameworkTest.fsx
+rm MicroC*.fs; rm *.fsi; fslex.exe .\MicroCLexer.fsl --unicode; fsyacc.exe .\MicroCParser.fsp --module MicroCParser;
+
+fslex.exe .\DomainLexer.fsl --unicode; fsyacc.exe .\DomainParser.fsp --module DomainParser;
+
+
+
+fsi.exe .\FrameworkTest.fsx
 
