@@ -13,10 +13,13 @@ cd ..\..\Users\0x18\Documents\F18\Thesis\F#\DomainGeneration\
 
 Rebuilding the parser:
 rm MicroC*.fs; rm *.fsi; fslex.exe .\MicroCLexer.fsl --unicode; fsyacc.exe .\MicroCParser.fsp --module MicroCParser;
+fsi.exe .\FrameworkTest.fsx
 
 fslex.exe .\DomainLexer.fsl --unicode; fsyacc.exe .\DomainParser.fsp --module DomainParser;
+fsi.exe .\DomainGenTest.fsx
 
 
-
-fsi.exe .\FrameworkTest.fsx
+git add *
+git commit -m "Something"
+git push -u master master
 
