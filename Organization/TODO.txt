@@ -13,7 +13,11 @@ enforce type output and input everywhere
 Allow must analyses (Switch condition and result in Analysis!)
 Allow backward analyses
 
-DomainGen: Make map work?
+DomainGen: Freshness returning?
 Domain tests: P(Q) - singleton powersets?
               P(Q)*P(Q)
+              P([Q*Q U {QM}])
 
+Remove Type hacking!
+Manual work
+Implementation notes: name gen

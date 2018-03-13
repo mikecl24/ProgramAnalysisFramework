@@ -16,14 +16,19 @@ open MetaLLexer                     //Generated Lexer
 #load "DomainParser.fs"
 open DomainParser                   // Domain String -> Domain AST
 
-#load "DomainGenerator.fs"
-open DomainGenerator                // Domain AST -> Code
+#load "consolidateAST.fs"
+open consolidateAST                 // Domain AST -> Flattened Domain AST
 
-let DomainString = "P( VAR * [Q U {QM}] * Q )"
+//#load "DomainGenerator.fs"
+//open DomainGenerator                // Domain AST -> Code
+
+let DomainString = "Q->P( VAR * [Q U {QM}] * Q )"//"P( VAR * [Q U {QM}] * Q )"
 
 // Domain String -> Domain AST
 let domainAST = ParseString (DomainString)
-printfn "%s" (domainAST.ToString())
 
-let code = evaluateAST domainAST DomainString
-printfn "%s" code
+let flatDomainAST = reduceDom (domainAST)
+printfn "%s" (flatDomainAST.ToString())
+
+//let code = evaluateAST flatDomainAST DomainString
+//printfn "%s" code
