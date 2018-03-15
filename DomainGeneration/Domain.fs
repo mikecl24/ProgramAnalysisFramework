@@ -17,12 +17,12 @@ type List1 =
 // Union1 = (Q2 U List1)
 type Union1 = 
     | Q2 of int
-    | U1_List1 of List1 // if it is "?"
+    | List1 of List1 // if it is "?"
 
 // Record1 = Var1 * Union1 * Q2
 type Record1 =
     {VAR1 : string;
-    R1_Union1 : Union1;
+    Union1 : Union1;
     Q1 : int
     }
 
