@@ -15,7 +15,53 @@ type DomainGenType = {
     prepend : string
 }
 
-let evalCartListSet (fListSet, pNum, mNum, rNum, csNum, vNum, qNum, uNum, lNum, resultString, prependString) =
+let evalCartListItem (fListSet, pNum, mNum, rNum, csNum, vNum, qNum, uNum, lNum, resultString, prependString) =
+    match fListSet with
+    | QSet                      ->  {result = "Q" + qNum.ToString() + " : Node ;\n";
+                                    p = pNum;
+                                    m = mNum;
+                                    r = rNum;
+                                    cs = csNum;
+                                    v = vNum;
+                                    q = qNum+1;
+                                    u = uNum;
+                                    l = lNum;
+                                    prepend = prependString}
+    | VARSet                    ->  {result = "VAR" + vNum.ToString() + " : Var ;\n";
+                                    p = pNum;
+                                    m = mNum;
+                                    r = rNum;
+                                    cs = csNum;
+                                    v = vNum+1;
+                                    q = qNum;
+                                    u = uNum;
+                                    l = lNum;
+                                    prepend = prependString}
+    | UnionSet(fSet1, fSet2)    ->  {result = "Unimplemented UnionSet in evalCartListItem\n";
+                                    p = pNum;
+                                    m = mNum;
+                                    r = rNum;
+                                    cs = csNum;
+                                    v = vNum;
+                                    q = qNum;
+                                    u = uNum;
+                                    l = lNum;
+                                    prepend = prependString}
+    | ListSet(fList)            ->  {result = "Unimplemented ListSet in evalCartListItem\n";
+                                    p = pNum;
+                                    m = mNum;
+                                    r = rNum;
+                                    cs = csNum;
+                                    v = vNum;
+                                    q = qNum;
+                                    u = uNum;
+                                    l = lNum;
+                                    prepend = prependString}
+    | _                         -> failwith "Error matching set in evalCartListItem"
+
+
+
+let rec evalCartListSet (fListSet, pNum, mNum, rNum, csNum, vNum, qNum, uNum, lNum, resultString, prependString) =
     match fListSet with
     | []    ->  {result = resultString;
                 p = pNum;
@@ -27,12 +73,13 @@ let evalCartListSet (fListSet, pNum, mNum, rNum, csNum, vNum, qNum, uNum, lNum, 
                 u = uNum;
                 l = lNum;
                 prepend = prependString}
-    | a::b  -> 
+    | a::b  ->  let prev = evalCartListItem (a, pNum, mNum, rNum, csNum, vNum, qNum, uNum, lNum, resultString, prependString)
+                evalCartListSet (b, prev.p, prev.m, prev.r, prev.cs, prev.v, prev.q, prev.u, prev.l, resultString+prev.result, prev.prepend+prependString)
 
 let evalSet (ast, pNum, mNum, rNum, csNum, vNum, qNum, uNum, lNum, resultString) = 
     match ast with
-    | CartesianListSet(fListSet)    ->  let prev = evalCartListSet (fListSet, pNum, mNum, rNum, csNum, vNum, qNum, uNum, lNum, resultString, "")
-                                        {result = "\nUnimplemented CartesianListSet in evalSet\n";
+    | CartesianListSet(fListSet)    ->  let prev = evalCartListSet (fListSet, pNum, mNum, rNum+1, csNum, vNum, qNum, uNum, lNum, resultString, "")
+                                        {result = prev.prepend + "\ntype Record" + rNum.ToString() + " = {\n" + prev.result+"}\n";
                                         p = pNum;
                                         m = mNum;
                                         r = rNum;
@@ -149,5 +196,5 @@ let evaluateAST ast textForm = format ( ((evalDom (ast, 1, 1, 1, 1, 1, 1, 1, 1, 
 
 let ast1 = PowersetDom(CartesianListSet[VARSet; UnionSet(QSet, ListSet(Element "QM")); QSet])
 let ast2 = TotalFunctionSpaceDom(QSet,PowersetDom(CartesianListSet [VARSet; UnionSet (QSet, ListSet (Element "QM")); QSet]))
-printfn "%s" (evaluateAST ast1 "Q -> P( VAR * [Q U {QM}] * Q )")
+printfn "%s" (evaluateAST ast1 "P( VAR * [Q U {QM}] * Q )")
 printfn "\n%A" ast1
