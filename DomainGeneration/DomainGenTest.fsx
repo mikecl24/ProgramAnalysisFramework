@@ -19,10 +19,10 @@ open DomainParser                   // Domain String -> Domain AST
 #load "consolidateAST.fs"
 open consolidateAST                 // Domain AST -> Flattened Domain AST
 
-//#load "DomainGenerator.fs"
-//open DomainGenerator                // Domain AST -> Code
+#load "DomainGenerator.fs"
+open DomainGenerator                // Domain AST -> Code
 
-let DomainString = "Q->P( VAR * [Q U {QM}] * Q )"//"P( VAR * [Q U {QM}] * Q )"
+let DomainString = "P( VAR * [Q U {QM}] * Q )"//"P( VAR * [Q U {QM}] * Q )"
 
 // Domain String -> Domain AST
 let domainAST = ParseString (DomainString)
@@ -30,5 +30,5 @@ let domainAST = ParseString (DomainString)
 let flatDomainAST = reduceDom (domainAST)
 printfn "%s" (flatDomainAST.ToString())
 
-//let code = evaluateAST flatDomainAST DomainString
-//printfn "%s" code
+let code = evaluateAST flatDomainAST DomainString
+printfn "%s" code

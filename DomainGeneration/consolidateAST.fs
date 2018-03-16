@@ -2,16 +2,18 @@ module consolidateAST
 
 let getValueCLS (CartesianListSet v) = v
 let getValueCLD (CartesianListDom v) = v
+let getValueEL (ElemList v) = v
 
 let rec getLast (array : string []) = 
     array.[array.Length - 1]
 
-let x = CartesianDom  (PowersetDom QSet, PowersetDom (CartesianSet (VARSet, UnionSet (QSet, ListSet (Element "QM")))))
 
 let rec toCartList ast =  
     match ast with
-    | Element(fElem)                        -> Element(fElem) 
-    | LargerList(fElem, fList)              -> LargerList(fElem, toCartList fList)
+    | Element(fElem)                        -> [ fElem ]
+    | LargerList(fElem, fList)              -> match fList with
+                                                | LargerList(fElem2, fList2)    -> [fElem] @ (toCartList fList)
+                                                | Element(fElem3)               -> [ fElem ] @ [ fElem3 ] 
 
 
 let rec toCartSet ast =  
@@ -22,7 +24,7 @@ let rec toCartSet ast =
     | QSet                                  -> QSet
     | VARSet                                -> VARSet
     | UnionSet(fSet1, fSet2)                -> UnionSet(toCartSet fSet1, toCartSet fSet2) 
-    | ListSet(fList)                        -> ListSet(toCartList fList)
+    | ListSet(fList)                        -> ElemList(toCartList fList)
     | _                                     -> failwith "Already mutated AST"
 
 let rec reduceDom ast = 

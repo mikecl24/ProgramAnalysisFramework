@@ -12,7 +12,6 @@ module Domain
 // List1 = {QM}
 type List1 =
     | L1_QM
-    | L1_nofrew
 
 // Union1 = (Q2 U List1)
 type Union1 = 

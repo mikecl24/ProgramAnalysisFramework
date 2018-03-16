@@ -12,6 +12,7 @@ type set =
   | VARSet
   | UnionSet of (set*set)
   | ListSet of elemlist
+  | ElemList of string list
 
 
 type domain =
