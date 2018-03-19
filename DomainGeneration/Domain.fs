@@ -1,32 +1,29 @@
 module Domain
 
-//Generated Code Section: Domain type
-// Q -> P( Var * [Q U {QM}] * Q )
-(* TotalFunctionSpaceDom
-  (QSet,
-   PowersetDom
-     (CartesianSet
-        (CartesianSet (VARSet, UnionSet (QSet, ListSet (Element "QM"))), QSet)))
+// Generated Code Section: Domain type
+(*
+Q -> P( VAR * [Q U {QM}] * Q )
 *)
 
-// List1 = {QM}
+type Node = Node of int
+type Var = Var of string
+
 type List1 =
-    | L1_QM
+    | QM
 
-// Union1 = (Q2 U List1)
-type Union1 = 
-    | Q2 of int
-    | List1 of List1 // if it is "?"
 
-// Record1 = Var1 * Union1 * Q2
-type Record1 =
-    {VAR1 : string;
+type Union1 =
+    | Q1 of Node 
+    | List1 of List1
+
+
+type Record1 = {
+    VAR1 : Var ;
     Union1 : Union1;
-    Q1 : int
-    }
+    Q2 : Node ;
+}
 
-// Set1 = P( Record1 )
-type Set1 = Record1 Set
+type Powerset1 = Record1 Set
 
-//  Q -> Set1
-let AnalysisResult = new Dictionary<int, Set1>()
+type AnalysisResult = AnalysisResult of Map<Node,Powerset1>
+ Hello

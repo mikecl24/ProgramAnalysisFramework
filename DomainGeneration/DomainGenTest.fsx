@@ -2,6 +2,7 @@
 
 open Microsoft.FSharp.Text.Lexing   // Lexing Library
 open System
+open System.IO
 open System.Collections.Generic
 
 #load "DomainTypes.fs"
@@ -22,7 +23,8 @@ open consolidateAST                 // Domain AST -> Flattened Domain AST
 #load "DomainGenerator.fs"
 open DomainGenerator                // Domain AST -> Code
 
-let DomainString = "P( VAR * [Q U {QM}] * Q )"//"P( VAR * [Q U {QM}] * Q )"
+let DomainString = "P( VAR * [Q U {QM}] * Q )"
+//let DomainString = "P({Plus;Minus;Zero})"
 
 // Domain String -> Domain AST
 let domainAST = ParseString (DomainString)
@@ -32,3 +34,5 @@ printfn "%s" (flatDomainAST.ToString())
 
 let code = evaluateAST flatDomainAST DomainString
 printfn "%s" code
+
+File.WriteAllText("Domain.fs", (code+"\n Hello"))

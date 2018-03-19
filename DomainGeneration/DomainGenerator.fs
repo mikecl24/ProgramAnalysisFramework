@@ -13,8 +13,6 @@ type DomainGenType = {
     prepend : string
 }
 
-
-
 let rec evalList (fList, pNum, mNum, rNum, csNum, vNum, qNum, uNum, lNum, resultString, prependString) =
     match fList with
     | []    ->  {result = "type List" + lNum.ToString() + " =\n" + resultString + "\n";
@@ -119,7 +117,7 @@ let rec evalCartListItem (fListSet, pNum, mNum, rNum, csNum, vNum, qNum, uNum, l
                                     l = second.l;
                                     prepend = first.prepend + second.prepend + 
                                             "\ntype Union" + uNum.ToString() + " =\n" + first.result + second.result + prependString+"\n"}
-    | ListSet(fList)            ->  {result = "Unimplemented ListSet in evalCartListItem\n";
+    | ElemList(fList)            ->  {result = "Unimplemented ListSet in evalCartListItem\n";
                                     p = pNum;
                                     m = mNum;
                                     r = rNum;
@@ -191,7 +189,7 @@ let rec evalSet (ast, pNum, mNum, rNum, csNum, vNum, qNum, uNum, lNum, resultStr
                                         u = uNum;
                                         l = lNum;
                                         prepend = ""}
-    | ListSet(fList)                ->  {result = "\nUnimplemented ListSet in evalSet\n";
+    | ElemList(fList)                ->  {result = "\nUnimplemented ListSet in evalSet\n";
                                         p = pNum;
                                         m = mNum;
                                         r = rNum;
@@ -213,7 +211,7 @@ let evalPowerset (typeNext, pNum, csNum, vNum, qNum, uNum, lNum) =
     | QSet                          -> (powersetString pNum ("Q" +  qNum.ToString()))
     | VARSet                        -> (powersetString pNum ("VAR" + vNum.ToString()))
     | UnionSet(fSet1, fSet2)        -> (powersetString pNum ("Union" +  uNum.ToString()))
-    | ListSet(fList)                -> (powersetString pNum ("List" +  lNum.ToString()))
+    | ElemList(fList)                -> (powersetString pNum ("List" +  lNum.ToString()))
     | _                             -> failwith "Error detecting set type at evalPowerset"
 
 let rec evalDom (ast, pNum, mNum, rNum, csNum, vNum, qNum, uNum, lNum, resultString) = 
