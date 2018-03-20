@@ -35,4 +35,4 @@ printfn "%s" (flatDomainAST.ToString())
 let code = evaluateAST flatDomainAST DomainString
 printfn "%s" code
 
-File.WriteAllText("Domain.fs", (code+"\n Hello"))
+File.WriteAllText("Domain.fs", code)

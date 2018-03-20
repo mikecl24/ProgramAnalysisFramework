@@ -1,5 +1,13 @@
 module Types
 
+type AnalysisDirection =
+    | Forward
+    | Backward
+
+type AnalysisOp = 
+    | LUB
+    | GLB
+
 type StatementType =
     | S_VarAssignment
     | S_Skip
