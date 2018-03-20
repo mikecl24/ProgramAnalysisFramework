@@ -35,7 +35,7 @@ WIP
     Maps + direction + nature? Analysis module
         functions as parameters: union/intersec + subseteq/superseteq
     how to generate subseteq/superseteq function (dom * dom) and (map -> map ...)
-                                                        map (set*set)->P()
+                                                                    map (set*set)->P()
         does this happen as domain is generated, or post, using the instance
         Fact: All analyses must contain at least one powerset (graph extensions will break this!)
     how to generate union/intersec

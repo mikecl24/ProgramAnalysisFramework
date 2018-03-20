@@ -7,12 +7,11 @@ let getValueEL (ElemList v) = v
 let rec getLast (array : string []) = 
     array.[array.Length - 1]
 
-
-let rec toCartList ast =  
+let rec toListList ast =  
     match ast with
     | Element(fElem)                        -> [ fElem ]
     | LargerList(fElem, fList)              -> match fList with
-                                                | LargerList(fElem2, fList2)    -> [fElem] @ (toCartList fList)
+                                                | LargerList(fElem2, fList2)    -> [fElem] @ (toListList fList)
                                                 | Element(fElem3)               -> [ fElem ] @ [ fElem3 ] 
 
 
@@ -24,7 +23,7 @@ let rec toCartSet ast =
     | QSet                                  -> QSet
     | VARSet                                -> VARSet
     | UnionSet(fSet1, fSet2)                -> UnionSet(toCartSet fSet1, toCartSet fSet2) 
-    | ListSet(fList)                        -> ElemList(toCartList fList)
+    | ListSet(fList)                        -> ElemList(toListList fList)
     | _                                     -> failwith "Already mutated AST"
 
 let rec reduceDom ast = 

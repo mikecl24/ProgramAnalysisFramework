@@ -60,7 +60,7 @@ open Analysis                       // Program Graph -> Analysis Result
 
 
 // Program Graph -> Analysis Result
-let Analysis = AnalyseEdges Edges
+let Analysis = AnalyseEdges Edges // union/intersection function, sub/super -seteq function
 
 printfn "Result"
 printfn "%A" (Seq.toList (getValueAR Analysis))

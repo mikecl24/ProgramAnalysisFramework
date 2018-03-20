@@ -23,8 +23,10 @@ open consolidateAST                 // Domain AST -> Flattened Domain AST
 #load "DomainGenerator.fs"
 open DomainGenerator                // Domain AST -> Code
 
-let DomainString = "P( VAR * [Q U {QM}] * Q )"
-//let DomainString = "P({Plus;Minus;Zero})"
+//let DomainString = "P( VAR * [Q U {QM}] * Q )"
+//let DomainString = "P(VAR * {Minus; Plus; Zero})"
+let DomainString = "VAR -> P({Plus;Minus;Zero})"
+//let DomainString = "P( Q )"
 
 // Domain String -> Domain AST
 let domainAST = ParseString (DomainString)
