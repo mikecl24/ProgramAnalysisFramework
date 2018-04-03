@@ -25,8 +25,11 @@ open DomainGenerator                // Domain AST -> Code
 
 //let DomainString = "P( VAR * [Q U {QM}] * Q )"
 //let DomainString = "P(VAR * {Minus; Plus; Zero})"
-let DomainString = "VAR -> P({Plus;Minus;Zero})"
-//let DomainString = "P( Q )"
+//let DomainString = "VAR -> P({Plus;Minus;Zero})"
+//"VAR -> Q -> P( [Q U [VAR U [{QTes; Other} U {Qs}] ] ] )"
+
+//let DomainString = "P([Q U Q]) * P([Q*Q U VAR])"
+let DomainString =  "Q -> P(VAR * Q) * VAR -> P(Q)"
 
 // Domain String -> Domain AST
 let domainAST = ParseString (DomainString)

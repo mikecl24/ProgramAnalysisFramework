@@ -13,12 +13,14 @@ enforce type output and input everywhere
 Allow must analyses (Switch condition and result in Analysis!)
 Allow backward analyses
 
+Domain Generation unimplemented:
+    Union in Union:  P([Q U [{QM} U  VAR]])
+    Cartesian in union:  P([Q*Q U {QM}])
+
 Domain tests: P(Q) - singleton powersets?
               P(Q)*P(Q)
               P([Q*Q U {QM}])
 
-Parser: var_if_test
-Flaten cartesian dom!
 TF -> names not prepending R1_, fix
 Manual work
 Implementation notes: name gen
@@ -26,9 +28,7 @@ Edges contain ints, but should contain nodes!
 1. Use maps
 2. expand gen
 
-Done: 
-    Flatten lists and cartesian sets
-    RD Dom generation
+NOTE: Precedence is highest for domain product! -> no Q -> (P(Q) * P(Q))
 
 WIP
     No longer Fact: All analyses are powersets 

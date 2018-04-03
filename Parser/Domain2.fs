@@ -23,6 +23,6 @@ type Record1 = {
     Q2 : Node ;
 }
 
-type Powerset1 = Record1 Set
+type Powerset1 =  Record1 Set
 
-type AnalysisResult = AnalysisResult of Map<Node,Powerset1>
+type AnalysisResult = Map<Node,Powerset1>

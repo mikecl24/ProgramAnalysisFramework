@@ -2,20 +2,20 @@ module Domain
 
 // Generated Code Section: Domain type
 (*
-Q -> VAR -> P({Plus;Minus;Zero})
+Q -> P( [Q U [VAR U {QTes}] ] )
 *)
 
 type Node = Node of int
 type Var = Var of string
 
-type List1 =
-    | Plus
-    | Minus
-    | Zero
+
+test
+
+type Union1 = 
+    | Q1 of Node 
+    | Unimplemented evaluation of union in union
 
 
-type Powerset1 = Powerset1 of List1 Set
+type Powerset1 = Powerset1 of Union1 Set
 
-type Map1 = Map1 of Map<Var,Powerset1>
-
-type AnalysisResult = AnalysisResult of Map<Node,Map1>
+type AnalysisResult = AnalysisResult of Map<Node,Powerset1>

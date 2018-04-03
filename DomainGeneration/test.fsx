@@ -1,12 +1,18 @@
 open System
 open System.Collections.Generic
 
+type Node = Node of int
+type Var = Var of string
+
+type Powerset2 = Powerset2 of Node Set
+
+type Powerset1 = Powerset1 of Node Set
+
 type Record1 = {
-    VAR1 : string ;
+    Powerset1 : Powerset1;
+    Powerset2 : Powerset2;
 }
 
-type Powerset1 = Powerset1 of Record1 Set
-type AnalysisResult = AnalysisResult of Map<int,Powerset1>
+let x = {Powerset1 = Powerset1(Set.empty.Add(Node(1))); Powerset2 = Powerset2(Set.empty.Add(Node(2)))}
 
-let result = AnalysisResult( Map.empty.Add( 0, Powerset1( Set.empty.Add( {VAR1 = "testing"} ) ) ) )
-printfn "%A" result
+printfn "%A" x

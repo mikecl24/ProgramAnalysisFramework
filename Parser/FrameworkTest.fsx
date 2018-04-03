@@ -19,12 +19,15 @@ open Parser                         // Program String -> Statement List
 #load "Grapher.fs"                  // Graph Generator:
 open Grapher                        // Statement List -> Program Graph 
 
+(*
 let programString = "
 if x>2 && true then 
     x := 10
 else 
     x := 9 
-fi
+fi"*)
+
+let programString = "if(true) then skip else skip fi
 "
 // Program String -> Statement List
 let stmtList = ParseString programString
@@ -53,7 +56,7 @@ open TransferFunctions              // iota, init
 
 // Completeness + Correctness Check
 // QuickChecking Module
-
+(*
 #load "Analysis2.fs"                 // Analysis Implementation:
 open Analysis                       // Program Graph -> Analysis Result
 
@@ -65,3 +68,4 @@ let Analysis = AnalyseEdges Edges // union/intersection function, sub/super -set
 printfn "Result"
 printfn "%A" (Seq.toList (getValueAR Analysis))
 //printfn "%A" Analysis.[3]
+*)
