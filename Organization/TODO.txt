@@ -1,5 +1,4 @@
 New module:
-    Node range generation in grapher
     Variables extraction in Parser
     graph reversal module
 

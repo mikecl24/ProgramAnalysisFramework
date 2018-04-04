@@ -48,3 +48,11 @@ let rec graphIt startNode endNode actList freshNext edgeList ifStart ifEnd doNod
 
 
 let GraphStatements stmtL =  (reverse (graphIt 0 1 stmtL 2 [] [] [] []) [])
+
+let rec extractNodes edgeList nodeSet = 
+    match edgeList with
+    |  []   -> reverse (Set.fold (fun l se -> se::l) [] nodeSet) []
+    |  a::b -> extractNodes b (Set.union nodeSet (Set.empty.Add(a.Q1).Add(a.Q2)))
+
+let ExtractNodes edgeList = extractNodes edgeList Set.empty
+     
