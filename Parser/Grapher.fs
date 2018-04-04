@@ -21,28 +21,28 @@ let rec graphIt startNode endNode actList freshNext edgeList ifStart ifEnd doNod
     | [] -> edgeList
     
     | x::xs when x.s_type=S_VarAssignment   
-        -> (graphIt endNode     freshNext   xs (freshNext+1)    ([{Q1 = startNode; Q2 = endNode; Action = x.text; Type = Assignment}]@edgeList) ifStart ifEnd doNodes)
+        -> (graphIt endNode     freshNext   xs (freshNext+1)    ([{Q1 = Node(startNode); Q2 = Node(endNode); Action = x.text; Type = Assignment}]@edgeList) ifStart ifEnd doNodes)
     
     | x::xs when x.s_type=S_Skip           
-        -> (graphIt endNode     freshNext   xs (freshNext+1)    ([{Q1 = startNode; Q2 = endNode; Action = x.text; Type = Skip}]@edgeList) ifStart ifEnd doNodes)
+        -> (graphIt endNode     freshNext   xs (freshNext+1)    ([{Q1 = Node(startNode); Q2 = Node(endNode); Action = x.text; Type = Skip}]@edgeList) ifStart ifEnd doNodes)
     
     | x::xs when x.s_type=S_IfBool          
-        -> (graphIt endNode     freshNext   xs (freshNext+1)    ([{Q1 = startNode; Q2 = endNode; Action = x.text; Type = Boolean}]@edgeList) (ifStart@[startNode]) ifEnd doNodes)
+        -> (graphIt endNode     freshNext   xs (freshNext+1)    ([{Q1 = Node(startNode); Q2 = Node(endNode); Action = x.text; Type = Boolean}]@edgeList) (ifStart@[startNode]) ifEnd doNodes)
     
     | x::xs when x.s_type=S_IfElse          
-        -> (graphIt endNode     freshNext   xs (freshNext+1)    ([{Q1 = ifStart.Head; Q2 = endNode; Action = x.text; Type = Boolean}]@edgeList) (ifStart.Tail) ([startNode]@ifEnd) doNodes)
+        -> (graphIt endNode     freshNext   xs (freshNext+1)    ([{Q1 = Node(ifStart.Head); Q2 = Node(endNode); Action = x.text; Type = Boolean}]@edgeList) (ifStart.Tail) ([startNode]@ifEnd) doNodes)
     
     | x::xs when x.s_type=S_IfFi            
-        -> (graphIt ifEnd.Head  startNode   xs freshNext        (correctEdges edgeList edgeList.Head.Q2 ifEnd.Head) (ifStart@[startNode]) ifEnd.Tail doNodes)
+        -> (graphIt ifEnd.Head  startNode   xs freshNext        (correctEdges edgeList edgeList.Head.Q2 (Node(ifEnd.Head))) (ifStart@[startNode]) ifEnd.Tail doNodes)
     
     | x::xs when x.s_type=S_DoBool          
-        -> (graphIt endNode     freshNext   xs (freshNext+1)    ([{Q1 = startNode; Q2 = endNode; Action = x.text; Type = Boolean}]@edgeList) ifStart ifEnd ([startNode]@doNodes))
+        -> (graphIt endNode     freshNext   xs (freshNext+1)    ([{Q1 = Node(startNode); Q2 = Node(endNode); Action = x.text; Type = Boolean}]@edgeList) ifStart ifEnd ([startNode]@doNodes))
     
     | x::xs when x.s_type=S_DoOd            
-        -> (graphIt startNode   endNode     xs freshNext        ([{Q1 = doNodes.Head; Q2 = startNode; Action = x.text; Type = Boolean}]@correctEdges edgeList edgeList.Head.Q2 doNodes.Head) ifStart ifEnd doNodes.Tail)
+        -> (graphIt startNode   endNode     xs freshNext        ([{Q1 = Node(doNodes.Head); Q2 = Node(startNode); Action = x.text; Type = Boolean}]@correctEdges edgeList edgeList.Head.Q2 (Node(doNodes.Head))) ifStart ifEnd doNodes.Tail)
     
     | x::xs when x.s_type=S_ArrAssignment   
-        -> (graphIt endNode     freshNext   xs (freshNext+1)    ([{Q1 = startNode; Q2 = endNode; Action = x.text; Type = ArrayAssignment}]@edgeList) ifStart ifEnd doNodes)
+        -> (graphIt endNode     freshNext   xs (freshNext+1)    ([{Q1 = Node(startNode); Q2 = Node(endNode); Action = x.text; Type = ArrayAssignment}]@edgeList) ifStart ifEnd doNodes)
     
     | _ -> failwith "Unknown action type"
 

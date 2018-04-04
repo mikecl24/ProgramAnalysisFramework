@@ -17,7 +17,6 @@ Analysis module:
 
 Parser:
     Use AST instead of text
-    Edges should contain nodes, not ints!
     
 Examples:
     New RD

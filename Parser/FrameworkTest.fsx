@@ -19,22 +19,20 @@ open Parser                         // Program String -> Statement List
 #load "Grapher.fs"                  // Graph Generator:
 open Grapher                        // Statement List -> Program Graph 
 
-(*
+
 let programString = "
-if x>2 && true then 
+if x>2 then 
     x := 10
 else 
     x := 9 
-fi"*)
+fi"
 
-let programString = "if(true) then skip else skip fi
-"
 // Program String -> Statement List
 let stmtList = ParseString programString
-
+printfn "%A" stmtList
 // Statement List -> Program Graph 
 let Edges = GraphStatements stmtList
-
+printfn "%A" Edges
 
 // Nodes: This should come from the graph generation (Hint: range(0,largest nr found))
 let Nodes = [0; 1; 3; 2]
@@ -51,8 +49,8 @@ open Domain                         // Q -> Domain variable + types
 // Pause
 // TF class generation
 
-#load "TransferFunctions2.fs"        // Transfer Function Specification
-open TransferFunctions              // iota, init
+//#load "TransferFunctions2.fs"        // Transfer Function Specification
+//open TransferFunctions              // iota, init
 
 // Completeness + Correctness Check
 // QuickChecking Module

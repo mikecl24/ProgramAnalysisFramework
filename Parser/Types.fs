@@ -1,5 +1,8 @@
 module Types
 
+type Node = Node of int
+type Var = Var of string
+
 type AnalysisDirection =
     | Forward
     | Backward
@@ -30,7 +33,7 @@ type TFtypes =
 
     
 type Edge = 
-    {Q1 : int;
-    Q2 : int;
+    {Q1 : Node;
+    Q2 : Node;
     Action : string;
     Type : TFtypes}
