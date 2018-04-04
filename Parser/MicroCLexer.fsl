@@ -45,7 +45,7 @@ rule tokenize = parse
 | opba			{ let str = LexBuffer<_>.LexemeString lexbuf in OPBA(str) }
 | opbu			{ let str = LexBuffer<_>.LexemeString lexbuf in OPBU(str) }
 | name          { let str = LexBuffer<_>.LexemeString lexbuf in VAR(str) }
-| num			{ let str = LexBuffer<_>.LexemeString lexbuf in NUM(str) }
+| num			{ NUM(int (LexBuffer<_>.LexemeString lexbuf)) }
 | lpar          { LPAR }
 | rpar          { RPAR }
 | lbrack        { LBRA }

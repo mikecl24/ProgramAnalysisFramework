@@ -238,7 +238,7 @@ and _fslex_tokenize  _fslex_state lexbuf =
           )
   | 20 -> ( 
 # 48 ".\MicroCLexer.fsl"
-                         let str = LexBuffer<_>.LexemeString lexbuf in NUM(str) 
+                         NUM(int (LexBuffer<_>.LexemeString lexbuf)) 
 # 242 ".\MicroCLexer.fs"
           )
   | 21 -> ( 

@@ -33,7 +33,7 @@ type token =
   | OPBA of (string)
   | OPAU of (string)
   | OPA of (string)
-  | NUM of (string)
+  | NUM of (int)
   | VAR of (string)
 // This type is used to give symbolic names to token indexes, useful for error messages
 type tokenId = 
@@ -240,10 +240,10 @@ let _fsyacc_reductions ()  =    [|
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 24 ".\MicroCParser.fsp"
+# 25 ".\MicroCParser.fsp"
                                               _1
                    )
-# 24 ".\MicroCParser.fsp"
+# 25 ".\MicroCParser.fsp"
                  : Statement list));
 # 248 ".\MicroCParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
@@ -252,10 +252,10 @@ let _fsyacc_reductions ()  =    [|
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 27 ".\MicroCParser.fsp"
+# 28 ".\MicroCParser.fsp"
                                                    _1 @ _3 
                    )
-# 27 ".\MicroCParser.fsp"
+# 28 ".\MicroCParser.fsp"
                  : 'command));
 # 260 ".\MicroCParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
@@ -264,20 +264,20 @@ let _fsyacc_reductions ()  =    [|
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 28 ".\MicroCParser.fsp"
-                                              [{text = _1+":="+_3; s_type = S_VarAssignment}] 
+# 29 ".\MicroCParser.fsp"
+                                              [{commandAST = AssignCommand(_1, _3); s_type = S_VarAssignment}] 
                    )
-# 28 ".\MicroCParser.fsp"
+# 29 ".\MicroCParser.fsp"
                  : 'command));
 # 272 ".\MicroCParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 29 ".\MicroCParser.fsp"
-                                      [{text = "skip"; s_type = S_Skip}] 
+# 30 ".\MicroCParser.fsp"
+                                      [{commandAST = SkipCommand; s_type = S_Skip}] 
                    )
-# 29 ".\MicroCParser.fsp"
+# 30 ".\MicroCParser.fsp"
                  : 'command));
 # 282 ".\MicroCParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
@@ -287,10 +287,10 @@ let _fsyacc_reductions ()  =    [|
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 30 ".\MicroCParser.fsp"
-                                                              [{text = _2; s_type = S_IfBool}] @ _4 @ [{text = "!("+_2+")"; s_type = S_IfElse}] @ _6 @ [{text = "FI"; s_type = S_IfFi}] 
+# 31 ".\MicroCParser.fsp"
+                                                              [{commandAST = BoolCommand(_2); s_type = S_IfBool}] @ _4 @ [{commandAST = BoolCommand(NotExpr(_2)); s_type = S_IfElse}] @ _6 @ [{commandAST = SkipCommand; s_type = S_IfFi}] 
                    )
-# 30 ".\MicroCParser.fsp"
+# 31 ".\MicroCParser.fsp"
                  : 'command));
 # 295 ".\MicroCParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
@@ -299,10 +299,10 @@ let _fsyacc_reductions ()  =    [|
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 31 ".\MicroCParser.fsp"
-                                                     [{text = _2; s_type = S_DoBool}] @ _4 @ [{text = "!("+_2+")"; s_type = S_DoOd}] 
+# 32 ".\MicroCParser.fsp"
+                                                     [{commandAST = BoolCommand(_2); s_type = S_DoBool}] @ _4 @ [{commandAST = BoolCommand(NotExpr(_2)); s_type = S_DoOd}] 
                    )
-# 31 ".\MicroCParser.fsp"
+# 32 ".\MicroCParser.fsp"
                  : 'command));
 # 307 ".\MicroCParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
@@ -312,10 +312,10 @@ let _fsyacc_reductions ()  =    [|
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 32 ".\MicroCParser.fsp"
-                                                               [{text = _1+"["+_3+"]"+":="+_6; s_type = S_ArrAssignment}] 
+# 33 ".\MicroCParser.fsp"
+                                                               [{commandAST = ArrAssignCommand(_1, _3, _6); s_type = S_ArrAssignment}] 
                    )
-# 32 ".\MicroCParser.fsp"
+# 33 ".\MicroCParser.fsp"
                  : 'command));
 # 320 ".\MicroCParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
@@ -323,10 +323,10 @@ let _fsyacc_reductions ()  =    [|
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 35 ".\MicroCParser.fsp"
-                                                               "("+_2+")"
+# 36 ".\MicroCParser.fsp"
+                                                               _2 
                    )
-# 35 ".\MicroCParser.fsp"
+# 36 ".\MicroCParser.fsp"
                  : 'aexp));
 # 331 ".\MicroCParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
@@ -335,10 +335,10 @@ let _fsyacc_reductions ()  =    [|
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 36 ".\MicroCParser.fsp"
-                                                               _1+"["+_3+"]" 
+# 37 ".\MicroCParser.fsp"
+                                                               ArrExpr(_1, _3) 
                    )
-# 36 ".\MicroCParser.fsp"
+# 37 ".\MicroCParser.fsp"
                  : 'aexp));
 # 343 ".\MicroCParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
@@ -346,21 +346,21 @@ let _fsyacc_reductions ()  =    [|
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 37 ".\MicroCParser.fsp"
-                                     _1 
+# 38 ".\MicroCParser.fsp"
+                                     VarExpr(_1) 
                    )
-# 37 ".\MicroCParser.fsp"
+# 38 ".\MicroCParser.fsp"
                  : 'aexp));
 # 354 ".\MicroCParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
-            let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : string)) in
+            let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : int)) in
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 38 ".\MicroCParser.fsp"
-                                     _1 
+# 39 ".\MicroCParser.fsp"
+                                     NumExpr(_1) 
                    )
-# 38 ".\MicroCParser.fsp"
+# 39 ".\MicroCParser.fsp"
                  : 'aexp));
 # 365 ".\MicroCParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
@@ -370,10 +370,10 @@ let _fsyacc_reductions ()  =    [|
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 39 ".\MicroCParser.fsp"
-                                             _1+_2+_3 
+# 40 ".\MicroCParser.fsp"
+                                             SumExpr(_1, _3) 
                    )
-# 39 ".\MicroCParser.fsp"
+# 40 ".\MicroCParser.fsp"
                  : 'aexp));
 # 378 ".\MicroCParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
@@ -383,10 +383,10 @@ let _fsyacc_reductions ()  =    [|
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 40 ".\MicroCParser.fsp"
-                                             _1+_2+_3 
+# 41 ".\MicroCParser.fsp"
+                                             MinExpr(_1,_3) 
                    )
-# 40 ".\MicroCParser.fsp"
+# 41 ".\MicroCParser.fsp"
                  : 'aexp));
 # 391 ".\MicroCParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
@@ -395,10 +395,10 @@ let _fsyacc_reductions ()  =    [|
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 41 ".\MicroCParser.fsp"
-                                          _1+_2 
+# 42 ".\MicroCParser.fsp"
+                                          UMinExpr(_2) 
                    )
-# 41 ".\MicroCParser.fsp"
+# 42 ".\MicroCParser.fsp"
                  : 'aexp));
 # 403 ".\MicroCParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
@@ -406,30 +406,30 @@ let _fsyacc_reductions ()  =    [|
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 44 ".\MicroCParser.fsp"
-                                                               "("+_2+")" 
+# 45 ".\MicroCParser.fsp"
+                                                               _2 
                    )
-# 44 ".\MicroCParser.fsp"
+# 45 ".\MicroCParser.fsp"
                  : 'bexp));
 # 414 ".\MicroCParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 45 ".\MicroCParser.fsp"
-                                      "true" 
+# 46 ".\MicroCParser.fsp"
+                                      TrueExpr 
                    )
-# 45 ".\MicroCParser.fsp"
+# 46 ".\MicroCParser.fsp"
                  : 'bexp));
 # 424 ".\MicroCParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 46 ".\MicroCParser.fsp"
-                                       "false" 
+# 47 ".\MicroCParser.fsp"
+                                       FalseExpr 
                    )
-# 46 ".\MicroCParser.fsp"
+# 47 ".\MicroCParser.fsp"
                  : 'bexp));
 # 434 ".\MicroCParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
@@ -439,10 +439,10 @@ let _fsyacc_reductions ()  =    [|
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 47 ".\MicroCParser.fsp"
-                                             _1+_2+_3 
+# 48 ".\MicroCParser.fsp"
+                                             LargerExpr(_1,_3) 
                    )
-# 47 ".\MicroCParser.fsp"
+# 48 ".\MicroCParser.fsp"
                  : 'bexp));
 # 447 ".\MicroCParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
@@ -451,10 +451,10 @@ let _fsyacc_reductions ()  =    [|
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 48 ".\MicroCParser.fsp"
-                                          _1+_2 
+# 49 ".\MicroCParser.fsp"
+                                          NotExpr(_2) 
                    )
-# 48 ".\MicroCParser.fsp"
+# 49 ".\MicroCParser.fsp"
                  : 'bexp));
 # 459 ".\MicroCParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
@@ -464,10 +464,10 @@ let _fsyacc_reductions ()  =    [|
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 49 ".\MicroCParser.fsp"
-                                             _1+_2+_3 
+# 50 ".\MicroCParser.fsp"
+                                             AndExpr(_1,_3) 
                    )
-# 49 ".\MicroCParser.fsp"
+# 50 ".\MicroCParser.fsp"
                  : 'bexp));
 |]
 # 473 ".\MicroCParser.fs"

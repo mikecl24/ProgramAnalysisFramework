@@ -23,7 +23,7 @@ type token =
   | OPBA of (string)
   | OPAU of (string)
   | OPA of (string)
-  | NUM of (string)
+  | NUM of (int)
   | VAR of (string)
 type tokenId = 
     | TOKEN_COMMA

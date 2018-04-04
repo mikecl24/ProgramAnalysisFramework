@@ -1,3 +1,6 @@
+Parser:
+    Using AST -> fix all ops!
+
 New module:
     Variables extraction in Parser
     graph reversal module
@@ -7,6 +10,7 @@ Domain Generation unimplemented:
 
 Lattice operation notes:
     subset_p (cartesian product of domains) only for 2: otherwise need to save them as (dom, opt(dom)) and last element is None!
+    better: susbset_p takes a parameter number which is the size of the cartesian, and acordingly calls for 2,3,4... (finite amount of choices)
     cartesian product of domains also has to be a tuple now (no way of iterating through records properly, unless using some code generation)   
     Implement union, intersection, superset
 
@@ -14,8 +18,6 @@ Analysis module:
     write using lattice operations
     test back/forward, must/may
 
-Parser:
-    Use AST instead of text
     
 Examples:
     New RD
