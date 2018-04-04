@@ -18,11 +18,11 @@ type Union1 =
 
 
 type Record1 = {
-    VAR1 : Var ;
+    Var1 : Var ;
     Union1 : Union1;
     Q2 : Node ;
 }
 
-type Powerset1 =  Record1 Set
+type Powerset1 = Record1 Set
 
 type AnalysisResult = Map<Node,Powerset1>

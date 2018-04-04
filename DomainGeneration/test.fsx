@@ -14,5 +14,9 @@ type Record1 = {
 }
 
 let x = {Powerset1 = Powerset1(Set.empty.Add(Node(1))); Powerset2 = Powerset2(Set.empty.Add(Node(2)))}
+//printfn "%A" x
 
-printfn "%A" x
+type tutest = int * int
+
+let y = tutest(1, 2)
+printfn "%A" (y.GetType())

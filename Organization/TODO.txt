@@ -1,41 +1,33 @@
-New RD
-Signs and SSR analysis
-
 New module:
- Node range generation in grapher
- Variables extraction in Parser
- 
-Replace Dictionary with Map maybe
-Use AST's
-
-Add functionality for iota in the last node instead of in the start?
-enforce type output and input everywhere
-Allow must analyses (Switch condition and result in Analysis!)
-Allow backward analyses
+    Node range generation in grapher
+    Variables extraction in Parser
+    graph reversal module
 
 Domain Generation unimplemented:
-    Union in Union:  P([Q U [{QM} U  VAR]])
-    Cartesian in union:  P([Q*Q U {QM}])
+    Deal with cartesian in domains "properly" -> tuple
 
-Domain tests: P(Q) - singleton powersets?
-              P(Q)*P(Q)
-              P([Q*Q U {QM}])
+Lattice operation notes:
+    subset_p (cartesian product of domains) only for 2: otherwise need to save them as (dom, opt(dom)) and last element is None!
+    cartesian product of domains also has to be a tuple now (no way of iterating through records properly, unless using some code generation)   
+    Implement union, intersection, superset
 
-TF -> names not prepending R1_, fix
-Manual work
-Implementation notes: name gen
-Edges contain ints, but should contain nodes!
-1. Use maps
-2. expand gen
+Analysis module:
+    write using lattice operations
+    test back/forward, must/may
 
-NOTE: Precedence is highest for domain product! -> no Q -> (P(Q) * P(Q))
+Parser:
+    Use AST instead of text
+    Edges should contain nodes, not ints!
+    
+Examples:
+    New RD
+    Signs and SSR analysis
+    
+Manual work:
+    Cartesian rework (max 2)
+    NOTE: Precedence is highest for domain product! -> no Q -> (P(Q) * P(Q))?
 
-WIP
-    No longer Fact: All analyses are powersets 
-    Maps + direction + nature? Analysis module
-        functions as parameters: union/intersec + subseteq/superseteq
-    how to generate subseteq/superseteq function (dom * dom) and (map -> map ...)
-                                                                    map (set*set)->P()
-        does this happen as domain is generated, or post, using the instance
-        Fact: All analyses must contain at least one powerset (graph extensions will break this!)
-    how to generate union/intersec
+
+Report:
+    Generation of domain
+    Latt operation module

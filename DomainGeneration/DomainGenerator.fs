@@ -49,15 +49,16 @@ let rec evalList (fList, pNum, mNum, rNum, vNum, qNum, uNum, lNum, resultString,
 
 let rec evalUnionSet (fSet, pNum, mNum, rNum, vNum, qNum, uNum, lNum, resultString, prependString) =
     match fSet with
-    | CartesianListSet(fListSet)    ->  {result = "    | Unimplemented evaluation of cartesian in union\n";
-                                        p = pNum;
-                                        m = mNum;
-                                        r = rNum;
-                                        v = vNum;
-                                        q = qNum;
-                                        u = uNum;
-                                        l = lNum;
-                                        prepend = prependString}
+    | CartesianListSet(fListSet)    ->  let prev = evalCartListSet (fListSet, pNum, mNum, rNum+1, vNum, qNum, uNum, lNum, resultString, "")
+                                        {result = "    | Record" + rNum.ToString() + " of Record" + rNum.ToString() + "\n";
+                                        p = prev.p;
+                                        m = prev.m;
+                                        r = prev.r;
+                                        v = prev.v;
+                                        q = prev.q;
+                                        u = prev.u;
+                                        l = prev.l;
+                                        prepend =  prev.prepend + "\ntype Record" + rNum.ToString() + " = {\n" + prev.result+"}\n";}
     | QSet                          ->  {result = "    | Q" + qNum.ToString() + " of Node \n";
                                         p = pNum;
                                         m = mNum;
@@ -100,7 +101,7 @@ let rec evalUnionSet (fSet, pNum, mNum, rNum, vNum, qNum, uNum, lNum, resultStri
                                         prepend = listRes.result + prependString}
     | _                             ->  failwith "Error matching evalUnionSet"
 
-let rec evalCartListItem (fListSet, pNum, mNum, rNum, vNum, qNum, uNum, lNum, resultString, prependString) =
+and evalCartListItem (fListSet, pNum, mNum, rNum, vNum, qNum, uNum, lNum, resultString, prependString) =
     match fListSet with
     | QSet                      ->  {result = "    Q" + qNum.ToString() + " : Node ;\n";
                                     p = pNum;
@@ -146,7 +147,7 @@ let rec evalCartListItem (fListSet, pNum, mNum, rNum, vNum, qNum, uNum, lNum, re
 
 
 
-let rec evalCartListSet (fListSet, pNum, mNum, rNum, vNum, qNum, uNum, lNum, resultString, prependString) =
+and evalCartListSet (fListSet, pNum, mNum, rNum, vNum, qNum, uNum, lNum, resultString, prependString) =
     match fListSet with
     | []    ->  {result = resultString;
                 p = pNum;
@@ -193,13 +194,13 @@ let rec evalSet (ast, pNum, mNum, rNum, vNum, qNum, uNum, lNum, resultString) =
     | UnionSet(fSet1, fSet2)        ->  let first = evalUnionSet (fSet1, pNum, mNum, rNum, vNum, qNum, uNum+1, lNum, "", "")
                                         let second = evalUnionSet (fSet2, first.p, first.m, first.r, first.v, first.q, first.u, first.l, "", "" )
                                         {result = first.prepend + second.prepend + "\ntype Union" + uNum.ToString() + " = \n" + first.result + second.result + "\n";
-                                        p = pNum;
-                                        m = mNum;
-                                        r = rNum;
-                                        v = vNum;
-                                        q = qNum;
-                                        u = uNum;
-                                        l = lNum;
+                                        p = second.p;
+                                        m = second.m;
+                                        r = second.r;
+                                        v = second.v;
+                                        q = second.q;
+                                        u = second.u;
+                                        l = second.l;
                                         prepend = ""}
     | ElemList(fList)                -> let first = evalList (fList, pNum, mNum, rNum, vNum, qNum, uNum, lNum, "", "")
                                         {result = first.result;
@@ -265,7 +266,7 @@ and evalDom (ast, pNum, mNum, rNum, vNum, qNum, uNum, lNum, resultString) =
                                                 l = second.l;
                                                 prepend = ""}
     | CartesianListDom(fListDom)            ->  let resDom = evalDomList (fListDom, pNum, mNum, rNum+1, vNum, qNum, uNum, lNum, resultString, "")
-                                                {result = resDom.prepend + "\ntype Record"+rNum.ToString()+" = {\n" + resDom.result + "}\n";
+                                                {result = resDom.prepend + "\ntype Record"+rNum.ToString()+" = {\n" + resDom.result + "}\n//This might change into a tuple!\n";
                                                 p = resDom.p;
                                                 m = resDom.m;
                                                 r = resDom.r;
