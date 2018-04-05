@@ -62,7 +62,6 @@ type TFtypes =
     | Skip
     | ArrayAssignment
 
-    
 type Edge = 
     {Q1 : Node;
     Q2 : Node;

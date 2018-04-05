@@ -1,12 +1,5 @@
 module Grapher
 
-// Reorders the list of edges by creation order
-let rec reverse inList acc=
-    match inList with
-    | [] -> acc
-    | [x] -> x::acc
-    | head::tail -> reverse tail (head::acc)
-
 // Corrects the Edge nodes: Replace a node with another (merge)
 let rec correctEdges listEd before after =
     match listEd with

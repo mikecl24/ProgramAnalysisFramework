@@ -1,5 +1,4 @@
 New module:
-    Variables extraction in Parser
     graph reversal module
 
 Domain Generation unimplemented:
