@@ -15,14 +15,24 @@ type token =
   | RPAR
   | LBRA
   | RBRA
+  | GT
+  | GTEQ
+  | LT
+  | LTEQ
+  | EQ
+  | NEQ
   | ASSIGN
   | SKIP
+  | PLUS
+  | MULT
+  | DIV
+  | MINUS
+  | AND
+  | OR
+  | SAND
+  | SOR
+  | NOT
   | EOF
-  | OPB of (string)
-  | OPBU of (string)
-  | OPBA of (string)
-  | OPAU of (string)
-  | OPA of (string)
   | NUM of (int)
   | VAR of (string)
 type tokenId = 
@@ -40,14 +50,24 @@ type tokenId =
     | TOKEN_RPAR
     | TOKEN_LBRA
     | TOKEN_RBRA
+    | TOKEN_GT
+    | TOKEN_GTEQ
+    | TOKEN_LT
+    | TOKEN_LTEQ
+    | TOKEN_EQ
+    | TOKEN_NEQ
     | TOKEN_ASSIGN
     | TOKEN_SKIP
+    | TOKEN_PLUS
+    | TOKEN_MULT
+    | TOKEN_DIV
+    | TOKEN_MINUS
+    | TOKEN_AND
+    | TOKEN_OR
+    | TOKEN_SAND
+    | TOKEN_SOR
+    | TOKEN_NOT
     | TOKEN_EOF
-    | TOKEN_OPB
-    | TOKEN_OPBU
-    | TOKEN_OPBA
-    | TOKEN_OPAU
-    | TOKEN_OPA
     | TOKEN_NUM
     | TOKEN_VAR
     | TOKEN_end_of_input

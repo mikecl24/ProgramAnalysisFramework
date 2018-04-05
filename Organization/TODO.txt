@@ -1,6 +1,3 @@
-Parser:
-    Using AST -> fix all ops!
-
 New module:
     Variables extraction in Parser
     graph reversal module

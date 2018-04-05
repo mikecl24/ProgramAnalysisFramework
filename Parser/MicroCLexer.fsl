@@ -14,11 +14,7 @@ let whitespace  = [' ' '\t']
 let newline     = "\n\r" | '\n' | '\r'
 let name        = char(char|digit)*
 let num 		= "0"|(['1'-'9'](digit)*)
-let opa			= '+'|'*'|'/'
-let opau		= '-'
-let opba		= '>'|">="|'<'|"<="|'='|"<>"
 let opbu		= '!'
-let opb			= "&&" | "||" | "&" | "|" 
 let lpar        = "("
 let rpar        = ")"
 let lbrack      = "["
@@ -39,11 +35,21 @@ rule tokenize = parse
 | "do"			{ DO }
 | "od"			{ OD }
 | ";"			{ COMMA }
-| opa			{ let str = LexBuffer<_>.LexemeString lexbuf in OPA(str) }
-| opau			{ let str = LexBuffer<_>.LexemeString lexbuf in OPAU(str) }
-| opb			{ let str = LexBuffer<_>.LexemeString lexbuf in OPB(str) }
-| opba			{ let str = LexBuffer<_>.LexemeString lexbuf in OPBA(str) }
-| opbu			{ let str = LexBuffer<_>.LexemeString lexbuf in OPBU(str) }
+| "+"           { PLUS }
+| "*"           { MULT }
+| "/"           { DIV }
+| "-"           { MINUS }
+| "&&"          { AND }
+| "||"          { OR }
+| "&"           { SAND }
+| "|"           { SOR }
+| "!"           { NOT }
+| '>'           { GT }
+| ">="          { GTEQ }
+| '<'           { LT }
+| "<="          { LTEQ }
+| '='           { EQ }
+| "<>"          { NEQ }
 | name          { let str = LexBuffer<_>.LexemeString lexbuf in VAR(str) }
 | num			{ NUM(int (LexBuffer<_>.LexemeString lexbuf)) }
 | lpar          { LPAR }

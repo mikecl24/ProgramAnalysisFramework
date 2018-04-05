@@ -21,10 +21,10 @@ open Grapher                        // Statement List -> Program Graph
 
 
 let programString = "
-if x>2 & true then 
-    x := 10+y
+if !x<>2 || true then
+    skip
 else 
-    x := 9 
+    skip
 fi"
 
 // Program String -> Statement List
