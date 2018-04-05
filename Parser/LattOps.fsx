@@ -1,5 +1,4 @@
-#load "Domain2.fs"                   // Domain Specification Generated code
-open Domain                         // Q -> Domain variable + types
+
 
 let subset_pw (dom1, dom2) = Set.isSubset dom1 dom2
 
@@ -33,16 +32,40 @@ let rec superset_p (superset_n1, superset_n2) (dom1, dom2) =
         false
     else
         true
-(*
-let x = Map.empty.Add(1, Set.empty.Add(1).Add(2).Add(3)).Add(3, Set.empty.Add(1).Add(2).Add(3))
-let y = Map.empty.Add(1, Set.empty.Add(1).Add(2)).Add(3, Set.empty)
-printfn "%A" (superset_m superset_pw (x,y))
-*)
+
+let union_pw (dom1, dom2) = Set.union dom1 dom2
+
+let union_m union_n ((dom1:Map<'a, 'b>), (dom2:Map<'a, 'b>)) = 
+    if dom1.Count = dom2.Count then
+        try Map.map (fun key value -> (union_n (value, dom2.Item(key)))) dom1
+        with e -> failwith "Union of maps with different keys!"
+    else
+        failwith "Union of maps with different keys!"
+
+let rec union_p (union_n1, union_n2) (dom1, dom2) =
+    (union_n1 ((fst dom1), (fst dom2)),union_n2 ((snd dom1), (snd dom2)))
+
+let intersect_pw (dom1, dom2) = Set.intersect dom1 dom2
+
+let intersect_m intersect_n ((dom1:Map<'a, 'b>), (dom2:Map<'a, 'b>)) = 
+    if dom1.Count = dom2.Count then
+        try Map.map (fun key value -> (intersect_n (value, dom2.Item(key)))) dom1
+        with e -> failwith "Intersection of maps with different keys!"
+    else
+        failwith "Intersection of maps with different keys!"
+
+let rec intersect_p (intersect_n1, intersect_n2) (dom1, dom2) =
+    (intersect_n1 ((fst dom1), (fst dom2)),intersect_n2 ((snd dom1), (snd dom2)))
+
+
+
 
 let x = (Set.empty.Add(1).Add(2), 
             Map.empty.Add("text1", Map.empty.Add(1, Set.empty.Add("x")).Add(2, Set.empty.Add("y").Add("z")))
+                     .Add("text2", Map.empty.Add(3, Set.empty.Add("z")).Add(2, Set.empty.Add("z")))
         )
-let y = (Set.empty.Add(1), 
+let y = (Set.empty.Add(1).Add(3), 
             Map.empty.Add("text1", Map.empty.Add(1, Set.empty.Add("x")).Add(2, Set.empty.Add("y")))
+                     .Add("text2", Map.empty.Add(3, Set.empty.Add("x")).Add(2, Set.empty.Add("y")))
         )
-printfn "%A" (superset_p (superset_pw, (superset_m (superset_m superset_pw))) (x, y) )
+printfn "%A" (intersect_p (intersect_pw, (intersect_m (intersect_m intersect_pw))) (x, y) )
