@@ -45,6 +45,10 @@ let Variables = uniqueVars vartemp
 #load "Domain.fs"                   // Domain Specification Generated code
 open Domain                         // Q -> Domain variable + types
 
+#load "LattOps.fs"                   // Lattice Operation functions
+open LatticeOperations               // Union, Intersection, Subset, Superset
+
+
 // Pause
 // TF class generation
 

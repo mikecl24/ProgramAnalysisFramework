@@ -1,4 +1,4 @@
-
+module LatticeOperations
 
 let subset_pw (dom1, dom2) = Set.isSubset dom1 dom2
 
@@ -56,16 +56,3 @@ let intersect_m intersect_n ((dom1:Map<'a, 'b>), (dom2:Map<'a, 'b>)) =
 
 let rec intersect_p (intersect_n1, intersect_n2) (dom1, dom2) =
     (intersect_n1 ((fst dom1), (fst dom2)),intersect_n2 ((snd dom1), (snd dom2)))
-
-
-
-
-let x = (Set.empty.Add(1).Add(2), 
-            Map.empty.Add("text1", Map.empty.Add(1, Set.empty.Add("x")).Add(2, Set.empty.Add("y").Add("z")))
-                     .Add("text2", Map.empty.Add(3, Set.empty.Add("z")).Add(2, Set.empty.Add("z")))
-        )
-let y = (Set.empty.Add(1).Add(3), 
-            Map.empty.Add("text1", Map.empty.Add(1, Set.empty.Add("x")).Add(2, Set.empty.Add("y")))
-                     .Add("text2", Map.empty.Add(3, Set.empty.Add("x")).Add(2, Set.empty.Add("y")))
-        )
-printfn "%A" (intersect_p (intersect_pw, (intersect_m (intersect_m intersect_pw))) (x, y) )

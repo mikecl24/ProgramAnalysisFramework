@@ -3,7 +3,6 @@ New module:
 
 Domain Generation unimplemented:
     Deal with cartesian in domains "properly" -> tuple
-    generate subset/superset/union/intersection call sequences!
 
 Lattice operation notes:
     subset_p (cartesian product of domains) only for 2: otherwise need to save them as (dom, opt(dom)) and last element is None!
@@ -13,11 +12,11 @@ Lattice operation notes:
 Analysis module:
     write using lattice operations
     test back/forward, must/may
-
+    
 Examples:
     New RD
     Signs and SSR analysis
-
+    
 Manual work:
     Cartesian rework (max 2)
     NOTE: Precedence is highest for domain product! -> no Q -> (P(Q) * P(Q))?
