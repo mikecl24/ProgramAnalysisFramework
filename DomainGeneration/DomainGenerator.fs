@@ -266,7 +266,7 @@ and evalDom (ast, pNum, mNum, rNum, vNum, qNum, uNum, lNum, resultString) =
                                                 l = second.l;
                                                 prepend = ""}
     | CartesianListDom(fListDom)            ->  let resDom = evalDomList (fListDom, pNum, mNum, rNum+1, vNum, qNum, uNum, lNum, resultString, "")
-                                                {result = resDom.prepend + "\ntype Record"+rNum.ToString()+" = {\n" + resDom.result + "}\n//This might change into a tuple!\n";
+                                                {result = resDom.prepend + "\ntype Record"+rNum.ToString()+" = {\n" + resDom.result + "}\n//This might change into a tuple: lookahead both!\n";
                                                 p = resDom.p;
                                                 m = resDom.m;
                                                 r = resDom.r;
