@@ -91,15 +91,7 @@ type CustomGeneratorProgram =
 
 Arb.register<CustomGeneratorProgram>()
 
-// let tf_test (x:Powerset1):Powerset1 = 
-//         if (x = Set.empty) then
-//             Set.empty.Add( {Var1 = Var "Var1";
-//             Union1 = Q1 (Node 1);
-//             Q2 = Node 2;} )
-//         else    
-//             Set.empty
 
-let tf_test x = Set.empty
     
 
 ///////////////////////////////////////////////
@@ -126,7 +118,15 @@ Check.Quick checkMaps
 
 ///////////////////////////////////////////////////////////////////
 
+// let tf_test (x:Powerset1):Powerset1 = 
+//         if (x = Set.empty) then
+//             Set.empty.Add( {Var1 = Var "Var1";
+//             Union1 = Q1 (Node 1);
+//             Q2 = Node 2;} )
+//         else    
+//             Set.empty
 
+let tf_test x = Set.empty
 
 let checkMonotonicity (x:Powerset1, y:Powerset1) = (Set.isSubset x y) ==> (lazy (Set.isSubset (tf_test x) (tf_test y)))
 printfn "Checking Monotonicity for Program sized programs in TF_test"
