@@ -1,5 +1,5 @@
 open System
 
-let x = Set.empty.Add(1).Add(3).Add(4)
-let y = Set.fold (fun l se -> se::l) [] x
+let x = Map.empty.Add(1,2)
+let y = x.Add(1,3)
 printfn "%A" y

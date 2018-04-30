@@ -22,9 +22,9 @@ type StatementType =
     | S_ArrAssignment
 
 type aexp = 
-    | VarExpr of string
+    | VarExpr of Var
     | NumExpr of int
-    | ArrExpr of string * aexp
+    | ArrExpr of Var * aexp
     | SumExpr of aexp * aexp
     | MinExpr of aexp * aexp
     | MultExpr of aexp * aexp
@@ -49,8 +49,8 @@ and bexp =
 type command = 
     | SkipCommand
     | BoolCommand of bexp
-    | AssignCommand of string * aexp
-    | ArrAssignCommand of string * aexp * aexp
+    | AssignCommand of Var * aexp
+    | ArrAssignCommand of Var * aexp * aexp
 
 type Statement =
     { commandAST : command;

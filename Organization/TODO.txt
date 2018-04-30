@@ -1,11 +1,19 @@
+References: 
+    iota and init: Lookahead to second type
+    TF signatures : Lookahead second type
+    subsetOP: subset sequence!
+
 Done:   Report section written
         Cartesian domains
+
+Grapher rework: Use function defined in report
+Get rid of types, use tuples?
 
 Goals: Write report
 Work on Quickchecking
 Report: Define reader
 
-Possibilities: Require |Var| = |Node| -> redefine map generation accordingly
+Worklist: Efficient/spec?
 
 New module:
     graph reversal module
@@ -14,7 +22,8 @@ New module:
 MetaL rework:
     TFS set vs larger sets: change syntax!
     
-Get trace function for subset parameter (subset_m subset_m ...)
+Domain Gen:
+    Get trace function for subset parameter (subset_m subset_m ...)
 Consolidate Folder structure
     
 Lattice operation notes:

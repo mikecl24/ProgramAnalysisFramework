@@ -8,7 +8,7 @@ open Microsoft.FSharp.Text.Parsing.ParseHelpers
 open System
 open System.Collections.Generic
 open Types
-let mutable vartemp = new List<string>()
+let mutable vartemp = new List<Var>()
 
 # 13 ".\MicroCParser.fs"
 // This type is the type of tokens accepted by the parser
@@ -337,7 +337,7 @@ let _fsyacc_reductions ()  =    [|
                 (
                    (
 # 32 ".\MicroCParser.fsp"
-                                              vartemp.Add(_1); [{commandAST = AssignCommand(_1, _3); s_type = S_VarAssignment}] 
+                                              vartemp.Add(Var _1); [{commandAST = AssignCommand(Var(_1), _3); s_type = S_VarAssignment}] 
                    )
 # 32 ".\MicroCParser.fsp"
                  : 'command));
@@ -385,7 +385,7 @@ let _fsyacc_reductions ()  =    [|
                 (
                    (
 # 36 ".\MicroCParser.fsp"
-                                                               vartemp.Add(_1); [{commandAST = ArrAssignCommand(_1, _3, _6); s_type = S_ArrAssignment}] 
+                                                               vartemp.Add(Var _1); [{commandAST = ArrAssignCommand(Var(_1), _3, _6); s_type = S_ArrAssignment}] 
                    )
 # 36 ".\MicroCParser.fsp"
                  : 'command));
@@ -408,7 +408,7 @@ let _fsyacc_reductions ()  =    [|
                 (
                    (
 # 40 ".\MicroCParser.fsp"
-                                                               ArrExpr(_1, _3) 
+                                                               vartemp.Add(Var _1); ArrExpr(Var _1, _3) 
                    )
 # 40 ".\MicroCParser.fsp"
                  : 'aexp));
@@ -419,7 +419,7 @@ let _fsyacc_reductions ()  =    [|
                 (
                    (
 # 41 ".\MicroCParser.fsp"
-                                     vartemp.Add(_1); VarExpr(_1) 
+                                     vartemp.Add(Var _1); VarExpr(Var _1) 
                    )
 # 41 ".\MicroCParser.fsp"
                  : 'aexp));
