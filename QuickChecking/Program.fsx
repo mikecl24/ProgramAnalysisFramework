@@ -36,8 +36,8 @@ let genSets (sn, sv) (mn, mv) (ln, lv) (pn, pv) =
     (r_sn, r_mn, r_ln, r_pn, r_sv, r_mv, r_lv, r_pv)
 
 
-(*      USAGE            *)
-let (nodeS, nodeM, nodeL, nodeP, varS, varM, varL, varP) = (genSets (4,8) (10, 20) (20, 100) (10, 10))
+(*            USAGE            *)
+let (nodeS, nodeM, nodeL, nodeP, varS, varM, varL, varP) = (genSets (4,8) (100, 200) (2000, 10000) (3, 3))
 
 
 
@@ -94,7 +94,7 @@ Arb.register<CustomGeneratorProgram>()
 
     
 
-///////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
 let tf_map (x:AnalysisResult) = x
 
 let subset_pw (dom1, dom2) = Set.isSubset dom1 dom2
@@ -113,25 +113,44 @@ let rec subset_p (subset_n1, subset_n2) (dom1, dom2) =
     else
         true
 
-let checkMaps (x:AnalysisResult, y:AnalysisResult) = (subset_m (subset_pw) (x, y)) ==> (lazy (subset_m (subset_pw) ((tf_map x), (tf_map y))))
-Check.Quick checkMaps
+//let checkMaps (x:AnalysisResult, y:AnalysisResult) = (subset_m (subset_pw) (x, y)) ==> (lazy (subset_m (subset_pw) ((tf_map x), (tf_map y))))
+//Check.Quick checkMaps
 
 ///////////////////////////////////////////////////////////////////
 
-// let tf_test (x:Powerset1):Powerset1 = 
-//         if (x = Set.empty) then
-//             Set.empty.Add( {Var1 = Var "Var1";
-//             Union1 = Q1 (Node 1);
-//             Q2 = Node 2;} )
-//         else    
-//             Set.empty
+let tf_test4 (x:Powerset1):Powerset1 = 
+        if (x = Set.empty) then
+            Set.empty.Add( {Var1 = Var "Var1";
+            Union1 = Q1 (Node 1);
+            Q2 = Node 2;} )
+        else    
+            Set.empty
 
-let tf_test x = Set.empty
+let tf_test1 (x:Powerset1):Powerset1 = 
+        if (x = Set.empty.Add( {Var1 = Var "Var1";
+            Union1 = Q1 (Node 1);
+            Q2 = Node 2;} )) then
+            Set.empty
+        else    
+            x
 
-let checkMonotonicity (x:Powerset1, y:Powerset1) = (Set.isSubset x y) ==> (lazy (Set.isSubset (tf_test x) (tf_test y)))
-printfn "Checking Monotonicity for Program sized programs in TF_test"
-Check.Quick checkMonotonicity
+let checkMonotonicity1 (x:Powerset1, y:Powerset1) = (Set.isSubset x y)  ==> (lazy (Set.isSubset (tf_test1 x) (tf_test1 y)))
+printfn "Checking Monotonicity for Program sized programs in TF_test1"
+Check.Quick checkMonotonicity1
 
+let tf_test2 x = Set.empty
 
-let check (x, y) = (x>y) ==>  (x>y-1)
-Check.QuickThrowOnFailure check
+let mutable count = 0
+
+let checkMonotonicity2 (x:Powerset1, y:Powerset1) = if (Set.isSubset x y) then (Set.isSubset (tf_test2 x) (tf_test2 y))
+                                                    elif (Set.isSubset y x) then (Set.isSubset (tf_test2 y) (tf_test2 x))
+                                                    else count <- count+1; true
+
+let checkMonotonicity3 (x:Powerset1, y:Powerset1) = (Set.isSubset y x) ==> (lazy (Set.isSubset (tf_test2 y) (tf_test2 x)))
+printfn "Checking Monotonicity for Program sized programs in TF_test2"
+Check.Quick checkMonotonicity2
+Check.Quick checkMonotonicity3
+
+// let check (x, y) = (x>y) ==>  (x>y-1)
+// Check.QuickThrowOnFailure check
+printfn "%i" count

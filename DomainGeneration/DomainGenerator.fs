@@ -16,7 +16,7 @@ let lookAheadDom (ast, p, m, r) =
     match ast with
     | PowersetDom(fSet)                     -> "Powerset"+p.ToString()
     | TotalFunctionSpaceDom(fSet, fDom)     -> "Map"+m.ToString()
-    | CartesianListDom(fListDom)            -> "Record"+r.ToString()
+    | CartesianListDom(fListDom)            -> "ComplexDomain"
     | _                                     -> failwith "Error matching start of domain"
 
 let lookAheadSet (ast, r, v, q, u, l) = 
@@ -30,8 +30,8 @@ let lookAheadSet (ast, r, v, q, u, l) =
 
 let lookAheadDomRecord (ast, p, m, r) =
     match ast with
-    | PowersetDom(fSet)                     -> "Powerset"+p.ToString() + " : " + "Powerset"+p.ToString() + ";"
-    | TotalFunctionSpaceDom(fSet, fDom)     -> "Map"+m.ToString()+ " : " + "Map"+m.ToString() + ";"
+    | PowersetDom(fSet)                     -> "Powerset"+p.ToString() + " * "
+    | TotalFunctionSpaceDom(fSet, fDom)     -> "Map"+m.ToString() + " * "
     | _                                     -> failwith "Error matching start of domain"
 
 let rec evalList (fList, pNum, mNum, rNum, vNum, qNum, uNum, lNum, resultString, prependString) =
@@ -145,8 +145,6 @@ and evalCartListItem (fListSet, pNum, mNum, rNum, vNum, qNum, uNum, lNum, result
                                     prepend = first.result + prependString}
     | _                         -> failwith "Error matching set in evalCartListItem"
 
-
-
 and evalCartListSet (fListSet, pNum, mNum, rNum, vNum, qNum, uNum, lNum, resultString, prependString) =
     match fListSet with
     | []    ->  {result = resultString;
@@ -227,9 +225,9 @@ let evalPowerset (typeNext, pNum, rNum, vNum, qNum, uNum, lNum) =
     | ElemList(fList)                -> (powersetString pNum ("List" +  lNum.ToString()))
     | _                             -> failwith "Error detecting set type at evalPowerset"
 
-let rec evalDomList (fListDom, pNum, mNum, rNum, vNum, qNum, uNum, lNum, resultString, prependString) = 
+let rec evalDomList (fListDom, pNum, mNum, rNum, vNum, qNum, uNum, lNum, (resultString:string), prependString) = 
     match fListDom with
-    | []    -> {result = resultString;
+    | []    -> {result = (resultString.Remove(resultString.Length-2));
                 p = pNum;
                 m = mNum;
                 r = rNum;
@@ -239,7 +237,7 @@ let rec evalDomList (fListDom, pNum, mNum, rNum, vNum, qNum, uNum, lNum, resultS
                 l = lNum;
                 prepend = prependString}
     | a::b  ->  let prev = evalDom (a, pNum, mNum, rNum, vNum, qNum, uNum, lNum, "")
-                evalDomList (b, prev.p, prev.m,  prev.r, prev.v, prev.q, prev.u, prev.l, resultString + "    " + lookAheadDomRecord (a, pNum, mNum, rNum) + "\n", prev.result + prependString)
+                evalDomList (b, prev.p, prev.m,  prev.r, prev.v, prev.q, prev.u, prev.l, resultString + lookAheadDomRecord (a, pNum, mNum, rNum), prev.result + prependString)
 
 and evalDom (ast, pNum, mNum, rNum, vNum, qNum, uNum, lNum, resultString) = 
     match ast with
@@ -265,8 +263,8 @@ and evalDom (ast, pNum, mNum, rNum, vNum, qNum, uNum, lNum, resultString) =
                                                 u = second.u;
                                                 l = second.l;
                                                 prepend = ""}
-    | CartesianListDom(fListDom)            ->  let resDom = evalDomList (fListDom, pNum, mNum, rNum+1, vNum, qNum, uNum, lNum, resultString, "")
-                                                {result = resDom.prepend + "\ntype Record"+rNum.ToString()+" = {\n" + resDom.result + "}\n//This might change into a tuple: lookahead both!\n";
+    | CartesianListDom(fListDom)            ->  let resDom = evalDomList (fListDom, pNum, mNum, rNum, vNum, qNum, uNum, lNum, resultString, "")
+                                                {result = resDom.prepend + "\ntype ComplexDomain"+" = " + resDom.result + "\n";
                                                 p = resDom.p;
                                                 m = resDom.m;
                                                 r = resDom.r;

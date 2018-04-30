@@ -1,16 +1,29 @@
+Done:   Report section written
+        Cartesian domains
+
+Goals: Write report
+Work on Quickchecking
+Report: Define reader
+
+Possibilities: Require |Var| = |Node| -> redefine map generation accordingly
+
 New module:
     graph reversal module
 
-Domain Generation unimplemented:
-    Deal with cartesian in domains "properly" -> tuple
 
+MetaL rework:
+    TFS set vs larger sets: change syntax!
+    
+Get trace function for subset parameter (subset_m subset_m ...)
+Consolidate Folder structure
+    
 Lattice operation notes:
     subset_p (cartesian product of domains) only for 2: otherwise need to save them as (dom, opt(dom)) and last element is None!
     better: susbset_p takes a parameter number which is the size of the cartesian, and acordingly calls for 2,3,4... (finite amount of choices)
     cartesian product of domains also has to be a tuple now (no way of iterating through records properly, unless using some code generation)
 
 Analysis module:
-    write using lattice operations
+    write using lattice operations as parameters union...
     test back/forward, must/may
     
 Examples:
@@ -20,7 +33,8 @@ Examples:
 Manual work:
     Cartesian rework (max 2)
     NOTE: Precedence is highest for domain product! -> no Q -> (P(Q) * P(Q))?
-
+    
 Report:
     Generation of domain
     Latt operation module
+    
