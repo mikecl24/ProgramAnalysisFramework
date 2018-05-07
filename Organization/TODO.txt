@@ -1,15 +1,21 @@
+Next Meeting:
+    indholdfortegnelse
+    extras til at fylde ->
+
+    SSR eksempel
+    Code finish
+    Report
+    Lit revciew: tools conf... 
+        esop acm...
+
 References: 
     iota and init: Lookahead to second type
     TF signatures : Lookahead second type
     subsetOP: subset sequence!
 
-Done:   Report section written
-        Cartesian domains
-
 Grapher rework: Use function defined in report
-Get rid of types, use tuples?
 
-Goals: Write report
+Write report
 Work on Quickchecking
 Report: Define reader
 
@@ -17,7 +23,6 @@ Worklist: Efficient/spec?
 
 New module:
     graph reversal module
-
 
 MetaL rework:
     TFS set vs larger sets: change syntax!
@@ -47,3 +52,6 @@ Report:
     Generation of domain
     Latt operation module
     
+Extension:
+    Extensions -> P( -> )
+              P( P() )
