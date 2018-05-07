@@ -1,18 +1,19 @@
 #r "FsLexYacc.Runtime.dll"          // Load in FsLexYacc dll
-open System
 
 open Microsoft.FSharp.Text.Lexing   // Lexing Library
 open System
+open System.IO                      // File Handling
 
+(*-----------------------------------------------------------------*)
 
 #load "Types.fs"
-open Types                          // Module with all the types
+open Types                          // Module with types
 
-#load "MicroCParser.fs"
-open MicroCParser                   // Generated Parser
+#load "ExtWParser.fs"
+open ExtWParser                   // Generated Parser from .fsp file
 
-#load "MicroCLexer.fs"
-open MicroCLexer                    //Generated Lexer
+#load "ExtWLexer.fs"
+open ExtWLexer                    //Generated Lexer from .fsl file
 
 #load "Parser.fs"                   // Parser Implementation:
 open Parser                         // Program String -> Statement List
@@ -20,17 +21,16 @@ open Parser                         // Program String -> Statement List
 #load "Grapher.fs"                  // Graph Generator:
 open Grapher                        // Statement List -> Program Graph 
 
+(*-----------------------------------------------------------------*)
 
-let programString = "
-x:=1;
-A[1]:=2
-"
+(* File -> Program String *)
+let programString : string = File.ReadAllText("Program.extw")
 
 (* Program String -> Statement List *)
-let stmtList = ParseString programString
+let stmtList : Statement list = ParseString programString
 
 (* Statement List -> Program Graph *)
-let Edges:Edge list = GraphStatements stmtList
+let Edges : Edge list = GraphStatements stmtList
 //printfn "%A" Edges
 
 

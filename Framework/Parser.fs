@@ -9,7 +9,7 @@ let rec reverse inList acc=
 
 let parse input =
     let lexbuf = LexBuffer<char>.FromString input
-    let result = MicroCParser.start MicroCLexer.tokenize lexbuf
+    let result = ExtWParser.start ExtWLexer.tokenize lexbuf
     result
 
 let ParseString inputString =

@@ -1,5 +1,4 @@
 module Analysis
-open System
 
 let getFirstNode (dir : AnalysisDirection) : Node =
     match dir with

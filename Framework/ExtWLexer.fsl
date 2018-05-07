@@ -1,8 +1,8 @@
 ﻿{
-module MicroCLexer
+module ExtWLexer
 
 open System
-open MicroCParser
+open ExtWParser
 open Microsoft.FSharp.Text.Lexing
 open System.Text
 

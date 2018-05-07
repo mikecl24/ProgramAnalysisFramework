@@ -1,14 +1,14 @@
-# 1 ".\MicroCLexer.fsl"
+# 1 ".\ExtWLexer.fsl"
  
-module MicroCLexer
+module ExtWLexer
 
 open System
-open MicroCParser
+open ExtWParser
 open Microsoft.FSharp.Text.Lexing
 open System.Text
 
 
-# 11 ".\MicroCLexer.fs"
+# 11 ".\ExtWLexer.fs"
 let trans : uint16[] array = 
     [| 
     (* State 0 *)
@@ -149,185 +149,185 @@ and tokenize  (lexbuf : Microsoft.FSharp.Text.Lexing.LexBuffer<_>) = _fslex_toke
 and _fslex_tokenize  _fslex_state lexbuf =
   match _fslex_tables.Interpret(_fslex_state,lexbuf) with
   | 0 -> ( 
-# 24 ".\MicroCLexer.fsl"
+# 24 ".\ExtWLexer.fsl"
                                  tokenize lexbuf 
-# 154 ".\MicroCLexer.fs"
+# 154 ".\ExtWLexer.fs"
           )
   | 1 -> ( 
-# 25 ".\MicroCLexer.fsl"
+# 25 ".\ExtWLexer.fsl"
                                  lexbuf.EndPos <- lexbuf.EndPos.NextLine; tokenize lexbuf; 
-# 159 ".\MicroCLexer.fs"
+# 159 ".\ExtWLexer.fs"
           )
   | 2 -> ( 
-# 26 ".\MicroCLexer.fsl"
+# 26 ".\ExtWLexer.fsl"
                           ASSIGN 
-# 164 ".\MicroCLexer.fs"
+# 164 ".\ExtWLexer.fs"
           )
   | 3 -> ( 
-# 27 ".\MicroCLexer.fsl"
+# 27 ".\ExtWLexer.fsl"
                                  SKIP 
-# 169 ".\MicroCLexer.fs"
+# 169 ".\ExtWLexer.fs"
           )
   | 4 -> ( 
-# 28 ".\MicroCLexer.fsl"
+# 28 ".\ExtWLexer.fsl"
                            TRUE 
-# 174 ".\MicroCLexer.fs"
+# 174 ".\ExtWLexer.fs"
           )
   | 5 -> ( 
-# 29 ".\MicroCLexer.fsl"
+# 29 ".\ExtWLexer.fsl"
                             FALSE 
-# 179 ".\MicroCLexer.fs"
+# 179 ".\ExtWLexer.fs"
           )
   | 6 -> ( 
-# 30 ".\MicroCLexer.fsl"
+# 30 ".\ExtWLexer.fsl"
                           IF 
-# 184 ".\MicroCLexer.fs"
+# 184 ".\ExtWLexer.fs"
           )
   | 7 -> ( 
-# 31 ".\MicroCLexer.fsl"
+# 31 ".\ExtWLexer.fsl"
                           FI 
-# 189 ".\MicroCLexer.fs"
+# 189 ".\ExtWLexer.fs"
           )
   | 8 -> ( 
-# 32 ".\MicroCLexer.fsl"
+# 32 ".\ExtWLexer.fsl"
                            THEN 
-# 194 ".\MicroCLexer.fs"
+# 194 ".\ExtWLexer.fs"
           )
   | 9 -> ( 
-# 33 ".\MicroCLexer.fsl"
+# 33 ".\ExtWLexer.fsl"
                            ELSE 
-# 199 ".\MicroCLexer.fs"
+# 199 ".\ExtWLexer.fs"
           )
   | 10 -> ( 
-# 34 ".\MicroCLexer.fsl"
+# 34 ".\ExtWLexer.fsl"
                             WHILE 
-# 204 ".\MicroCLexer.fs"
+# 204 ".\ExtWLexer.fs"
           )
   | 11 -> ( 
-# 35 ".\MicroCLexer.fsl"
+# 35 ".\ExtWLexer.fsl"
                           DO 
-# 209 ".\MicroCLexer.fs"
+# 209 ".\ExtWLexer.fs"
           )
   | 12 -> ( 
-# 36 ".\MicroCLexer.fsl"
+# 36 ".\ExtWLexer.fsl"
                           OD 
-# 214 ".\MicroCLexer.fs"
+# 214 ".\ExtWLexer.fs"
           )
   | 13 -> ( 
-# 37 ".\MicroCLexer.fsl"
+# 37 ".\ExtWLexer.fsl"
                          COMMA 
-# 219 ".\MicroCLexer.fs"
+# 219 ".\ExtWLexer.fs"
           )
   | 14 -> ( 
-# 38 ".\MicroCLexer.fsl"
+# 38 ".\ExtWLexer.fsl"
                                  PLUS 
-# 224 ".\MicroCLexer.fs"
+# 224 ".\ExtWLexer.fs"
           )
   | 15 -> ( 
-# 39 ".\MicroCLexer.fsl"
+# 39 ".\ExtWLexer.fsl"
                                  MULT 
-# 229 ".\MicroCLexer.fs"
+# 229 ".\ExtWLexer.fs"
           )
   | 16 -> ( 
-# 40 ".\MicroCLexer.fsl"
+# 40 ".\ExtWLexer.fsl"
                                  DIV 
-# 234 ".\MicroCLexer.fs"
+# 234 ".\ExtWLexer.fs"
           )
   | 17 -> ( 
-# 41 ".\MicroCLexer.fsl"
+# 41 ".\ExtWLexer.fsl"
                                  MINUS 
-# 239 ".\MicroCLexer.fs"
+# 239 ".\ExtWLexer.fs"
           )
   | 18 -> ( 
-# 42 ".\MicroCLexer.fsl"
+# 42 ".\ExtWLexer.fsl"
                                  AND 
-# 244 ".\MicroCLexer.fs"
+# 244 ".\ExtWLexer.fs"
           )
   | 19 -> ( 
-# 43 ".\MicroCLexer.fsl"
+# 43 ".\ExtWLexer.fsl"
                                  OR 
-# 249 ".\MicroCLexer.fs"
+# 249 ".\ExtWLexer.fs"
           )
   | 20 -> ( 
-# 44 ".\MicroCLexer.fsl"
+# 44 ".\ExtWLexer.fsl"
                                  SAND 
-# 254 ".\MicroCLexer.fs"
+# 254 ".\ExtWLexer.fs"
           )
   | 21 -> ( 
-# 45 ".\MicroCLexer.fsl"
+# 45 ".\ExtWLexer.fsl"
                                  SOR 
-# 259 ".\MicroCLexer.fs"
+# 259 ".\ExtWLexer.fs"
           )
   | 22 -> ( 
-# 46 ".\MicroCLexer.fsl"
+# 46 ".\ExtWLexer.fsl"
                                  NOT 
-# 264 ".\MicroCLexer.fs"
+# 264 ".\ExtWLexer.fs"
           )
   | 23 -> ( 
-# 47 ".\MicroCLexer.fsl"
+# 47 ".\ExtWLexer.fsl"
                                  GT 
-# 269 ".\MicroCLexer.fs"
+# 269 ".\ExtWLexer.fs"
           )
   | 24 -> ( 
-# 48 ".\MicroCLexer.fsl"
+# 48 ".\ExtWLexer.fsl"
                                  GTEQ 
-# 274 ".\MicroCLexer.fs"
+# 274 ".\ExtWLexer.fs"
           )
   | 25 -> ( 
-# 49 ".\MicroCLexer.fsl"
+# 49 ".\ExtWLexer.fsl"
                                  LT 
-# 279 ".\MicroCLexer.fs"
+# 279 ".\ExtWLexer.fs"
           )
   | 26 -> ( 
-# 50 ".\MicroCLexer.fsl"
+# 50 ".\ExtWLexer.fsl"
                                  LTEQ 
-# 284 ".\MicroCLexer.fs"
+# 284 ".\ExtWLexer.fs"
           )
   | 27 -> ( 
-# 51 ".\MicroCLexer.fsl"
+# 51 ".\ExtWLexer.fsl"
                                  EQ 
-# 289 ".\MicroCLexer.fs"
+# 289 ".\ExtWLexer.fs"
           )
   | 28 -> ( 
-# 52 ".\MicroCLexer.fsl"
+# 52 ".\ExtWLexer.fsl"
                                  NEQ 
-# 294 ".\MicroCLexer.fs"
+# 294 ".\ExtWLexer.fs"
           )
   | 29 -> ( 
-# 53 ".\MicroCLexer.fsl"
+# 53 ".\ExtWLexer.fsl"
                                  let str = LexBuffer<_>.LexemeString lexbuf in VAR(str) 
-# 299 ".\MicroCLexer.fs"
+# 299 ".\ExtWLexer.fs"
           )
   | 30 -> ( 
-# 54 ".\MicroCLexer.fsl"
+# 54 ".\ExtWLexer.fsl"
                          NUM(int (LexBuffer<_>.LexemeString lexbuf)) 
-# 304 ".\MicroCLexer.fs"
+# 304 ".\ExtWLexer.fs"
           )
   | 31 -> ( 
-# 55 ".\MicroCLexer.fsl"
+# 55 ".\ExtWLexer.fsl"
                                  LPAR 
-# 309 ".\MicroCLexer.fs"
+# 309 ".\ExtWLexer.fs"
           )
   | 32 -> ( 
-# 56 ".\MicroCLexer.fsl"
+# 56 ".\ExtWLexer.fsl"
                                  RPAR 
-# 314 ".\MicroCLexer.fs"
+# 314 ".\ExtWLexer.fs"
           )
   | 33 -> ( 
-# 57 ".\MicroCLexer.fsl"
+# 57 ".\ExtWLexer.fsl"
                                  LBRA 
-# 319 ".\MicroCLexer.fs"
+# 319 ".\ExtWLexer.fs"
           )
   | 34 -> ( 
-# 58 ".\MicroCLexer.fsl"
+# 58 ".\ExtWLexer.fsl"
                                  RBRA 
-# 324 ".\MicroCLexer.fs"
+# 324 ".\ExtWLexer.fs"
           )
   | 35 -> ( 
-# 59 ".\MicroCLexer.fsl"
+# 59 ".\ExtWLexer.fsl"
                                  EOF 
-# 329 ".\MicroCLexer.fs"
+# 329 ".\ExtWLexer.fs"
           )
   | _ -> failwith "tokenize"
 
-# 3000000 ".\MicroCLexer.fs"
+# 3000000 ".\ExtWLexer.fs"

@@ -12,7 +12,7 @@ cd ..\..\Users\0x18\Documents\F18\Thesis\F#\Parser\
 cd ..\..\Users\0x18\Documents\F18\Thesis\F#\DomainGeneration\
 
 Rebuilding the parser:
-rm MicroC*.fs; rm *.fsi; fslex.exe .\MicroCLexer.fsl --unicode; fsyacc.exe .\MicroCParser.fsp --module MicroCParser;
+rm ExtW*.fs; rm *.fsi; fslex.exe .\ExtWLexer.fsl --unicode; fsyacc.exe .\ExtWParser.fsp --module ExtWParser;
 fsi.exe .\FrameworkTest.fsx
 
 fslex.exe .\MetaLLexer.fsl --unicode; fsyacc.exe .\MetaLParser.fsp --module MetaLParser;
