@@ -3,34 +3,36 @@ Next Meeting:
     extras til at fylde ->
 
     SSR eksempel
+    + eksempler
     Code finish
     Report
     Lit revciew: tools conf... 
         esop acm...
 
-References: 
-    iota and init: Lookahead to second type
-    TF signatures : Lookahead second type
+References:
     subsetOP: subset sequence!
+
+Domain Generation:
+    sigma = first lookup!
+    Traces for functions
+
+MetaL rework:
+    TFS set vs larger sets: change syntax!
+    Easy extensions: P( -> ), P( P() )
+    Cartesian Domain: ext to support max 3 otherwise error
+
+Examples:
+    New RD
+    Signs and SSR analysis
 
 Grapher rework: Use function defined in report
 
-Write report
+Unify QuickChecking and DomainGen Module into Framework
 Work on Quickchecking
 Report: Define reader
 
 Worklist: Efficient/spec?
 
-New module:
-    graph reversal module
-
-MetaL rework:
-    TFS set vs larger sets: change syntax!
-    
-Domain Gen:
-    Get trace function for subset parameter (subset_m subset_m ...)
-Consolidate Folder structure
-    
 Lattice operation notes:
     subset_p (cartesian product of domains) only for 2: otherwise need to save them as (dom, opt(dom)) and last element is None!
     better: susbset_p takes a parameter number which is the size of the cartesian, and acordingly calls for 2,3,4... (finite amount of choices)
@@ -40,18 +42,5 @@ Analysis module:
     write using lattice operations as parameters union...
     test back/forward, must/may
     
-Examples:
-    New RD
-    Signs and SSR analysis
-    
 Manual work:
-    Cartesian rework (max 2)
     NOTE: Precedence is highest for domain product! -> no Q -> (P(Q) * P(Q))?
-    
-Report:
-    Generation of domain
-    Latt operation module
-    
-Extension:
-    Extensions -> P( -> )
-              P( P() )

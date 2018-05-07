@@ -1,3 +1,4 @@
+[<AutoOpen>]
 module DomainParser
 
 let parse input =

@@ -14,22 +14,12 @@ open MetaLParser                    // Generated Parser
 #load "MetaLLexer.fs"
 open MetaLLexer                     //Generated Lexer
 
-#load "DomainParser.fs"
-open DomainParser                   // Domain String -> Domain AST
+#load "DomainParser.fs"             // Domain String -> Domain AST
+#load "consolidateAST.fs"           // Domain AST -> Flattened Domain AST
+#load "DomainGenerator.fs"          // Domain AST -> Code
+#load "CallGenerator.fs"            // Domain AST -> LattOps code
 
-#load "consolidateAST.fs"
-open consolidateAST                 // Domain AST -> Flattened Domain AST
-
-#load "DomainGenerator.fs"
-open DomainGenerator                // Domain AST -> Code
-
-//let DomainString = "P( VAR * [Q U {QM}] * Q )"
-//let DomainString = "P(VAR * {Minus; Plus; Zero})"
-//let DomainString = "VAR -> P({Plus;Minus;Zero})"
-//"VAR -> Q -> P( [Q U [VAR U [{QTes; Other} U {Qs}] ] ] )"
-
-let DomainString = "P( VAR * [Q U {QM}] * Q )"
-//let DomainString =  "P(Q) * P(VAR)"
+let DomainString = File.ReadAllText("Domain.metaL")
 
 // Domain String -> Domain AST
 let domainAST = ParseString (DomainString)
@@ -40,4 +30,7 @@ printfn "%s" (flatDomainAST.ToString())
 let code = evaluateAST flatDomainAST DomainString
 printfn "%s" code
 
-File.WriteAllText("Domain.fs", code)
+let lattOps = getCalls flatDomainAST
+printfn "%s" lattOps
+
+File.WriteAllText("Domain.fs", code + lattOps)

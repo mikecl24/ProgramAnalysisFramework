@@ -1,3 +1,4 @@
+[<AutoOpen>]
 module DomainGenerator
 
 type DomainGenType = {
@@ -36,7 +37,7 @@ let lookAheadDomRecord (ast, p, m, r) =
 
 let rec evalList (fList, pNum, mNum, rNum, vNum, qNum, uNum, lNum, resultString, prependString) =
     match fList with
-    | []    ->  {result = "type List" + lNum.ToString() + " =\n" + resultString + "\n";
+    | []    ->  {result = "\ntype List" + lNum.ToString() + " =\n" + resultString + "\n";
                 p = pNum;
                 m = mNum;
                 r = rNum;
@@ -227,7 +228,7 @@ let evalPowerset (typeNext, pNum, rNum, vNum, qNum, uNum, lNum) =
 
 let rec evalDomList (fListDom, pNum, mNum, rNum, vNum, qNum, uNum, lNum, (resultString:string), prependString) = 
     match fListDom with
-    | []    -> {result = (resultString.Remove(resultString.Length-2));
+    | []    -> {result = (resultString.Remove(resultString.Length-2));  // remove extra asterisk
                 p = pNum;
                 m = mNum;
                 r = rNum;
@@ -276,11 +277,11 @@ and evalDom (ast, pNum, mNum, rNum, vNum, qNum, uNum, lNum, resultString) =
     | _                                     -> failwith "Error matching ast in evalDom"
 
 
-let header = "module Domain\n\n// Generated Code Section: Domain type\n(*\nQ -> "
+let header = "[<AutoOpen>]\nmodule Domain\n\n// Generated Code Section: Domain type\n(*\nQ -> "
 
 
 
 let format (genTypes, textForm, ast) = (header + textForm + "\n*)\n\ntype Node = Node of int\ntype Var = Var of string\n\n" 
-                                        + genTypes + "\ntype AnalysisResult = Map<Node," + (lookAheadDom (ast, 1, 1, 1)) + ">")
+                                        + genTypes + "\ntype sigma = " + (lookAheadDom (ast, 1, 1, 1)) + "\n\ntype AnalysisResult = Map<Node, sigma>\n")
 
 let evaluateAST ast textForm = format ( ((evalDom (ast, 1, 1, 1, 1, 1, 1, 1, "")).result ), textForm, ast )

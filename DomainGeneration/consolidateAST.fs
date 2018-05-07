@@ -1,8 +1,17 @@
+[<AutoOpen>]
 module consolidateAST
+open System.Runtime.InteropServices
 
-let getValueCLS (CartesianListSet v) = v
-let getValueCLD (CartesianListDom v) = v
-let getValueEL (ElemList v) = v
+let getValueCLS (v) = 
+    match v with
+    | CartesianListSet v    ->  v
+    | _                     ->  failwith "Extraction attempt with wrong funciton: CLS"
+
+let getValueCLD (v) = 
+    match v with
+    | CartesianListDom v    ->  v
+    | _                     -> failwith "Extraction attempt with wrong funciton: CLD"
+//let getValueEL (ElemList v) = v
 
 let rec getLast (array : string []) = 
     array.[array.Length - 1]
