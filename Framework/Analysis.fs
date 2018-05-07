@@ -1,63 +1,54 @@
 module Analysis
+open System
 
+let getFirstNode (dir : AnalysisDirection) : Node =
+    match dir with
+    | Forward   ->  Node 0
+    | Backward  ->  Edges.[Edges.Length-1].Q2   //Grapher last edge will always connect to last node (happening naturally or by merge)
 
-let rec initializeSigma nList = 
+let getComparator (op : AnalysisOp) =
+    match op with
+    | LUB   ->  subsetOP
+    | GLB   ->  supersetOP
+
+let getCombinator (op : AnalysisOp) =
+    match op with
+    | LUB   ->  unionOP
+    | GLB   ->  intersectOP
+
+let updateAnalysisResult (p : AnalysisResult, q : AnalysisResult) : AnalysisResult = 
+    Map(Seq.concat [ (Map.toSeq p) ; (Map.toSeq q) ])
+
+let rec initializeSigma (nList : Node list, prevMap : AnalysisResult, node : Node) : AnalysisResult =
     match nList with
-    | [] -> printfn ""
-    | x::xs -> AnalysisResult.Add(x, init);
-               initializeSigma xs
+    | []    ->  prevMap
+    | x::xs ->  if x = node then
+                    initializeSigma (xs, (updateAnalysisResult (prevMap, (Map.empty.Add(x, iota)))), node)
+                else
+                    initializeSigma (xs, (updateAnalysisResult (prevMap, (Map.empty.Add(x, init)))), node)
+   
 
-               
-initializeSigma Nodes
-AnalysisResult.Remove 0
-AnalysisResult.Add(0, iota)
-printfn "Initial analysis state:\n%A\n" (Seq.toList AnalysisResult)
+let rec analysis (worklist : Edge list, edges : Edge list, sigmaMap : AnalysisResult, compOP, combOP) : AnalysisResult = 
+    match worklist with
+    | []        ->  sigmaMap
+    | e1::es    ->  match e1.Type with
+                    | Boolean           ->  if (compOP ((TF_Boolean (sigmaMap.[e1.Q1], e1)), sigmaMap.[e1.Q2])) then 
+                                                analysis (es, edges, sigmaMap, compOP, combOP)
+                                            else
+                                                analysis (edges, edges, (sigmaMap.Add(e1.Q2 ,combOP (((TF_Boolean (sigmaMap.[e1.Q1], e1))), sigmaMap.[e1.Q2]))), compOP, combOP)
+                    | Assignment        ->  if (compOP ((TF_Assignment (sigmaMap.[e1.Q1], e1)), sigmaMap.[e1.Q2])) then 
+                                                analysis (es, edges, sigmaMap, compOP, combOP)
+                                            else
+                                                analysis (edges, edges, (sigmaMap.Add(e1.Q2 ,combOP (((TF_Assignment (sigmaMap.[e1.Q1], e1))), sigmaMap.[e1.Q2]))), compOP, combOP)
+                    | Skip              ->  if (compOP ((TF_Skip (sigmaMap.[e1.Q1], e1)), sigmaMap.[e1.Q2])) then 
+                                                analysis (es, edges, sigmaMap, compOP, combOP)
+                                            else
+                                                analysis (edges, edges, (sigmaMap.Add(e1.Q2 ,combOP (((TF_Skip (sigmaMap.[e1.Q1], e1))), sigmaMap.[e1.Q2]))), compOP, combOP)
+                    | ArrayAssignment   ->  if (compOP ((TF_ArrayAssignment (sigmaMap.[e1.Q1], e1)), sigmaMap.[e1.Q2])) then 
+                                                analysis (es, edges, sigmaMap, compOP, combOP)
+                                            else
+                                                analysis (edges, edges, (sigmaMap.Add(e1.Q2 ,combOP (((TF_ArrayAssignment (sigmaMap.[e1.Q1], e1))), sigmaMap.[e1.Q2]))), compOP, combOP)
 
-let rec genWorklist lEdges oldSet = 
-    match lEdges with
-    | [] -> oldSet
-    | x::xs -> ( genWorklist xs (Set.union oldSet (Set.empty.Add(x))) )
-
-//let worklist = genWorklist [0..Edges.Length-1] Set.empty
-//printfn "Worklist:\n%A\n" worklist
-
-let mutable oldSet = Set.empty
-
-let rec Analysis edgeList Edges = 
-    match edgeList with
-    | [] -> AnalysisResult
-    | edge1::edgeL -> 
-        match edge1.Type with
-        | Boolean -> if Set.isSubset (TF_Boolean AnalysisResult.[edge1.Q1] edge1) AnalysisResult.[edge1.Q2] then 
-                        Analysis edgeL Edges
-                     else
-                        oldSet <- AnalysisResult.[edge1.Q2]
-                        AnalysisResult.Remove edge1.Q2
-                        AnalysisResult.Add(edge1.Q2, (Set.union oldSet (TF_Boolean AnalysisResult.[edge1.Q1] edge1)))
-                        Analysis Edges Edges
-        
-        | Assignment -> if Set.isSubset (TF_Assignment (AnalysisResult.Item(edge1.Q1)) edge1) AnalysisResult.[edge1.Q2] then  
-                            Analysis edgeL Edges
-                        else
-                            oldSet <- AnalysisResult.[edge1.Q2]
-                            AnalysisResult.Remove edge1.Q2
-                            AnalysisResult.Add(edge1.Q2, (Set.union oldSet (TF_Assignment AnalysisResult.[edge1.Q1] edge1)))
-                            Analysis Edges Edges
-                            
-        | Skip -> if Set.isSubset (TF_Skip AnalysisResult.[edge1.Q1] edge1) AnalysisResult.[edge1.Q2] then
-                    Analysis edgeL Edges
-                  else
-                    oldSet <- AnalysisResult.[edge1.Q2]
-                    AnalysisResult.Remove edge1.Q2
-                    AnalysisResult.Add(edge1.Q2, (Set.union oldSet (TF_Skip AnalysisResult.[edge1.Q1] edge1)))
-                    Analysis Edges Edges
-        
-        | ArrayAssignment -> if Set.isSubset (TF_ArrayAssignment AnalysisResult.[edge1.Q1] edge1) AnalysisResult.[edge1.Q2] then
-                                 Analysis edgeL Edges
-                             else
-                                 oldSet <- AnalysisResult.[edge1.Q2]
-                                 AnalysisResult.Remove edge1.Q2
-                                 AnalysisResult.Add(edge1.Q2, (Set.union oldSet (TF_ArrayAssignment AnalysisResult.[edge1.Q1] edge1)))
-                                 Analysis Edges Edges
- 
-let AnalyseEdges Edges = Analysis Edges Edges
+let AnalyseEdges ( edgesList: Edge list) : AnalysisResult = 
+    let start = initializeSigma (Nodes, (Map.empty), (getFirstNode direction))
+    in analysis (Edges, Edges, start, (getComparator operation), (getCombinator operation))
