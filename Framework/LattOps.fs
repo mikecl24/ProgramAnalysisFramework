@@ -1,3 +1,4 @@
+[<AutoOpen>]
 module LatticeOperations
 
 let subset_pw (dom1, dom2) = Set.isSubset dom1 dom2

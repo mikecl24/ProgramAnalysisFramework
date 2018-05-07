@@ -1,3 +1,4 @@
+[<AutoOpen>]
 module Parser
 
 // Reorders the list of edges by creation order

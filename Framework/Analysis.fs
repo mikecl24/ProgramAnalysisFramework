@@ -1,4 +1,22 @@
+[<AutoOpen>]
 module Analysis
+open System.Runtime.CompilerServices
+
+let reverseEdge (e : Edge) : Edge = 
+    {Q1 = e.Q2;
+    Q2 = e.Q1;
+    Action = e.Action;
+    Type = e.Type}
+
+let rec reverseEdges (old : Edge list) : Edge list = 
+    match old with
+    | []    ->  []
+    | a::b  ->  [reverseEdge a] @ reverseEdges b
+
+let getAnalysisEdges (edgesList : Edge list, direction : AnalysisDirection) : Edge list = 
+    match direction with
+    | Forward   ->  edgesList
+    | Backward  ->  reverseEdges edgesList
 
 let getFirstNode (dir : AnalysisDirection) : Node =
     match dir with
@@ -48,6 +66,7 @@ let rec analysis (worklist : Edge list, edges : Edge list, sigmaMap : AnalysisRe
                                             else
                                                 analysis (edges, edges, (sigmaMap.Add(e1.Q2 ,combOP (((TF_ArrayAssignment (sigmaMap.[e1.Q1], e1))), sigmaMap.[e1.Q2]))), compOP, combOP)
 
-let AnalyseEdges ( edgesList: Edge list) : AnalysisResult = 
+let AnalyseEdges (edgesList: Edge list) : AnalysisResult = 
     let start = initializeSigma (Nodes, (Map.empty), (getFirstNode direction))
-    in analysis (Edges, Edges, start, (getComparator operation), (getCombinator operation))
+    let edges = getAnalysisEdges (edgesList, direction)
+    in analysis (edges, edges, start, (getComparator operation), (getCombinator operation))

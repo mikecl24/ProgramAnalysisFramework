@@ -1,26 +1,26 @@
-#r "FsLexYacc.Runtime.dll"          // Load in FsLexYacc dll
-
-open Microsoft.FSharp.Text.Lexing   // Lexing Library
-open System
-open System.IO                      // File Handling
-
+(*-----------------------------------------------------------------*)
+(*-----------------------------IMPORTS-----------------------------*)
 (*-----------------------------------------------------------------*)
 
-#load "Types.fs"
-open Types                          // Module with types
+#r "FsLexYacc.Runtime.dll"          // Load in FsLexYacc dll
+
+//open System
+open Microsoft.FSharp.Text.Lexing   // Lexing Library
+open System.IO                      // File Handling
+
+#load "Types.fs"                    // Module with types
 
 #load "ExtWParser.fs"
-open ExtWParser                   // Generated Parser from .fsp file
+open ExtWParser                     // Generated Parser from .fsp file
 
 #load "ExtWLexer.fs"
-open ExtWLexer                    //Generated Lexer from .fsl file
+open ExtWLexer                      //Generated Lexer from .fsl file
 
-#load "Parser.fs"                   // Parser Implementation:
-open Parser                         // Program String -> Statement List
+#load "Parser.fs"                   // Program String -> Statement List
+#load "Grapher.fs"                  // Statement List -> Program Graph 
 
-#load "Grapher.fs"                  // Graph Generator:
-open Grapher                        // Statement List -> Program Graph 
-
+(*-----------------------------------------------------------------*)
+(*-------------------CODE-PRE-PROCESSING-MODULE--------------------*)
 (*-----------------------------------------------------------------*)
 
 (* File -> Program String *)
@@ -42,33 +42,45 @@ let Nodes : Node list = ExtractNodes Edges
 let Variables : Var list = uniqueVars vartemp
 // printfn "%A" Variables
 
+(*-----------------------------------------------------------------*)
+(*------------------------EXT-DOMAIN-CHECK-------------------------*)
+(*-----------------------------------------------------------------*)
+
 // MetaL Parser -> Generate Domain
 // Quickchecking domain?
 
-#load "LattOps.fs"                   // Lattice Operation functions
-open LatticeOperations               // Union, Intersection, Subset, Superset
+(*-----------------------------------------------------------------*)
+(*--------------------------DOMAIN-MODULE--------------------------*)
+(*-----------------------------------------------------------------*)
 
-#load "Domain.fs"                   // Domain Specification Generated code
-open Domain                         // Q -> Domain variable + types
+// Pass stuff from DomainGenerator Folder here, and call
 
+#load "LattOps.fs"                   // Lattice Opreations: Union, Intersection, Subset, Superset
+#load "Domain.fs"                   // Domain Specification: Generated code and call traces for LattOps
 
-// Pause
-// TF class generation
+(*-----------------------------------------------------------------*)
+(*---------------------TRANSFER-FUNCTION-MODULE--------------------*)
+(*-----------------------------------------------------------------*)
 
-#load "TransferFunctions2.fs"        // Transfer Function Specification
-open TransferFunctions              // iota, init
+#load "TransferFunctions.fs"        // Transfer Function Specification + 
+                                    // Direction, combination op, iota, init
 
+(*                          QuickChecking                          *)
+//insert QuickChecking folder stuff here
 
-// QuickChecking Module
-(**)
-#load "Analysis.fs"                 // Analysis Implementation:
-open Analysis                       // Program Graph -> Analysis Result
+(*-----------------------------------------------------------------*)
+(*-------------------------ANALYSIS-MODULE-------------------------*)
+(*-----------------------------------------------------------------*)
 
-
+#load "Analysis.fs"                 // Program Graph -> Analysis Result
 
 // Program Graph -> Analysis Result
-let Analysis : AnalysisResult = AnalyseEdges Edges // union/intersection function, sub/super -seteq function
+let Analysis : AnalysisResult = AnalyseEdges Edges // union/intersection function, sub/super -seteq function as parameters
 
+
+(*-----------------------------------------------------------------*)
+(*-----------------------------RESULTS-----------------------------*)
+(*-----------------------------------------------------------------*)
 
 let format text (chars:string) =
     Array.fold (
@@ -77,5 +89,3 @@ let format text (chars:string) =
 
 printfn "RESULT:"
 Analysis |> Seq.iter (fun x -> (printfn "%A\t->\t%s" x.Key (format (x.Value.ToString()) "\n")); printfn "\n")
-//printfn "%A" (Seq.toList (Analysis))
-//printfn "%A" Analysis.[3]

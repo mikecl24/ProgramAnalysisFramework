@@ -1,3 +1,4 @@
+[<AutoOpen>]
 module Domain
 
 // Generated Code Section: Domain type
@@ -22,7 +23,9 @@ type Record1 = {
 
 type Powerset1 = Record1 Set
 
-type AnalysisResult = Map<Node,Powerset1>
+type sigma = Powerset1
+
+type AnalysisResult = Map<Node,sigma>
 
 let subsetOP = subset_pw
 let supersetOP = superset_pw

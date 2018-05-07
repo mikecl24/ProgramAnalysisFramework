@@ -1,7 +1,10 @@
+[<AutoOpen>]
 module Grapher
 
+open Types
+
 // Corrects the Edge nodes: Replace a node with another (merge)
-let rec correctEdges listEd before after =
+let rec correctEdges (listEd : Edge list) before after =
     match listEd with
     | [] -> []
     | x::xs when x.Q1=before -> [{Q1 = after; Q2 = x.Q2; Action = x.Action; Type = x.Type}] @ (correctEdges xs before after)

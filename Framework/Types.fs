@@ -1,5 +1,7 @@
+[<AutoOpen>]
 module Types
 
+(* Analysis Program Meta Types*)
 type Node = Node of int
 type Var = Var of string
 
