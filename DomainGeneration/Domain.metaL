@@ -1,1 +1,1 @@
-P(Q)
+P(VAR * [Q U {QM}] * Q)

@@ -30,7 +30,7 @@ printfn "%s" (flatDomainAST.ToString())
 let code = evaluateAST flatDomainAST DomainString
 printfn "%s" code
 
-let lattOps = getCalls flatDomainAST
+let lattOps = evaluateASTCalls flatDomainAST
 printfn "%s" lattOps
 
 File.WriteAllText("Domain.fs", code + lattOps)

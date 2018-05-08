@@ -3,8 +3,9 @@ module Domain
 
 // Generated Code Section: Domain type
 (*
-Q -> P( VAR * [Q U {QM}] * Q )
+Q -> P(VAR * [Q U {QM}] * Q)
 *)
+
 
 type List1 =
     | QM
@@ -25,8 +26,7 @@ type Powerset1 = Record1 Set
 
 type sigma = Powerset1
 
-type AnalysisResult = Map<Node,sigma>
-
+type AnalysisResult = Map<Node, sigma>
 let subsetOP = subset_pw
 let supersetOP = superset_pw
 let unionOP = union_pw

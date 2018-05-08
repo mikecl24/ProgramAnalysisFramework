@@ -281,7 +281,7 @@ let header = "[<AutoOpen>]\nmodule Domain\n\n// Generated Code Section: Domain t
 
 
 
-let format (genTypes, textForm, ast) = (header + textForm + "\n*)\n\ntype Node = Node of int\ntype Var = Var of string\n\n" 
+let format (genTypes, textForm, ast) = (header + textForm + "\n*)\n\n" 
                                         + genTypes + "\ntype sigma = " + (lookAheadDom (ast, 1, 1, 1)) + "\n\ntype AnalysisResult = Map<Node, sigma>\n")
 
 let evaluateAST ast textForm = format ( ((evalDom (ast, 1, 1, 1, 1, 1, 1, 1, "")).result ), textForm, ast )
