@@ -13,7 +13,7 @@ let parse input =
     let result = ExtWParser.start ExtWLexer.tokenize lexbuf
     result
 
-let ParseString inputString =
+let ParseString inputString : Statement list =
     try
     parse inputString 
     with e -> failwith "Error parsing program: Invalid code input"

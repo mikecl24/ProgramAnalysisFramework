@@ -32,7 +32,6 @@ let rec subset_p3 (subset_n1, subset_n2, subset_n3) (dom1, dom2) =
     else
         true
 
-subset_p3 (subset_pw, subset_pw, subset_pw) ( (Set.empty, Set.empty.Add(1).Add(2), Set.empty.Add(1,2)) , (Set.empty, Set.empty.Add(1), Set.empty.Add(1,2)))
 
 let superset_pw (dom1, dom2) =  Set.isSuperset dom1 dom2
 

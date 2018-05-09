@@ -9,6 +9,7 @@ Next Meeting:
         esop acm...
 
 Note: Split Variables and Arrays!, add to MetaL
+Improve outputs?
 
 MetaL rework:
     TFS set vs larger sets: change syntax!

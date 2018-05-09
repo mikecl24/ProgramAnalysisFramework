@@ -73,7 +73,7 @@ open MetaLLexer                     //Generated Lexer
 let DomainString = File.ReadAllText("Domain.metaL")
 
 // String -> Domain AST
-let domainAST = ParseString (DomainString)
+let domainAST = ParseStringDom (DomainString)
 
 // Domain AST -> flattened Domain AST
 let flatDomainAST : domain = reduceDom (domainAST)
@@ -92,6 +92,8 @@ File.WriteAllText("Domain.fs", code + lattOps)
 #load "LattOps.fs"                      // Lattice Opreations: Union, Intersection, Subset, Superset
 #load "Domain.fs"                       // Domain Specification: Generated code and call traces for LattOps
 
+printfn "Domain Generation Done"
+
 (*-----------------------------------------------------------------*)
 (*---------------------TRANSFER-FUNCTION-MODULE--------------------*)
 (*-----------------------------------------------------------------*)
@@ -101,6 +103,8 @@ File.WriteAllText("Domain.fs", code + lattOps)
 
 (*                          QuickChecking                          *)
 //insert QuickChecking folder stuff here
+
+printfn "Transfer Function Done"
 
 (*-----------------------------------------------------------------*)
 (*-------------------------ANALYSIS-MODULE-------------------------*)
@@ -121,5 +125,5 @@ let format text (chars:string) =
         fun (s:string) c -> s.Replace(c.ToString(),"").Replace("};", "};\n\t\t")
     ) text (chars.ToCharArray())
 
-printfn "RESULT:"
+printfn "Analysis Done\n\n"
 Analysis |> Seq.iter (fun x -> (printfn "%A\t->\t%s" x.Key (format (x.Value.ToString()) "\n")); printfn "\n")

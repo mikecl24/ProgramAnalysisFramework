@@ -6,7 +6,7 @@ let parse input =
     let result = MetaLParser.start MetaLLexer.tokenize lexbuf
     result
 
-let ParseString inputString =
+let ParseStringDom inputString =
     try
     parse inputString 
     with e -> failwith "Error parsing domain: Invalid domain input"
