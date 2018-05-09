@@ -9,7 +9,7 @@ open System
 open System.Collections.Generic
 open Types
 let mutable vartemp = new List<Var>()
-let mutable arrtemp = new List<Var>()
+let mutable arrtemp = new List<Arr>()
 
 # 14 ".\ExtWParser.fs"
 // This type is the type of tokens accepted by the parser
@@ -386,7 +386,7 @@ let _fsyacc_reductions ()  =    [|
                 (
                    (
 # 37 ".\ExtWParser.fsp"
-                                                               arrtemp.Add(Var _1); [{commandAST = ArrAssignCommand(Var(_1), _3, _6); s_type = S_ArrAssignment}] 
+                                                               arrtemp.Add(Arr _1); [{commandAST = ArrAssignCommand(Arr(_1), _3, _6); s_type = S_ArrAssignment}] 
                    )
 # 37 ".\ExtWParser.fsp"
                  : 'command));
@@ -409,7 +409,7 @@ let _fsyacc_reductions ()  =    [|
                 (
                    (
 # 41 ".\ExtWParser.fsp"
-                                                               arrtemp.Add(Var _1); ArrExpr(Var _1, _3) 
+                                                               arrtemp.Add(Arr _1); ArrExpr(Arr _1, _3) 
                    )
 # 41 ".\ExtWParser.fsp"
                  : 'aexp));

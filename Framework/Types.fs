@@ -4,6 +4,7 @@ module Types
 (* Analysis Program Meta Types*)
 type Node = Node of int
 type Var = Var of string
+type Arr = Arr of string
 
 type AnalysisDirection =
     | Forward
@@ -26,7 +27,7 @@ type StatementType =
 type aexp = 
     | VarExpr of Var
     | NumExpr of int
-    | ArrExpr of Var * aexp
+    | ArrExpr of Arr * aexp
     | SumExpr of aexp * aexp
     | MinExpr of aexp * aexp
     | MultExpr of aexp * aexp
@@ -52,7 +53,7 @@ type command =
     | SkipCommand
     | BoolCommand of bexp
     | AssignCommand of Var * aexp
-    | ArrAssignCommand of Var * aexp * aexp
+    | ArrAssignCommand of Arr * aexp * aexp
 
 type Statement =
     { commandAST : command;

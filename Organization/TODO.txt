@@ -8,11 +8,16 @@ Next Meeting:
     Lit revciew: tools conf... 
         esop acm...
 
-Note: Split Variables and Arrays!, add to MetaL
+Done:
+    Integration
+    Var -> Var and Arr
+
+
 Improve outputs?
 
 MetaL rework:
-    TFS set vs larger sets: change syntax!
+    Add ARR
+    TFS set vs larger sets: change syntax! -> Prevent VAR U ARR !!!
     Easy extensions: P( -> ), P( P() )
     Cartesian Domain: Possible extension to 4/5/6... domains
 

@@ -41,7 +41,7 @@ let Nodes : Node list = ExtractNodes Edges
 
 (* Variable list from Grapher *)
 let Variables : Var list = uniqueVars vartemp
-let Arrays : Var list = uniqueVars arrtemp
+let Arrays : Arr list = uniqueVars arrtemp
 // printfn "%A" Variables
 // printfn "%A" Arrays
 

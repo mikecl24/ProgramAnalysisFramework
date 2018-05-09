@@ -11,6 +11,7 @@ type set =
   | CartesianListSet of set list
   | QSet
   | VARSet
+  | ARRSet
   | UnionSet of (set*set)
   | ListSet of elemlist
   | ElemList of string list

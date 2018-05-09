@@ -23,6 +23,7 @@ rule tokenize = parse
 | "->"          { TFS }
 | "*"           { CART }
 | "VAR"         { VARSET }
+| "ARR"         { ARRSET }
 | "Q"           { QSET }
 | '['           { LSQ }
 | ']'           { RSQ }

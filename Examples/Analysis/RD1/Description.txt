@@ -1,1 +1,1 @@
-Spec for RD when ARR is a subset of VAR
+Spec for RD when ARR is force to be VARS (simpler domain, but complicates TF)
