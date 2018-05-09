@@ -42,6 +42,8 @@ let Nodes : Node list = ExtractNodes Edges
 let Variables : Var list = uniqueVars vartemp
 // printfn "%A" Variables
 
+printfn "Code Pre-processing Done"
+
 (*-----------------------------------------------------------------*)
 (*------------------------EXT-DOMAIN-CHECK-------------------------*)
 (*-----------------------------------------------------------------*)
@@ -53,10 +55,42 @@ let Variables : Var list = uniqueVars vartemp
 (*--------------------------DOMAIN-MODULE--------------------------*)
 (*-----------------------------------------------------------------*)
 
-// Pass stuff from DomainGenerator Folder here, and call
+(*                             imports                             *)
 
-#load "LattOps.fs"                   // Lattice Opreations: Union, Intersection, Subset, Superset
-#load "Domain.fs"                   // Domain Specification: Generated code and call traces for LattOps
+#load "DomainTypes.fs"              // Types: AST
+
+#load "MetaLParser.fs"
+open MetaLParser                    // Generated Parser
+#load "MetaLLexer.fs"
+open MetaLLexer                     //Generated Lexer
+
+#load "DomainParser.fs"             // Domain String -> Domain AST
+#load "consolidateAST.fs"           // Domain AST -> Flattened Domain AST
+#load "DomainGenerator.fs"          // Domain AST -> Code
+#load "CallGenerator.fs"            // Domain AST -> LattOps code
+
+// File -> String
+let DomainString = File.ReadAllText("Domain.metaL")
+
+// String -> Domain AST
+let domainAST = ParseString (DomainString)
+
+// Domain AST -> flattened Domain AST
+let flatDomainAST : domain = reduceDom (domainAST)
+//printfn "%s" (flatDomainAST.ToString())
+
+// flattened Domain AST -> Types
+let code = evaluateAST flatDomainAST DomainString
+//printfn "%s" code
+
+// flattened Domain AST -> Lattice Operations
+let lattOps = evaluateASTCalls flatDomainAST
+//printfn "%s" lattOps
+
+File.WriteAllText("Domain.fs", code + lattOps)
+
+#load "LattOps.fs"                      // Lattice Opreations: Union, Intersection, Subset, Superset
+#load "Domain.fs"                       // Domain Specification: Generated code and call traces for LattOps
 
 (*-----------------------------------------------------------------*)
 (*---------------------TRANSFER-FUNCTION-MODULE--------------------*)
