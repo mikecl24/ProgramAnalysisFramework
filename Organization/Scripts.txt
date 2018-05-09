@@ -1,9 +1,3 @@
-Intalling FsLexYacc:
-Left click solution -> Manage NuGet Packages
-Browse -> FsLexYacc -> Install
-use in cmd from package
-
-
 Adding enviroment paths:
 $env:Path += ";C:\Users\0x18\Documents\Visual Studio 2017\Projects\Parser\packages\FsLexYacc.7.0.6\build"
 $env:Path += ";C:\Program Files (x86)\Microsoft SDKs\F#\10.1\Framework\v4.0"
@@ -16,7 +10,6 @@ rm ExtW*.fs; rm *.fsi; fslex.exe .\ExtWLexer.fsl --unicode; fsyacc.exe .\ExtWPar
 fsi.exe .\FrameworkTest.fsx
 
 fslex.exe .\MetaLLexer.fsl --unicode; fsyacc.exe .\MetaLParser.fsp --module MetaLParser;
-fsi.exe .\DomainGenTest.fsx
 
 Git VC:
 git add *

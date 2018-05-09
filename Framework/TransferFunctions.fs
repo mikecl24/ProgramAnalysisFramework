@@ -13,7 +13,7 @@ let direction : AnalysisDirection = Forward
 // Combination operator
 let operation : AnalysisOp = LUB
 // Iota
-let iota : sigma = genIota (Variables, Set.empty)
+let iota : sigma = genIota (Variables@Arrays, Set.empty)
 //printfn "Iota:\n%A\n" (Seq.toList iota)
 // Init
 let init : sigma = Set.empty

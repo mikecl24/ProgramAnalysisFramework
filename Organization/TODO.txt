@@ -22,20 +22,18 @@ Examples:
 
 Grapher rework: Use function defined in report
 
-Unify QuickChecking and DomainGen Module into Framework
+Unify QuickChecking into Framework
 Work on Quickchecking
 Report: Define reader
 
 Worklist: Efficient/spec?
-
-Lattice operation notes:
-    subset_pN!
+ 
 
 Analysis module:
     write using lattice operations as parameters union...
-    test back/forward, must/may
     
 Manual work:
     NOTE: Precedence is highest for domain product! -> no Q -> (P(Q) * P(Q))?
+    subset_pN
 
 Improvements: Find underlying equal structures, and reuse types
