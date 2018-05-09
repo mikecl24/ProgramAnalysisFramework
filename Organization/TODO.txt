@@ -1,18 +1,19 @@
 Next Meeting:
-    indholdfortegnelse
-    extras til at fylde ->
+    indholdfortegnelse -> Done
 
-    SSR eksempel
     + eksempler
-    Code finish
+    SSR eksempel
+    Code finish -> Merge sections
     Report
     Lit revciew: tools conf... 
         esop acm...
 
+Note: Split Variables and Arrays!, add to MetaL
+
 MetaL rework:
     TFS set vs larger sets: change syntax!
     Easy extensions: P( -> ), P( P() )
-    Cartesian Domain: ext to support max 3 otherwise error
+    Cartesian Domain: Possible extension to 4/5/6... domains
 
 Examples:
     New RD
@@ -35,3 +36,5 @@ Analysis module:
     
 Manual work:
     NOTE: Precedence is highest for domain product! -> no Q -> (P(Q) * P(Q))?
+
+Improvements: Find underlying equal structures, and reuse types
