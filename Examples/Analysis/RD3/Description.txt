@@ -1,0 +1,4 @@
+P(VAR * [Q U {QM1}] * Q) * P(ARR * [Q U {QM2}] * Q)
+
+Problem with same label elements, gets inferred to be in first list! (either have to say List2.QM or unique names)
+Reusing parts could be nice :)

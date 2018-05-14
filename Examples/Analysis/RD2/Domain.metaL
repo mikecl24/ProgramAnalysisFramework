@@ -1,0 +1,1 @@
+P([VAR U ARR] * [Q U {QM}] * Q)

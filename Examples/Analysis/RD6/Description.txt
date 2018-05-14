@@ -1,0 +1,3 @@
+[VAR U ARR] -> P([Q * Q U {QM}])
+
+Single map with complex map set

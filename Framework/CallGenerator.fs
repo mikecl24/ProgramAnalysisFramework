@@ -9,10 +9,10 @@ let trd4 (a, b, c, d) = c
 let frt4 (a, b, c, d) = d
 
 let format (sub, sup, uni, inter) = 
-    "let subsetOP = " + sub + "\n" +
-    "let supersetOP = " + sup + "\n" +
-    "let unionOP = " + uni + "\n" +
-    "let intersectOP = " + inter + "\n"
+    "let subsetOP x = " + sub + " x \n" +
+    "let supersetOP x = " + sup + " x \n" +
+    "let unionOP x = " + uni + " x \n" +
+    "let intersectOP x = " + inter + " x \n"
 let rec getCalls dom = 
     match dom with
     | PowersetDom(fSet)                 ->  ("subset_pw", "superset_pw", "union_pw", "intersect_pw")

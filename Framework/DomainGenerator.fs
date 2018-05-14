@@ -270,7 +270,7 @@ let evalPowerset (typeNext, pNum, rNum, vNum, qNum, uNum, lNum, aNum) =
     | CartesianListSet(fListSet)    -> (powersetString pNum ("Record" +  rNum.ToString()))
     | QSet                          -> (powersetString pNum ("Node"))
     | VARSet                        -> (powersetString pNum ("Var"))
-    | VARSet                        -> (powersetString pNum ("Arr"))
+    | ARRSet                        -> (powersetString pNum ("Arr"))
     | UnionSet(fSet1, fSet2)        -> (powersetString pNum ("Union" +  uNum.ToString()))
     | ElemList(fList)                -> (powersetString pNum ("List" +  lNum.ToString()))
     | _                             -> failwith "Error detecting set type at evalPowerset"

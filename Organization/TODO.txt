@@ -1,7 +1,7 @@
 Next Meeting:
     indholdfortegnelse -> Done
 
-    + eksempler
+    + analyse eksempler: How indepth to document?
     SSR eksempel
     Code finish -> Merge sections
     Report
@@ -12,18 +12,22 @@ Done:
     Integration
     Var -> Var and Arr
 
-
+Merge QCheck
 Improve outputs?
 
 MetaL rework:
     Add ARR
-    TFS set vs larger sets: change syntax! -> Prevent VAR U ARR !!!
+    TFS set vs larger sets: change syntax! -> Prevent VAR U ARR !, add this to grammar too?
     Easy extensions: P( -> ), P( P() )
     Cartesian Domain: Possible extension to 4/5/6... domains
+    Reuse alreade made parts? as seen in example RD3, or require universaly unique labels
 
-Examples:
+Examples analysis:
     New RD
     Signs and SSR analysis
+
+Examples code:
+    Code using arrays (array sum?)
 
 Grapher rework: Use function defined in report
 

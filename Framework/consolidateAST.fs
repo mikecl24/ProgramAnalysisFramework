@@ -31,6 +31,7 @@ let rec toCartSet ast =
                                                 | _                     -> CartesianListSet([toCartSet fSet1] @ [toCartSet fSet2]) 
     | QSet                                  -> QSet
     | VARSet                                -> VARSet
+    | ARRSet                                -> ARRSet
     | UnionSet(fSet1, fSet2)                -> UnionSet(toCartSet fSet1, toCartSet fSet2) 
     | ListSet(fList)                        -> ElemList(toListList fList)
     | _                                     -> failwith "Already mutated AST"

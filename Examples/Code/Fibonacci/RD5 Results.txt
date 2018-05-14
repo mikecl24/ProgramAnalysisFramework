@@ -1,0 +1,88 @@
+Node 0   ->
+(map [(Var "x", set [List1 QM1]); (Var "y", set [List1 QM1])], map [])
+
+
+Node 1   ->
+(map [(Var "x", set [Record1 {Q1 = Node 1;
+                              Q2 = Node 0;}]); (Var "y", set [List1 QM1])],
+ map [])
+
+
+Node 2   ->
+(map
+   [(Var "x", set [Record1 {Q1 = Node 1;
+                            Q2 = Node 0;}]);
+    (Var "y", set [Record1 {Q1 = Node 2;
+                            Q2 = Node 1;}])], map [])
+
+
+Node 3   ->
+(map
+   [(Var "x", set [Record1 {Q1 = Node 1;
+                            Q2 = Node 0;}]);
+    (Var "y", set [Record1 {Q1 = Node 2;
+                            Q2 = Node 1;}])], map [])
+
+
+Node 4   ->
+(map
+   [(Var "x", set [Record1 {Q1 = Node 1;
+                            Q2 = Node 0;}; Record1 {Q1 = Node 5;
+                                                    Q2 = Node 8;}]);
+    (Var "y",
+     set
+       [Record1 {Q1 = Node 2;
+                 Q2 = Node 1;}; Record1 {Q1 = Node 4;
+                                         Q2 = Node 3;}; Record1 {Q1 = Node 8;
+                                                                 Q2 = Node 9;}])],
+ map [])
+
+
+Node 5   ->
+(map
+   [(Var "x", set [Record1 {Q1 = Node 1;
+                            Q2 = Node 0;}; Record1 {Q1 = Node 5;
+                                                    Q2 = Node 8;}]);
+    (Var "y", set [Record1 {Q1 = Node 2;
+                            Q2 = Node 1;}; Record1 {Q1 = Node 8;
+                                                    Q2 = Node 9;}])], map [])
+
+
+Node 6   ->
+(map
+   [(Var "x", set [Record1 {Q1 = Node 1;
+                            Q2 = Node 0;}; Record1 {Q1 = Node 5;
+                                                    Q2 = Node 8;}]);
+    (Var "y", set [Record1 {Q1 = Node 2;
+                            Q2 = Node 1;}; Record1 {Q1 = Node 8;
+                                                    Q2 = Node 9;}])], map [])
+
+
+Node 7   ->
+(map
+   [(Var "x", set [Record1 {Q1 = Node 1;
+                            Q2 = Node 0;}; Record1 {Q1 = Node 5;
+                                                    Q2 = Node 8;}]);
+    (Var "y", set [Record1 {Q1 = Node 2;
+                            Q2 = Node 1;}; Record1 {Q1 = Node 8;
+                                                    Q2 = Node 9;}])], map [])
+
+
+Node 8   ->
+(map
+   [(Var "x", set [Record1 {Q1 = Node 1;
+                            Q2 = Node 0;}; Record1 {Q1 = Node 5;
+                                                    Q2 = Node 8;}]);
+    (Var "y", set [Record1 {Q1 = Node 2;
+                            Q2 = Node 1;}; Record1 {Q1 = Node 8;
+                                                    Q2 = Node 9;}])], map [])
+
+
+Node 9   ->
+(map
+   [(Var "x", set [Record1 {Q1 = Node 1;
+                            Q2 = Node 0;}; Record1 {Q1 = Node 5;
+                                                    Q2 = Node 8;}]);
+    (Var "y", set [Record1 {Q1 = Node 2;
+                            Q2 = Node 1;}; Record1 {Q1 = Node 8;
+                                                    Q2 = Node 9;}])], map [])

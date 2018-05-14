@@ -1,0 +1,1 @@
+VAR -> P([Q * Q U {QM1}]) * ARR -> P([Q * Q U {QM2}])

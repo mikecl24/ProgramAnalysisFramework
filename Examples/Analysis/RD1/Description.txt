@@ -1,1 +1,3 @@
-Spec for RD when ARR is force to be VARS (simpler domain, but complicates TF)
+P(VAR * [Q U {QM}] * Q)
+
+Spec for RD when ARR is forced to be VARS (simpler domain, but complicates TF)

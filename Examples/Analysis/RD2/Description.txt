@@ -1,0 +1,4 @@
+P([VAR U ARR] * [Q U {QM}] * Q)
+
+Spec for RD when first term is a union.
+Slightly more verbose because of union, but clear when its an array or variable
