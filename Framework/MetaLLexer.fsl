@@ -9,10 +9,11 @@ open System.Text
 }
 
 let char        = ['a'-'z' 'A'-'Z']
+let upper       = ['A'-'Z']
 let digit       = ['0'-'9']
 let whitespace  = [' ' '\t']
 let newline     = "\n\r" | '\n' | '\r'
-let name        = (char|digit|'_')*
+let name        = upper (char|digit|'_')*
 
 rule tokenize = parse
 | whitespace    { tokenize lexbuf }

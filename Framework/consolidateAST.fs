@@ -34,6 +34,8 @@ let rec toCartSet ast =
     | ARRSet                                -> ARRSet
     | UnionSet(fSet1, fSet2)                -> UnionSet(toCartSet fSet1, toCartSet fSet2) 
     | ListSet(fList)                        -> ElemList(toListList fList)
+    | PowersetSet(fSet)                     -> PowersetSet( toCartSet fSet )
+    | TotalFunctionSpaceSet(fset1, fset2)   -> TotalFunctionSpaceSet( toCartSet fset1 , toCartSet fset2)
     | _                                     -> failwith "Already mutated AST"
 
 let rec reduceDom ast = 

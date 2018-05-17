@@ -3,37 +3,27 @@ module Domain
 
 // Generated Code Section: Domain type
 (*
-Q -> [VAR U ARR] -> P([Q * Q U {QM}])
+Q -> P( [[Q*VAR -> Q] U Q] )
 *)
 
 
 type Record1 = {
     Q1 : Node ;
-    Q2 : Node ;
+    Var1 : Var ;
 }
 
-type List1 =
-    | QM
-
-
-type Union2 = 
-    | Record1 of Record1
-    | List1 of List1
-
-
-type Powerset1 = Union2 Set
 
 type Union1 = 
-    | Var1 of Var 
-    | Arr1 of Arr 
+    | Map1 of Map<Record1, Node> 
+    | Q2 of Node 
 
 
-type Map1 = Map<Union1,Powerset1>
+type Powerset1 = Union1 Set
 
-type sigma = Map1
+type sigma = Powerset1
 
 type AnalysisResult = Map<Node, sigma>
-let subsetOP x = subset_m (subset_pw) x 
-let supersetOP x = superset_m (superset_pw) x 
-let unionOP x = union_m (union_pw) x 
-let intersectOP x = intersect_m (intersect_pw) x 
+let subsetOP x = subset_pw x 
+let supersetOP x = superset_pw x 
+let unionOP x = union_pw x 
+let intersectOP x = intersect_pw x 

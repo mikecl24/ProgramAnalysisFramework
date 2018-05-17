@@ -1,30 +1,22 @@
-Next Meeting:
-    indholdfortegnelse -> Done
+Questions:
+    Requirement that initial and final nodes are different needed? (in PG definition)
 
-    + analyse eksempler: How indepth to document?
+Done:
+    Extensions
+
+Next Meeting:
+    Signs Examples
+    Conclusion
     SSR eksempel
-    Code finish -> Merge sections
+    Code finish -> Merge QCheck
     Report
     Lit revciew: tools conf... 
         esop acm...
 
-Done:
-    Integration
-    Var -> Var and Arr
-
-Merge QCheck
-Improve outputs?
+Test backward analysis! might be taking wrong node as last
 
 MetaL rework:
-    Add ARR
-    TFS set vs larger sets: change syntax! -> Prevent VAR U ARR !, add this to grammar too?
     Easy extensions: P( -> ), P( P() )
-    Cartesian Domain: Possible extension to 4/5/6... domains
-    Reuse alreade made parts? as seen in example RD3, or require universaly unique labels
-
-Examples analysis:
-    New RD
-    Signs and SSR analysis
 
 Examples code:
     Code using arrays (array sum?)
@@ -36,7 +28,6 @@ Work on Quickchecking
 Report: Define reader
 
 Worklist: Efficient/spec?
- 
 
 Analysis module:
     write using lattice operations as parameters union...
@@ -44,5 +35,3 @@ Analysis module:
 Manual work:
     NOTE: Precedence is highest for domain product! -> no Q -> (P(Q) * P(Q))?
     subset_pN
-
-Improvements: Find underlying equal structures, and reuse types

@@ -15,6 +15,8 @@ type set =
   | UnionSet of (set*set)
   | ListSet of elemlist
   | ElemList of string list
+  | PowersetSet of set
+  | TotalFunctionSpaceSet of (set*set)
 
 
 type domain =

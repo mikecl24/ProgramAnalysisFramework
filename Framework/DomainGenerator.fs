@@ -14,6 +14,20 @@ type DomainGenType = {
     prepend : string
 }
 
+let powersetString pNum next= ("\ntype Powerset" + (pNum.ToString()) +  " = " + next + " Set\n")
+let evalPowerset (typeNext, pNum, mNum, rNum, vNum, qNum, uNum, lNum, aNum) =
+    match typeNext with
+    | CartesianListSet(fListSet)    -> (powersetString pNum ("Record" +  rNum.ToString()))
+    | QSet                          -> (powersetString pNum ("Node"))
+    | VARSet                        -> (powersetString pNum ("Var"))
+    | ARRSet                        -> (powersetString pNum ("Arr"))
+    | UnionSet(fSet1, fSet2)        -> (powersetString pNum ("Union" +  uNum.ToString()))
+    | ElemList(fList)               -> (powersetString pNum ("List" +  lNum.ToString()))
+    | PowersetSet(fSet)             -> (powersetString pNum ("Powerset" +  (pNum+1).ToString()))
+    | TotalFunctionSpaceSet(s1, s2) -> (powersetString pNum ("Map" +  (mNum).ToString()))
+    | _                             -> failwith "Error detecting set type at evalPowerset"
+
+
 let lookAheadDom (ast, p, m, r) = 
     match ast with
     | PowersetDom(fSet)                     -> "Powerset"+p.ToString()
@@ -21,7 +35,7 @@ let lookAheadDom (ast, p, m, r) =
     | CartesianListDom(fListDom)            -> "ComplexDomain"
     | _                                     -> failwith "Error matching start of domain"
 
-let lookAheadSet (ast, r, v, q, u, l, a) = 
+let lookAheadSet (ast, p, m, r, v, q, u, l, a) = 
     match ast with
     | CartesianListSet(fListSet)            -> "Record"+r.ToString()
     | QSet                                  -> "Node"
@@ -29,6 +43,8 @@ let lookAheadSet (ast, r, v, q, u, l, a) =
     | ARRSet                                -> "Arr"
     | UnionSet(fSet1, fSet2)                -> "Union"+u.ToString()
     | ElemList(fList)                       -> "List"+l.ToString()
+    | PowersetSet(fSet)                     -> "Powerset"+p.ToString()
+    | TotalFunctionSpaceSet(s1, s2)         -> "Map"+m.ToString()
     | _                                     -> failwith "Error matching start of domain"
 
 let lookAheadDomRecord (ast, p, m) =
@@ -118,6 +134,29 @@ let rec evalUnionSet (fSet, pNum, mNum, rNum, vNum, qNum, uNum, lNum, aNum, resu
                                         l = lNum+1;
                                         a = aNum;
                                         prepend = listRes.result + prependString}
+    | PowersetSet(fSet)             ->  let prev = evalSet (fSet, pNum+1, mNum, rNum, vNum, qNum, uNum, lNum, aNum,  resultString)
+                                        {result = "    | Powerset" + pNum.ToString() + " of " + lookAheadSet (fSet, pNum+1, mNum, rNum, vNum, qNum, uNum, lNum, aNum) + " Set \n";
+                                        p = prev.p;
+                                        m = prev.m;
+                                        r = prev.r;
+                                        v = prev.v;
+                                        q = prev.q;
+                                        u = prev.u;
+                                        l = prev.l;
+                                        a = prev.a;
+                                        prepend =  prev.prepend + prev.result + "\n";}
+    | TotalFunctionSpaceSet(s1, s2) ->  let first = evalSet (s1, pNum, mNum+1, rNum, vNum, qNum, uNum, lNum, aNum,  resultString)
+                                        let second = evalSet (s2, first.p, first.m, first.r, first.v, first.q, first.u, first.l, first.a, resultString)
+                                        {result = "    | Map" + mNum.ToString() + " of Map<" + lookAheadSet (s1, pNum, mNum+1, rNum, vNum, qNum, uNum, lNum, aNum) + ", " + lookAheadSet (s2, first.p, first.m, first.r, first.v, first.q, first.u, first.l, first.a) + "> \n";
+                                        p = second.p;
+                                        m = second.m;
+                                        r = second.r;
+                                        v = second.v;
+                                        q = second.q;
+                                        u = second.u;
+                                        l = second.l;
+                                        a = second.a;
+                                        prepend =  first.prepend + first.result + second.prepend + second.result + "\n";}
     | _                             ->  failwith "Error matching evalUnionSet"
 
 and evalCartListItem (fListSet, pNum, mNum, rNum, vNum, qNum, uNum, lNum, aNum, resultString, prependString) =
@@ -165,17 +204,40 @@ and evalCartListItem (fListSet, pNum, mNum, rNum, vNum, qNum, uNum, lNum, aNum, 
                                     a = second.a;
                                     prepend = first.prepend + second.prepend + 
                                             "\ntype Union" + uNum.ToString() + " =\n" + first.result + second.result + prependString+"\n"}
-    | ElemList(fList)            -> let first = evalList (fList, pNum, mNum, rNum, vNum, qNum, uNum, lNum, aNum, "", "")
-                                    {result = "    List"  + lNum.ToString() + " : List" + lNum.ToString() + ";\n";
-                                    p = pNum;
-                                    m = mNum;
-                                    r = rNum;
-                                    v = vNum;
-                                    q = qNum;
-                                    u = uNum;
-                                    l = lNum+1;
-                                    a = aNum;
-                                    prepend = first.result + prependString}
+    | ElemList(fList)           -> let first = evalList (fList, pNum, mNum, rNum, vNum, qNum, uNum, lNum, aNum, "", "")
+                                   {result = "    List"  + lNum.ToString() + " : List" + lNum.ToString() + ";\n";
+                                   p = pNum;
+                                   m = mNum;
+                                   r = rNum;
+                                   v = vNum;
+                                   q = qNum;
+                                   u = uNum;
+                                   l = lNum+1;
+                                   a = aNum;
+                                   prepend = first.result + prependString}
+    | PowersetSet(fSet)            -> let prev = evalSet (fSet, pNum+1, mNum, rNum, vNum, qNum, uNum, lNum, aNum, resultString)
+                                      {result = "    Powerset"  + pNum.ToString() + " : " + lookAheadSet (fSet, pNum+1, mNum, rNum, vNum, qNum, uNum, lNum, aNum) + " Set;\n";
+                                       p = prev.p;
+                                       m = prev.m;
+                                       r = prev.r;
+                                       v = prev.v;
+                                       q = prev.q;
+                                       u = prev.u;
+                                       l = prev.l;
+                                       a = prev.a;
+                                       prepend = prev.prepend + prev.result}
+    | TotalFunctionSpaceSet(s1, s2) ->  let first = evalSet (s1, pNum, mNum+1, rNum, vNum, qNum, uNum, lNum, aNum, resultString)
+                                        let second = evalSet (s2, first.p, first.m, first.r, first.v, first.q, first.u, first.l, first.a, "")
+                                        {result = "    Map"+ mNum.ToString() + " : Map<" + lookAheadSet (s1, pNum, mNum+1, rNum, vNum, qNum, uNum, lNum, aNum) + ", " + lookAheadSet (s2, first.p, first.m, first.r, first.v, first.q, first.u, first.l, first.a) + ">\n";
+                                       p = second.p;
+                                       m = second.m;
+                                       r = second.r;
+                                       v = second.v;
+                                       q = second.q;
+                                       u = second.u;
+                                       l = second.l;
+                                       a = second.a;
+                                       prepend = second.prepend + second.result + first.prepend + first.result }
     | _                         -> failwith "Error matching set in evalCartListItem"
 
 and evalCartListSet (fListSet, pNum, mNum, rNum, vNum, qNum, uNum, lNum, aNum, resultString, prependString) =
@@ -193,7 +255,8 @@ and evalCartListSet (fListSet, pNum, mNum, rNum, vNum, qNum, uNum, lNum, aNum, r
     | a::b  ->  let prev = evalCartListItem (a, pNum, mNum, rNum, vNum, qNum, uNum, lNum, aNum, resultString, prependString)
                 evalCartListSet (b, prev.p, prev.m, prev.r, prev.v, prev.q, prev.u, prev.l, prev.a, resultString+prev.result, prev.prepend)
 
-let rec evalSet (ast, pNum, mNum, rNum, vNum, qNum, uNum, lNum, aNum, resultString) = 
+
+and evalSet (ast, pNum, mNum, rNum, vNum, qNum, uNum, lNum, aNum, resultString) = 
     match ast with
     | CartesianListSet(fListSet)    ->  let prev = evalCartListSet (fListSet, pNum, mNum, rNum+1, vNum, qNum, uNum, lNum, aNum, resultString, "")
                                         {result = prev.prepend + "\ntype Record" + rNum.ToString() + " = {\n" + prev.result+"}\n";
@@ -259,21 +322,31 @@ let rec evalSet (ast, pNum, mNum, rNum, vNum, qNum, uNum, lNum, aNum, resultStri
                                         l = lNum;
                                         a = aNum;
                                         prepend = ""}
+    | PowersetSet (fSet)            ->  let prev = evalSet (fSet, pNum+1, mNum, rNum, vNum, qNum, uNum, lNum, aNum, resultString)
+                                        {result = prev.prepend + prev.result + evalPowerset(fSet, pNum, mNum, rNum, vNum, qNum, uNum, lNum, aNum);
+                                        p = prev.p;
+                                        m = prev.m;
+                                        r = prev.r;
+                                        v = prev.v;
+                                        q = prev.q;
+                                        u = prev.u;
+                                        l = prev.l;
+                                        a = prev.a;
+                                        prepend = ""}
+    | TotalFunctionSpaceSet(fset1, fset2)   ->  let first = evalSet (fset1, pNum, mNum+1, rNum, vNum, qNum, uNum, lNum, aNum, resultString)
+                                                let second = evalSet (fset2, first.p, first.m, first.r, first.v, first.q, first.u, first.l, first.a, "")
+                                                {result = first.result + second.result + "\ntype Map" + mNum.ToString() + " = " + "Map<" + (lookAheadSet (fset1, pNum, mNum, rNum, vNum, qNum, uNum, lNum, aNum)) + "," + (lookAheadSet (fset2, first.p, first.m, first.r, first.v, first.q, first.u, first.l, first.a)) + ">\n";
+                                                p = second.p;
+                                                m = second.m;
+                                                r = second.r;
+                                                v = second.v;
+                                                q = second.q;
+                                                u = second.u;
+                                                l = second.l;
+                                                a = second.a;
+                                                prepend = first.prepend + second.prepend}
     | _                             -> failwith "Error detecting set at evalSet"
 
-
-
-let powersetString pNum next= ("\ntype Powerset" + (pNum.ToString()) +  " = " + next + " Set\n")
-
-let evalPowerset (typeNext, pNum, rNum, vNum, qNum, uNum, lNum, aNum) =
-    match typeNext with
-    | CartesianListSet(fListSet)    -> (powersetString pNum ("Record" +  rNum.ToString()))
-    | QSet                          -> (powersetString pNum ("Node"))
-    | VARSet                        -> (powersetString pNum ("Var"))
-    | ARRSet                        -> (powersetString pNum ("Arr"))
-    | UnionSet(fSet1, fSet2)        -> (powersetString pNum ("Union" +  uNum.ToString()))
-    | ElemList(fList)                -> (powersetString pNum ("List" +  lNum.ToString()))
-    | _                             -> failwith "Error detecting set type at evalPowerset"
 
 let rec evalDomList (fListDom, pNum, mNum, rNum, vNum, qNum, uNum, lNum, aNum, (resultString:string), prependString) = 
     match fListDom with
@@ -293,7 +366,7 @@ let rec evalDomList (fListDom, pNum, mNum, rNum, vNum, qNum, uNum, lNum, aNum, (
 and evalDom (ast, pNum, mNum, rNum, vNum, qNum, uNum, lNum, aNum, resultString) = 
     match ast with
     | PowersetDom(fSet)                     ->  let prev = evalSet (fSet, pNum+1, mNum, rNum, vNum, qNum, uNum, lNum, aNum, resultString);
-                                                {result = prev.result + (evalPowerset (fSet, pNum, rNum, vNum, qNum, uNum, lNum, aNum)) + resultString;
+                                                {result = prev.result + (evalPowerset (fSet, pNum, mNum, rNum, vNum, qNum, uNum, lNum, aNum)) + resultString;
                                                 p = prev.p;
                                                 m = prev.m;
                                                 r = prev.r;
@@ -305,7 +378,7 @@ and evalDom (ast, pNum, mNum, rNum, vNum, qNum, uNum, lNum, aNum, resultString) 
                                                 prepend = prev.prepend}
     | TotalFunctionSpaceDom(fSet, fDom)     ->  let first = evalSet(fSet, pNum, mNum+1, rNum, vNum, qNum, uNum, lNum, aNum, "")
                                                 let second = evalDom(fDom, first.p, first.m, first.r, first.v, first.q, first.u, first.l, first.a, first.result)
-                                                {result = second.result + "\ntype Map" + mNum.ToString() + " = " + "Map<" + (lookAheadSet (fSet, rNum, vNum, qNum, uNum, lNum, aNum)) + "," + (lookAheadDom (fDom, pNum, mNum, rNum)) + ">\n"
+                                                {result = second.result + "\ntype Map" + mNum.ToString() + " = " + "Map<" + (lookAheadSet (fSet, pNum, mNum, rNum, vNum, qNum, uNum, lNum, aNum)) + "," + (lookAheadDom (fDom, pNum, mNum, rNum)) + ">\n"
                                                     + resultString;
                                                 p = second.p;
                                                 m = second.m;

@@ -32,6 +32,8 @@ set:
 | QSET                                  { QSet }
 | LSQ set UNION set RSQ                 { UnionSet($2,$4) }
 | LCURL elist RCURL                     { ListSet($2) }
+| POWERSET LBRA set RBRA                { PowersetSet($3) }
+| LSQ set TFS set RSQ                   {TotalFunctionSpaceSet($2,$4)}
 
 elist:
 | ELEM                                  { Element($1) }
