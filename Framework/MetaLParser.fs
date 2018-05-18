@@ -53,6 +53,7 @@ type tokenId =
 type nonTerminalId = 
     | NONTERM__startstart
     | NONTERM_start
+    | NONTERM_domainc
     | NONTERM_domain
     | NONTERM_set
     | NONTERM_elist
@@ -105,10 +106,10 @@ let prodIdxToNonTerminal (prodIdx:int) =
   match prodIdx with
     | 0 -> NONTERM__startstart 
     | 1 -> NONTERM_start 
-    | 2 -> NONTERM_domain 
-    | 3 -> NONTERM_domain 
+    | 2 -> NONTERM_domainc 
+    | 3 -> NONTERM_domainc 
     | 4 -> NONTERM_domain 
-    | 5 -> NONTERM_set 
+    | 5 -> NONTERM_domain 
     | 6 -> NONTERM_set 
     | 7 -> NONTERM_set 
     | 8 -> NONTERM_set 
@@ -116,8 +117,9 @@ let prodIdxToNonTerminal (prodIdx:int) =
     | 10 -> NONTERM_set 
     | 11 -> NONTERM_set 
     | 12 -> NONTERM_set 
-    | 13 -> NONTERM_elist 
+    | 13 -> NONTERM_set 
     | 14 -> NONTERM_elist 
+    | 15 -> NONTERM_elist 
     | _ -> failwith "prodIdxToNonTerminal: bad production index"
 
 let _fsyacc_endOfInputTag = 18 
@@ -162,18 +164,18 @@ let _fsyacc_dataOfToken (t:token) =
   | EOF  -> (null : System.Object) 
   | ARRSET  -> (null : System.Object) 
   | ELEM _fsyacc_x -> Microsoft.FSharp.Core.Operators.box _fsyacc_x 
-let _fsyacc_gotos = [| 0us; 65535us; 1us; 65535us; 0us; 1us; 3us; 65535us; 0us; 2us; 10us; 11us; 14us; 13us; 7us; 65535us; 5us; 6us; 8us; 9us; 20us; 15us; 24us; 16us; 25us; 17us; 31us; 18us; 33us; 19us; 2us; 65535us; 27us; 28us; 36us; 37us; |]
-let _fsyacc_sparseGotoTableRowOffsets = [|0us; 1us; 3us; 7us; 15us; |]
-let _fsyacc_stateToProdIdxsTableElements = [| 1us; 0us; 1us; 0us; 2us; 1us; 4us; 1us; 1us; 1us; 2us; 1us; 2us; 2us; 2us; 5us; 1us; 2us; 1us; 3us; 2us; 3us; 5us; 1us; 3us; 2us; 3us; 4us; 1us; 3us; 2us; 4us; 4us; 1us; 4us; 2us; 5us; 5us; 3us; 5us; 9us; 12us; 2us; 5us; 9us; 2us; 5us; 11us; 2us; 5us; 12us; 1us; 5us; 1us; 6us; 1us; 7us; 1us; 8us; 2us; 9us; 12us; 1us; 9us; 1us; 9us; 1us; 10us; 1us; 10us; 1us; 10us; 1us; 11us; 1us; 11us; 1us; 11us; 1us; 12us; 1us; 12us; 2us; 13us; 14us; 1us; 14us; 1us; 14us; |]
-let _fsyacc_stateToProdIdxsTableRowOffsets = [|0us; 2us; 4us; 7us; 9us; 11us; 13us; 16us; 18us; 20us; 23us; 25us; 28us; 30us; 33us; 35us; 38us; 42us; 45us; 48us; 51us; 53us; 55us; 57us; 59us; 62us; 64us; 66us; 68us; 70us; 72us; 74us; 76us; 78us; 80us; 82us; 85us; 87us; |]
-let _fsyacc_action_rows = 38
-let _fsyacc_actionTableElements = [|2us; 32768us; 0us; 4us; 7us; 8us; 0us; 49152us; 2us; 32768us; 4us; 14us; 13us; 3us; 0us; 16385us; 1us; 32768us; 1us; 5us; 6us; 32768us; 0us; 30us; 5us; 21us; 6us; 23us; 7us; 24us; 10us; 27us; 14us; 22us; 2us; 32768us; 2us; 7us; 4us; 20us; 0us; 16386us; 6us; 32768us; 0us; 30us; 5us; 21us; 6us; 23us; 7us; 24us; 10us; 27us; 14us; 22us; 2us; 32768us; 3us; 10us; 4us; 20us; 2us; 32768us; 0us; 4us; 7us; 8us; 2us; 32768us; 4us; 14us; 8us; 12us; 0us; 16387us; 0us; 16388us; 2us; 32768us; 0us; 4us; 7us; 8us; 0us; 16389us; 3us; 32768us; 3us; 33us; 4us; 20us; 9us; 25us; 2us; 32768us; 4us; 20us; 8us; 26us; 2us; 32768us; 2us; 32us; 4us; 20us; 2us; 32768us; 4us; 20us; 8us; 34us; 6us; 32768us; 0us; 30us; 5us; 21us; 6us; 23us; 7us; 24us; 10us; 27us; 14us; 22us; 0us; 16390us; 0us; 16391us; 0us; 16392us; 6us; 32768us; 0us; 30us; 5us; 21us; 6us; 23us; 7us; 24us; 10us; 27us; 14us; 22us; 6us; 32768us; 0us; 30us; 5us; 21us; 6us; 23us; 7us; 24us; 10us; 27us; 14us; 22us; 0us; 16393us; 1us; 32768us; 15us; 35us; 1us; 32768us; 11us; 29us; 0us; 16394us; 1us; 32768us; 1us; 31us; 6us; 32768us; 0us; 30us; 5us; 21us; 6us; 23us; 7us; 24us; 10us; 27us; 14us; 22us; 0us; 16395us; 6us; 32768us; 0us; 30us; 5us; 21us; 6us; 23us; 7us; 24us; 10us; 27us; 14us; 22us; 0us; 16396us; 1us; 16397us; 12us; 36us; 1us; 32768us; 15us; 35us; 0us; 16398us; |]
-let _fsyacc_actionTableRowOffsets = [|0us; 3us; 4us; 7us; 8us; 10us; 17us; 20us; 21us; 28us; 31us; 34us; 37us; 38us; 39us; 42us; 43us; 47us; 50us; 53us; 56us; 63us; 64us; 65us; 66us; 73us; 80us; 81us; 83us; 85us; 86us; 88us; 95us; 96us; 103us; 104us; 106us; 108us; |]
-let _fsyacc_reductionSymbolCounts = [|1us; 2us; 4us; 5us; 3us; 3us; 1us; 1us; 1us; 5us; 3us; 4us; 5us; 1us; 3us; |]
-let _fsyacc_productionToNonTerminalTable = [|0us; 1us; 2us; 2us; 2us; 3us; 3us; 3us; 3us; 3us; 3us; 3us; 3us; 4us; 4us; |]
-let _fsyacc_immediateActions = [|65535us; 49152us; 65535us; 16385us; 65535us; 65535us; 65535us; 16386us; 65535us; 65535us; 65535us; 65535us; 16387us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 16390us; 16391us; 16392us; 65535us; 65535us; 16393us; 65535us; 65535us; 16394us; 65535us; 65535us; 16395us; 65535us; 16396us; 65535us; 65535us; 16398us; |]
+let _fsyacc_gotos = [| 0us; 65535us; 1us; 65535us; 0us; 1us; 1us; 65535us; 0us; 2us; 3us; 65535us; 0us; 4us; 5us; 6us; 13us; 14us; 7us; 65535us; 8us; 9us; 11us; 12us; 21us; 16us; 25us; 17us; 26us; 18us; 32us; 19us; 34us; 20us; 2us; 65535us; 28us; 29us; 37us; 38us; |]
+let _fsyacc_sparseGotoTableRowOffsets = [|0us; 1us; 3us; 5us; 9us; 17us; |]
+let _fsyacc_stateToProdIdxsTableElements = [| 1us; 0us; 1us; 0us; 2us; 1us; 3us; 1us; 1us; 1us; 2us; 1us; 3us; 1us; 3us; 1us; 4us; 1us; 4us; 2us; 4us; 6us; 1us; 4us; 1us; 5us; 2us; 5us; 6us; 1us; 5us; 1us; 5us; 1us; 5us; 2us; 6us; 6us; 3us; 6us; 10us; 13us; 2us; 6us; 10us; 2us; 6us; 12us; 2us; 6us; 13us; 1us; 6us; 1us; 7us; 1us; 8us; 1us; 9us; 2us; 10us; 13us; 1us; 10us; 1us; 10us; 1us; 11us; 1us; 11us; 1us; 11us; 1us; 12us; 1us; 12us; 1us; 12us; 1us; 13us; 1us; 13us; 2us; 14us; 15us; 1us; 15us; 1us; 15us; |]
+let _fsyacc_stateToProdIdxsTableRowOffsets = [|0us; 2us; 4us; 7us; 9us; 11us; 13us; 15us; 17us; 19us; 22us; 24us; 26us; 29us; 31us; 33us; 35us; 38us; 42us; 45us; 48us; 51us; 53us; 55us; 57us; 59us; 62us; 64us; 66us; 68us; 70us; 72us; 74us; 76us; 78us; 80us; 82us; 85us; 87us; |]
+let _fsyacc_action_rows = 39
+let _fsyacc_actionTableElements = [|2us; 32768us; 0us; 7us; 7us; 11us; 0us; 49152us; 2us; 32768us; 4us; 5us; 13us; 3us; 0us; 16385us; 0us; 16386us; 2us; 32768us; 0us; 7us; 7us; 11us; 0us; 16387us; 1us; 32768us; 1us; 8us; 6us; 32768us; 0us; 31us; 5us; 22us; 6us; 24us; 7us; 25us; 10us; 28us; 14us; 23us; 2us; 32768us; 2us; 10us; 4us; 21us; 0us; 16388us; 6us; 32768us; 0us; 31us; 5us; 22us; 6us; 24us; 7us; 25us; 10us; 28us; 14us; 23us; 2us; 32768us; 3us; 13us; 4us; 21us; 2us; 32768us; 0us; 7us; 7us; 11us; 1us; 32768us; 8us; 15us; 0us; 16389us; 0us; 16390us; 3us; 32768us; 3us; 34us; 4us; 21us; 9us; 26us; 2us; 32768us; 4us; 21us; 8us; 27us; 2us; 32768us; 2us; 33us; 4us; 21us; 2us; 32768us; 4us; 21us; 8us; 35us; 6us; 32768us; 0us; 31us; 5us; 22us; 6us; 24us; 7us; 25us; 10us; 28us; 14us; 23us; 0us; 16391us; 0us; 16392us; 0us; 16393us; 6us; 32768us; 0us; 31us; 5us; 22us; 6us; 24us; 7us; 25us; 10us; 28us; 14us; 23us; 6us; 32768us; 0us; 31us; 5us; 22us; 6us; 24us; 7us; 25us; 10us; 28us; 14us; 23us; 0us; 16394us; 1us; 32768us; 15us; 36us; 1us; 32768us; 11us; 30us; 0us; 16395us; 1us; 32768us; 1us; 32us; 6us; 32768us; 0us; 31us; 5us; 22us; 6us; 24us; 7us; 25us; 10us; 28us; 14us; 23us; 0us; 16396us; 6us; 32768us; 0us; 31us; 5us; 22us; 6us; 24us; 7us; 25us; 10us; 28us; 14us; 23us; 0us; 16397us; 1us; 16398us; 12us; 37us; 1us; 32768us; 15us; 36us; 0us; 16399us; |]
+let _fsyacc_actionTableRowOffsets = [|0us; 3us; 4us; 7us; 8us; 9us; 12us; 13us; 15us; 22us; 25us; 26us; 33us; 36us; 39us; 41us; 42us; 43us; 47us; 50us; 53us; 56us; 63us; 64us; 65us; 66us; 73us; 80us; 81us; 83us; 85us; 86us; 88us; 95us; 96us; 103us; 104us; 106us; 108us; |]
+let _fsyacc_reductionSymbolCounts = [|1us; 2us; 1us; 3us; 4us; 5us; 3us; 1us; 1us; 1us; 5us; 3us; 4us; 5us; 1us; 3us; |]
+let _fsyacc_productionToNonTerminalTable = [|0us; 1us; 2us; 2us; 3us; 3us; 4us; 4us; 4us; 4us; 4us; 4us; 4us; 4us; 5us; 5us; |]
+let _fsyacc_immediateActions = [|65535us; 49152us; 65535us; 16385us; 16386us; 65535us; 16387us; 65535us; 65535us; 65535us; 16388us; 65535us; 65535us; 65535us; 65535us; 16389us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 16391us; 16392us; 16393us; 65535us; 65535us; 16394us; 65535us; 65535us; 16395us; 65535us; 65535us; 16396us; 65535us; 16397us; 65535us; 65535us; 16399us; |]
 let _fsyacc_reductions ()  =    [| 
-# 176 ".\MetaLParser.fs"
+# 178 ".\MetaLParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : domain)) in
             Microsoft.FSharp.Core.Operators.box
@@ -182,165 +184,176 @@ let _fsyacc_reductions ()  =    [|
                       raise (Microsoft.FSharp.Text.Parsing.Accept(Microsoft.FSharp.Core.Operators.box _1))
                    )
                  : '_startstart));
-# 185 ".\MetaLParser.fs"
+# 187 ".\MetaLParser.fs"
+        (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
+            let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : 'domainc)) in
+            Microsoft.FSharp.Core.Operators.box
+                (
+                   (
+# 21 ".\MetaLParser.fsp"
+                                              _1
+                   )
+# 21 ".\MetaLParser.fsp"
+                 : domain));
+# 198 ".\MetaLParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : 'domain)) in
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 21 ".\MetaLParser.fsp"
-                                             _1
+# 24 ".\MetaLParser.fsp"
+                                                              _1
                    )
-# 21 ".\MetaLParser.fsp"
-                 : domain));
-# 196 ".\MetaLParser.fs"
+# 24 ".\MetaLParser.fsp"
+                 : 'domainc));
+# 209 ".\MetaLParser.fs"
+        (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
+            let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : 'domainc)) in
+            let _3 = (let data = parseState.GetInput(3) in (Microsoft.FSharp.Core.Operators.unbox data : 'domain)) in
+            Microsoft.FSharp.Core.Operators.box
+                (
+                   (
+# 25 ".\MetaLParser.fsp"
+                                                               CartesianDom(_1,_3) 
+                   )
+# 25 ".\MetaLParser.fsp"
+                 : 'domainc));
+# 221 ".\MetaLParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             let _3 = (let data = parseState.GetInput(3) in (Microsoft.FSharp.Core.Operators.unbox data : 'set)) in
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 24 ".\MetaLParser.fsp"
+# 28 ".\MetaLParser.fsp"
                                                                PowersetDom(_3) 
                    )
-# 24 ".\MetaLParser.fsp"
+# 28 ".\MetaLParser.fsp"
                  : 'domain));
-# 207 ".\MetaLParser.fs"
+# 232 ".\MetaLParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             let _2 = (let data = parseState.GetInput(2) in (Microsoft.FSharp.Core.Operators.unbox data : 'set)) in
             let _4 = (let data = parseState.GetInput(4) in (Microsoft.FSharp.Core.Operators.unbox data : 'domain)) in
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 25 ".\MetaLParser.fsp"
+# 29 ".\MetaLParser.fsp"
                                                                TotalFunctionSpaceDom(_2,_4) 
                    )
-# 25 ".\MetaLParser.fsp"
+# 29 ".\MetaLParser.fsp"
                  : 'domain));
-# 219 ".\MetaLParser.fs"
-        (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
-            let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : 'domain)) in
-            let _3 = (let data = parseState.GetInput(3) in (Microsoft.FSharp.Core.Operators.unbox data : 'domain)) in
-            Microsoft.FSharp.Core.Operators.box
-                (
-                   (
-# 26 ".\MetaLParser.fsp"
-                                                               CartesianDom(_1,_3) 
-                   )
-# 26 ".\MetaLParser.fsp"
-                 : 'domain));
-# 231 ".\MetaLParser.fs"
+# 244 ".\MetaLParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : 'set)) in
             let _3 = (let data = parseState.GetInput(3) in (Microsoft.FSharp.Core.Operators.unbox data : 'set)) in
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 29 ".\MetaLParser.fsp"
+# 32 ".\MetaLParser.fsp"
                                                                CartesianSet(_1,_3) 
                    )
-# 29 ".\MetaLParser.fsp"
+# 32 ".\MetaLParser.fsp"
                  : 'set));
-# 243 ".\MetaLParser.fs"
+# 256 ".\MetaLParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 30 ".\MetaLParser.fsp"
+# 33 ".\MetaLParser.fsp"
                                                                VARSet 
                    )
-# 30 ".\MetaLParser.fsp"
+# 33 ".\MetaLParser.fsp"
                  : 'set));
-# 253 ".\MetaLParser.fs"
+# 266 ".\MetaLParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 31 ".\MetaLParser.fsp"
+# 34 ".\MetaLParser.fsp"
                                                                ARRSet 
                    )
-# 31 ".\MetaLParser.fsp"
+# 34 ".\MetaLParser.fsp"
                  : 'set));
-# 263 ".\MetaLParser.fs"
+# 276 ".\MetaLParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 32 ".\MetaLParser.fsp"
+# 35 ".\MetaLParser.fsp"
                                                                QSet 
                    )
-# 32 ".\MetaLParser.fsp"
+# 35 ".\MetaLParser.fsp"
                  : 'set));
-# 273 ".\MetaLParser.fs"
+# 286 ".\MetaLParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             let _2 = (let data = parseState.GetInput(2) in (Microsoft.FSharp.Core.Operators.unbox data : 'set)) in
             let _4 = (let data = parseState.GetInput(4) in (Microsoft.FSharp.Core.Operators.unbox data : 'set)) in
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 33 ".\MetaLParser.fsp"
+# 36 ".\MetaLParser.fsp"
                                                                UnionSet(_2,_4) 
                    )
-# 33 ".\MetaLParser.fsp"
+# 36 ".\MetaLParser.fsp"
                  : 'set));
-# 285 ".\MetaLParser.fs"
+# 298 ".\MetaLParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             let _2 = (let data = parseState.GetInput(2) in (Microsoft.FSharp.Core.Operators.unbox data : 'elist)) in
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 34 ".\MetaLParser.fsp"
+# 37 ".\MetaLParser.fsp"
                                                                ListSet(_2) 
                    )
-# 34 ".\MetaLParser.fsp"
+# 37 ".\MetaLParser.fsp"
                  : 'set));
-# 296 ".\MetaLParser.fs"
+# 309 ".\MetaLParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             let _3 = (let data = parseState.GetInput(3) in (Microsoft.FSharp.Core.Operators.unbox data : 'set)) in
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 35 ".\MetaLParser.fsp"
+# 38 ".\MetaLParser.fsp"
                                                                PowersetSet(_3) 
                    )
-# 35 ".\MetaLParser.fsp"
+# 38 ".\MetaLParser.fsp"
                  : 'set));
-# 307 ".\MetaLParser.fs"
+# 320 ".\MetaLParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             let _2 = (let data = parseState.GetInput(2) in (Microsoft.FSharp.Core.Operators.unbox data : 'set)) in
             let _4 = (let data = parseState.GetInput(4) in (Microsoft.FSharp.Core.Operators.unbox data : 'set)) in
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 36 ".\MetaLParser.fsp"
+# 39 ".\MetaLParser.fsp"
                                                               TotalFunctionSpaceSet(_2,_4)
                    )
-# 36 ".\MetaLParser.fsp"
+# 39 ".\MetaLParser.fsp"
                  : 'set));
-# 319 ".\MetaLParser.fs"
+# 332 ".\MetaLParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : string)) in
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 39 ".\MetaLParser.fsp"
+# 42 ".\MetaLParser.fsp"
                                                                Element(_1) 
                    )
-# 39 ".\MetaLParser.fsp"
+# 42 ".\MetaLParser.fsp"
                  : 'elist));
-# 330 ".\MetaLParser.fs"
+# 343 ".\MetaLParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : string)) in
             let _3 = (let data = parseState.GetInput(3) in (Microsoft.FSharp.Core.Operators.unbox data : 'elist)) in
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 40 ".\MetaLParser.fsp"
+# 43 ".\MetaLParser.fsp"
                                                                LargerList(_1,_3) 
                    )
-# 40 ".\MetaLParser.fsp"
+# 43 ".\MetaLParser.fsp"
                  : 'elist));
 |]
-# 343 ".\MetaLParser.fs"
+# 356 ".\MetaLParser.fs"
 let tables () : Microsoft.FSharp.Text.Parsing.Tables<_> = 
   { reductions= _fsyacc_reductions ();
     endOfInputTag = _fsyacc_endOfInputTag;

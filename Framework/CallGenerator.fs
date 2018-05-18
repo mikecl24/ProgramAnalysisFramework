@@ -37,10 +37,10 @@ let rec getCalls dom =
                                                     let x2 = getCalls fListDom.[1]
                                                     let x3 = getCalls fListDom.[2] in
                                                     (
-                                                    "subset_p2 (" + fst4 x1 + ", " + fst4 x2 + ", " + fst4 x3 + ")",
-                                                    "superset_p2 (" + snd4 x1 + ", " + snd4 x2 + ", " + snd4 x3 + ")",
-                                                    "union_p2 (" + trd4 x1 + ", " + trd4 x2 + ", " + trd4 x3 + ")",
-                                                    "intersect_p2 (" + frt4 x1 + ", " + frt4 x2 + ", " + frt4 x3 + ")"
+                                                    "subset_p3 (" + fst4 x1 + ", " + fst4 x2 + ", " + fst4 x3 + ")",
+                                                    "superset_p3 (" + snd4 x1 + ", " + snd4 x2 + ", " + snd4 x3 + ")",
+                                                    "union_p3 (" + trd4 x1 + ", " + trd4 x2 + ", " + trd4 x3 + ")",
+                                                    "intersect_p3 (" + frt4 x1 + ", " + frt4 x2 + ", " + frt4 x3 + ")"
                                                     )
                                             | _ -> failwith "Error: Cartesian domains with maximum 3 terms (for now)"
     | _                                 ->  ("not a programmed case","","","")

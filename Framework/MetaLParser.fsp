@@ -18,12 +18,15 @@ open DomainTypes
 %left POWERSET TFS CART
 %%
 
-start: domain EOF						{$1}
+start: domainc EOF						{$1}
+
+domainc:
+| domain                                {$1}
+| domainc CART domain                   { CartesianDom($1,$3) }
 
 domain: 
 | POWERSET LBRA set RBRA                { PowersetDom($3) }
 | LSQ set TFS domain RSQ                { TotalFunctionSpaceDom($2,$4) }
-| domain CART domain                    { CartesianDom($1,$3) }
  
 set:
 | set CART set                          { CartesianSet($1,$3) }

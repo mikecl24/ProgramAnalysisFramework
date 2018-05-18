@@ -80,10 +80,11 @@ if not debug then
 
     // String -> Domain AST
     let domainAST = ParseStringDom (DomainString)
+    //printfn "%A" (domainAST)
 
     // Domain AST -> flattened Domain AST
     let flatDomainAST : domain = reduceDom (domainAST)
-    printfn "%s" (flatDomainAST.ToString())
+    //printfn "%s" (flatDomainAST.ToString())
 
     // flattened Domain AST -> Types
     let code = evaluateAST flatDomainAST DomainString

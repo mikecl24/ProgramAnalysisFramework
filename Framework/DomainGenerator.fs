@@ -51,7 +51,7 @@ let lookAheadDomRecord (ast, p, m) =
     match ast with
     | PowersetDom(fSet)                     -> "Powerset" + p.ToString() + " * "
     | TotalFunctionSpaceDom(fSet, fDom)     -> "Map" + m.ToString() + " * "
-    | _                                     -> failwith "Error matching start of domain"
+    | a                                     -> failwith "Error matching start of domain" 
 
 let rec evalList (fList, pNum, mNum, rNum, vNum, qNum, uNum, lNum, aNum, resultString, prependString) =
     match fList with

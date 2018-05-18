@@ -39,6 +39,7 @@ type tokenId =
 type nonTerminalId = 
     | NONTERM__startstart
     | NONTERM_start
+    | NONTERM_domainc
     | NONTERM_domain
     | NONTERM_set
     | NONTERM_elist
