@@ -2,6 +2,8 @@
 (*-----------------------------IMPORTS-----------------------------*)
 (*-----------------------------------------------------------------*)
 
+let debug = false
+
 #r "FsLexYacc.Runtime.dll"          // Load in FsLexYacc dll
 
 //open System
@@ -72,31 +74,35 @@ open MetaLLexer                     //Generated Lexer
 #load "DomainGenerator.fs"          // Domain AST -> Code
 #load "CallGenerator.fs"            // Domain AST -> LattOps code
 
-// File -> String
-let DomainString = File.ReadAllText("Domain.metaL")
+if not debug then
+    // File -> String
+    let DomainString = File.ReadAllText("Domain.metaL")
 
-// String -> Domain AST
-let domainAST = ParseStringDom (DomainString)
+    // String -> Domain AST
+    let domainAST = ParseStringDom (DomainString)
 
-// Domain AST -> flattened Domain AST
-let flatDomainAST : domain = reduceDom (domainAST)
-printfn "%s" (flatDomainAST.ToString())
+    // Domain AST -> flattened Domain AST
+    let flatDomainAST : domain = reduceDom (domainAST)
+    printfn "%s" (flatDomainAST.ToString())
 
-// flattened Domain AST -> Types
-let code = evaluateAST flatDomainAST DomainString
-//printfn "%s" code
+    // flattened Domain AST -> Types
+    let code = evaluateAST flatDomainAST DomainString
+    //printfn "%s" code
 
-// flattened Domain AST -> Lattice Operations
-let lattOps = evaluateASTCalls flatDomainAST
-//printfn "%s" lattOps
+    // flattened Domain AST -> Lattice Operations
+    let lattOps = evaluateASTCalls flatDomainAST
+    //printfn "%s" lattOps
 
-File.WriteAllText("Domain.fs", code + lattOps)
+
+    File.WriteAllText("Domain.fs", code + lattOps)
+else
+    printfn ""
 
 #load "LattOps.fs"                      // Lattice Opreations: Union, Intersection, Subset, Superset
 #load "Domain.fs"                       // Domain Specification: Generated code and call traces for LattOps
 
 printfn "Domain Generation Done"
-#quit;;
+
 (*-----------------------------------------------------------------*)
 (*---------------------TRANSFER-FUNCTION-MODULE--------------------*)
 (*-----------------------------------------------------------------*)

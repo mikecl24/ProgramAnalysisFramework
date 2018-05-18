@@ -1,0 +1,52 @@
+Node 0   ->
+map
+  [(Var1 (Var "x"), set [Plus; Zero; Minus]);
+   (Var1 (Var "y"), set [Plus; Zero; Minus])]
+
+
+Node 1   ->
+map [(Var1 (Var "x"), set [Plus]); (Var1 (Var "y"), set [Plus; Zero; Minus])]
+
+
+Node 2   ->
+map [(Var1 (Var "x"), set [Plus]); (Var1 (Var "y"), set [Plus])]
+
+
+Node 3   ->
+map [(Var1 (Var "x"), set [Plus]); (Var1 (Var "y"), set [Plus])]
+
+
+Node 4   ->
+map
+  [(Var1 (Var "x"), set [Plus; Zero; Minus]);
+   (Var1 (Var "y"), set [Plus; Zero; Minus])]
+
+
+Node 5   ->
+map
+  [(Var1 (Var "x"), set [Plus; Zero; Minus]);
+   (Var1 (Var "y"), set [Plus; Zero; Minus])]
+
+
+Node 6   ->
+map
+  [(Var1 (Var "x"), set [Plus; Zero; Minus]);
+   (Var1 (Var "y"), set [Plus; Zero; Minus])]
+
+
+Node 7   ->
+map
+  [(Var1 (Var "x"), set [Plus; Zero; Minus]);
+   (Var1 (Var "y"), set [Plus; Zero; Minus])]
+
+
+Node 8   ->
+map
+  [(Var1 (Var "x"), set [Plus; Zero; Minus]);
+   (Var1 (Var "y"), set [Plus; Zero; Minus])]
+
+
+Node 9   ->
+map
+  [(Var1 (Var "x"), set [Plus; Zero; Minus]);
+   (Var1 (Var "y"), set [Plus; Zero; Minus])]

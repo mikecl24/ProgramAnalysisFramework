@@ -1,0 +1,1 @@
+[ [VAR U ARR] -> [ {Bot} U [INT U {NegInf}] * [INT U {PlusInf}] ] ]

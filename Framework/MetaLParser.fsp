@@ -22,7 +22,7 @@ start: domain EOF						{$1}
 
 domain: 
 | POWERSET LBRA set RBRA                { PowersetDom($3) }
-| set TFS domain                        { TotalFunctionSpaceDom($1,$3) }
+| LSQ set TFS domain RSQ                { TotalFunctionSpaceDom($2,$4) }
 | domain CART domain                    { CartesianDom($1,$3) }
  
 set:

@@ -1,1 +1,1 @@
-[VAR U ARR] -> P([Q * Q U {QM}])
+[[VAR U ARR] -> P([Q * Q U {QM}])]

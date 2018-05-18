@@ -3,15 +3,17 @@ Questions:
 
 Done:
     Extensions
+    Signs Example
 
 Next Meeting:
-    Signs Examples
     Conclusion
     SSR eksempel
     Code finish -> Merge QCheck
     Report
     Lit revciew: tools conf... 
         esop acm...
+
+Improve Signs example boolean TF?
 
 Test backward analysis! might be taking wrong node as last
 
