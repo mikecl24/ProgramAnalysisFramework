@@ -2,11 +2,12 @@ Questions:
     Requirement that initial and final nodes are different needed? (in PG definition)
 
 Done:
-    Extensions
+    Extensions  P( -> ), P( P() )
     Signs Example
 
 Next Meeting:
     Conclusion
+    Graph work
     SSR eksempel
     Code finish -> Merge QCheck
     Report
@@ -17,13 +18,10 @@ Improve Signs example boolean TF?
 
 Test backward analysis! might be taking wrong node as last
 
-MetaL rework:
-    Easy extensions: P( -> ), P( P() )
+MetaL rework: graphs/sets
 
 Examples code:
     Code using arrays (array sum?)
-
-Grapher rework: Use function defined in report
 
 Unify QuickChecking into Framework
 Work on Quickchecking
@@ -35,5 +33,4 @@ Analysis module:
     write using lattice operations as parameters union...
     
 Manual work:
-    NOTE: Precedence is highest for domain product! -> no Q -> (P(Q) * P(Q))?
     subset_pN
