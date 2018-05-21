@@ -19,6 +19,8 @@ rule tokenize = parse
 | whitespace    { tokenize lexbuf }
 | newline       { lexbuf.EndPos <- lexbuf.EndPos.NextLine; tokenize lexbuf; }
 | 'P'           { POWERSET }
+| '|'           { GOP }
+| '!'           { GRAPH }
 | '('           { LBRA }
 | ')'           { RBRA }
 | "->"          { TFS }
@@ -26,6 +28,8 @@ rule tokenize = parse
 | "VAR"         { VARSET }
 | "ARR"         { ARRSET }
 | "Q"           { QSET }
+| "INT"         { INTSET } 
+| "STR"         { STRSET }
 | '['           { LSQ }
 | ']'           { RSQ }
 | 'U'           { UNION }

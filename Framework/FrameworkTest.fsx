@@ -70,34 +70,18 @@ open MetaLParser                    // Generated Parser
 open MetaLLexer                     //Generated Lexer
 
 #load "DomainParser.fs"             // Domain String -> Domain AST
-#load "consolidateAST.fs"           // Domain AST -> Flattened Domain AST
 #load "DomainGenerator.fs"          // Domain AST -> Code
 #load "CallGenerator.fs"            // Domain AST -> LattOps code
+#load "consolidateAST.fs"           // Domain AST -> Flattened Domain AST
 
-if not debug then
-    // File -> String
-    let DomainString = File.ReadAllText("Domain.metaL")
+// File -> String
+let DomainString = File.ReadAllText("Domain.metaL")
 
-    // String -> Domain AST
-    let domainAST = ParseStringDom (DomainString)
-    //printfn "%A" (domainAST)
+// String -> Domain AST
+let domainAST = ParseStringDom (DomainString)
+printfn "%A" (domainAST)
 
-    // Domain AST -> flattened Domain AST
-    let flatDomainAST : domain = reduceDom (domainAST)
-    //printfn "%s" (flatDomainAST.ToString())
-
-    // flattened Domain AST -> Types
-    let code = evaluateAST flatDomainAST DomainString
-    //printfn "%s" code
-
-    // flattened Domain AST -> Lattice Operations
-    let lattOps = evaluateASTCalls flatDomainAST
-    //printfn "%s" lattOps
-
-
-    File.WriteAllText("Domain.fs", code + lattOps)
-else
-    printfn ""
+generateCode (domainAST, DomainString)
 
 #load "LattOps.fs"                      // Lattice Opreations: Union, Intersection, Subset, Superset
 #load "Domain.fs"                       // Domain Specification: Generated code and call traces for LattOps

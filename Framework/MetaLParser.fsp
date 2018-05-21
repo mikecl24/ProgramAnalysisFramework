@@ -6,7 +6,9 @@ open DomainTypes
 %}
 
 %token <string> ELEM
-%token POWERSET LBRA RBRA TFS CART VARSET QSET LSQ RSQ UNION LCURL RCURL SCOL EOF ARRSET
+%token POWERSET LBRA RBRA TFS CART VARSET ARRSET QSET LSQ RSQ UNION LCURL RCURL SCOL EOF 
+%token GRAPH INTSET STRSET GOP
+
 
 //left OPA
 
@@ -16,17 +18,23 @@ open DomainTypes
 %type <domain> start
 
 %left POWERSET TFS CART
+//%left GDOM
+//%left NORMDOM
 %%
 
-start: domainc EOF						{$1}
+start: dom EOF                          { $1 }
 
-domainc:
-| domain                                {$1}
-| domainc CART domain                   { CartesianDom($1,$3) }
+dom:
+| domainM 			   %prec NORMDOM	{DomainMetaL($1)}
+| GRAPH domainG GRAPH  %prec GDOM       {DomainGraph($2)}
 
-domain: 
+domainM:
+| dinst                                 { $1 }
+| domainM CART dinst                    { CartesianDom($1,$3) }
+
+dinst: 
 | POWERSET LBRA set RBRA                { PowersetDom($3) }
-| LSQ set TFS domain RSQ                { TotalFunctionSpaceDom($2,$4) }
+| LSQ set TFS dinst RSQ                 { TotalFunctionSpaceDom($2,$4) }
  
 set:
 | set CART set                          { CartesianSet($1,$3) }
@@ -41,5 +49,21 @@ set:
 elist:
 | ELEM                                  { Element($1) }
 | ELEM SCOL elist                       { LargerList($1,$3) }
+
+domainG:
+| LSQ set TFS domainG RSQ               { TotalFunctionSpaceDom_G($2,$4) }
+| iset                                  { ISet($1) }
+
+iset:
+| iset CART iset                        { CartesianSet_G($1,$3) }
+| VARSET                                { VARSet_G }
+| ARRSET                                { ARRSet_G }
+| QSET                                  { QSet_G }
+| INTSET                                { INTSet_G }
+| STRSET                                { STRSet_G }
+| LBRA iset UNION iset RBRA               { UnionSet_G($2,$4) }
+| LCURL elist RCURL                     { ListSet_G($2) }
+| POWERSET LBRA set RBRA                { PowersetSet_G($3) }
+
 
 %%

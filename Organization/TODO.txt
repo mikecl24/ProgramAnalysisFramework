@@ -4,6 +4,7 @@ Questions:
 Done:
     Extensions  P( -> ), P( P() )
     Signs Example
+    Graph extension parsing
 
 Next Meeting:
     Conclusion
@@ -13,6 +14,9 @@ Next Meeting:
     Report
     Lit revciew: tools conf... 
         esop acm...
+
+consolidateAST graphs
+gen calls and domain graphs
 
 Improve Signs example boolean TF?
 

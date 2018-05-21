@@ -1,5 +1,6 @@
 [<AutoOpen>]
 module DomainParser
+open System
 
 let parse input =
     let lexbuf = LexBuffer<char>.FromString input

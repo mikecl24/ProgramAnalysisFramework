@@ -46,3 +46,22 @@ let rec reduceDom ast =
                                                 | CartesianDom(f1, f2)  -> CartesianListDom( getValueCLD (reduceDom fDom1)  @ [reduceDom fDom2] )
                                                 | _                     -> CartesianListDom([reduceDom fDom1] @ [reduceDom fDom2]) 
     | _                                     -> failwith "Already mutated AST"
+
+let generateCode (ast, Dstring) = 
+    match ast with
+    | DomainMetaL(d)  ->  // Domain AST -> flattened Domain AST
+                        let flatDomainAST : domainM = reduceDom (d)
+                        //printfn "%s" (flatDomainAST.ToString())
+
+                        // flattened Domain AST -> Types
+                        let code = evaluateAST flatDomainAST Dstring
+                        //printfn "%s" code
+
+                        // flattened Domain AST -> Lattice Operations
+                        let lattOps = evaluateASTCalls flatDomainAST
+                        //printfn "%s" lattOps
+
+
+                        File.WriteAllText("Domain.fs", code + lattOps)
+
+    | DomainGraph(d)  ->  failwith "nice"
