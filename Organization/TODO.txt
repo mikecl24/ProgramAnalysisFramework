@@ -1,6 +1,11 @@
 Questions:
     Requirement that initial and final nodes are different needed? (in PG definition)
 
+Generating Bottom:
+    metaL join languages
+    SimpleSet
+    Generating top?????? (maybe use duality? Can you always do so?)
+
 Done:
     Extensions  P( -> ), P( P() )
     Signs Example

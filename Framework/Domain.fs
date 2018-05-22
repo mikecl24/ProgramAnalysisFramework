@@ -16,8 +16,8 @@ type List1 =
 type Powerset1 = List1 Set
 
 type Union1 = 
-    | Var1 of Var 
-    | Arr1 of Arr 
+    | Var2 of Var 
+    | Arr2 of Arr 
 
 
 type Map1 = Map<Union1,Powerset1>

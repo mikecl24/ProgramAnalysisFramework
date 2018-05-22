@@ -8,24 +8,24 @@ let initValue = Set.empty
 let rec genIotaV (vars, oldIota) =
     match vars with
     | [] -> oldIota
-    | var::next -> genIotaV (next, (Map.fold (fun acc key value -> Map.add key value acc) oldIota (Map.empty.Add(Var1 var, iotaValue))))
+    | var::next -> genIotaV (next, (Map.fold (fun acc key value -> Map.add key value acc) oldIota (Map.empty.Add(Var2 var, iotaValue))))
 
 
 let rec genIotaA (arrs, oldIota) =
     match arrs with
     | [] -> oldIota
-    | arr::next -> genIotaA (next, (Map.fold (fun acc key value -> Map.add key value acc) oldIota (Map.empty.Add(Arr1 arr, iotaValue))))
+    | arr::next -> genIotaA (next, (Map.fold (fun acc key value -> Map.add key value acc) oldIota (Map.empty.Add(Arr2 arr, iotaValue))))
 
 let rec genInitV (vars, oldIota) =
     match vars with
     | [] -> oldIota
-    | var::next -> genInitV (next, (Map.fold (fun acc key value -> Map.add key value acc) oldIota (Map.empty.Add(Var1 var, initValue))))
+    | var::next -> genInitV (next, (Map.fold (fun acc key value -> Map.add key value acc) oldIota (Map.empty.Add(Var2 var, initValue))))
 
 
 let rec genInitA (arrs, oldIota) =
     match arrs with
     | [] -> oldIota
-    | arr::next -> genInitA (next, (Map.fold (fun acc key value -> Map.add key value acc) oldIota (Map.empty.Add(Arr1 arr, initValue))))
+    | arr::next -> genInitA (next, (Map.fold (fun acc key value -> Map.add key value acc) oldIota (Map.empty.Add(Arr2 arr, initValue))))
 
 
 (*            Analysis Type            *)
@@ -157,9 +157,9 @@ let evalUmin1 (a:Powerset1) : Powerset1 =
 
 let rec evalA (a:aexp, s:sigma) : Powerset1 =  
     match a with
-    | VarExpr(v)            -> s.[Var1 v]
+    | VarExpr(v)            -> s.[Var2 v]
     | NumExpr(i)            -> beta i
-    | ArrExpr(aname, aex)   -> s.[Arr1 aname]
+    | ArrExpr(aname, aex)   -> s.[Arr2 aname]
     | SumExpr(a1, a2)       -> evalSum1 ((evalA (a1,s)), (evalA (a2, s)))
     | MinExpr(a1, a2)       -> evalMin1 ((evalA (a1,s)), (evalA (a2, s)))
     | MultExpr(a1, a2)      -> evalMult1 ((evalA (a1,s)), (evalA (a2, s)))
@@ -186,7 +186,7 @@ let getArr ast =
 let TF_Boolean (inSigma : sigma, edge : Edge) : sigma = inSigma
 
 let TF_Assignment (inSigma : sigma, edge : Edge) : sigma = 
-    inSigma.Add(Var1 (getVar edge.Action), evalA (getA edge.Action, inSigma))
+    inSigma.Add(Var2 (getVar edge.Action), evalA (getA edge.Action, inSigma))
     //(Map.fold (fun acc key value -> Map.add key value acc) inSigma (Map.empty.Add(Var1 (getVar edge.Action), Set.empty.Add(Record1 {Q1 = edge.Q2; Q2 = edge.Q1}))))
     
 let TF_Skip (inSigma : sigma, edge : Edge) : sigma = inSigma

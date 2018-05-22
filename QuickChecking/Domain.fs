@@ -1,28 +1,27 @@
+[<AutoOpen>]
 module Domain
 
 // Generated Code Section: Domain type
 (*
-Q -> P( VAR * [Q U {QM}] * Q )
+Q -> [ [VAR U ARR] -> P({Plus; Zero; Minus}) ]
 *)
 
-type Node = Node of int
-type Var = Var of string
 
 type List1 =
-    | QM
+    | Plus
+    | Zero
+    | Minus
 
 
-type Union1 =
-    | Q1 of Node 
-    | List1 of List1
+type Powerset1 = List1 Set
+
+type Union1 = 
+    | Var1 of Var 
+    | Arr1 of Arr 
 
 
-type Record1 = {
-    Var1 : Var ;
-    Union1 : Union1;
-    Q2 : Node ;
-}
+type Map1 = Map<Var,Powerset1>
 
-type Powerset1 = Record1 Set
+type sigma = Map1
 
-type AnalysisResult = Map<Node,Powerset1>
+type AnalysisResult = Map<Node, sigma>

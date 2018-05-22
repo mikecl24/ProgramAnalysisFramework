@@ -47,6 +47,10 @@ let Arrays : Arr list = uniqueVars arrtemp
 // printfn "%A" Variables
 // printfn "%A" Arrays
 
+let Identifiers : Identifier list =
+ List.map (fun x -> Var1 x) Variables @
+ List.map (fun x -> Arr1 x) Arrays
+
 printfn "Code Pre-processing Done"
 
 (*-----------------------------------------------------------------*)

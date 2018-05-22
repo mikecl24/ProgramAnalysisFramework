@@ -5,6 +5,9 @@ module Types
 type Node = Node of int
 type Var = Var of string
 type Arr = Arr of string
+type Identifier =
+| Var1 of Var
+| Arr1 of Arr
 
 type AnalysisDirection =
     | Forward
