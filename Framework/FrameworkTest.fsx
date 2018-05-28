@@ -1,10 +1,8 @@
 (*-----------------------------------------------------------------*)
 (*-----------------------------IMPORTS-----------------------------*)
 (*-----------------------------------------------------------------*)
-
-let debug = false
-
 #r "FsLexYacc.Runtime.dll"          // Load in FsLexYacc dll
+#r "FsCheck.dll"                    // Load in FsCheck.dll
 
 //open System
 open Microsoft.FSharp.Text.Lexing   // Lexing Library
@@ -42,23 +40,16 @@ let Nodes : Node list = ExtractNodes Edges
 // printfn "%A" Nodes
 
 (* Variable list from Grapher *)
-let Variables : Var list = uniqueVars vartemp
-let Arrays : Arr list = uniqueVars arrtemp
+let Variables : Var list = uniqueSeq vartemp
+let Arrays : Arr list = uniqueSeq arrtemp
 // printfn "%A" Variables
-// printfn "%A" Arrays
+printfn "%A" Arrays
 
-let Identifiers : Identifier list =
+let Identifiers : Ident list =
  List.map (fun x -> Var1 x) Variables @
  List.map (fun x -> Arr1 x) Arrays
 
 printfn "Code Pre-processing Done"
-
-(*-----------------------------------------------------------------*)
-(*------------------------EXT-DOMAIN-CHECK-------------------------*)
-(*-----------------------------------------------------------------*)
-
-// MetaL Parser -> Generate Domain
-// Quickchecking domain?
 
 (*-----------------------------------------------------------------*)
 (*--------------------------DOMAIN-MODULE--------------------------*)
@@ -74,23 +65,63 @@ open MetaLParser                    // Generated Parser
 open MetaLLexer                     //Generated Lexer
 
 #load "DomainParser.fs"             // Domain String -> Domain AST
+#load "consolidateAST.fs"           // Domain AST -> Flattened Domain AST
 #load "DomainGenerator.fs"          // Domain AST -> Code
 #load "CallGenerator.fs"            // Domain AST -> LattOps code
-#load "consolidateAST.fs"           // Domain AST -> Flattened Domain AST
 
 // File -> String
-let DomainString = File.ReadAllText("Domain.metaL")
+let DomainString : string = File.ReadAllText("Domain.metaL")
+//printfn "%A" DomainString
 
 // String -> Domain AST
-let domainAST = ParseStringDom (DomainString)
-printfn "%A" (domainAST)
+let domainAST : domain = ParseStringDom (DomainString)
+//printfn "%A" domainAST
 
-generateCode (domainAST, DomainString)
+// Domain AST -> flattened Domain AST
+let flatDomainAST : domain = reduceDom (domainAST)
+// printfn "%A" flatDomainAST
 
+// flattened Domain AST -> Types
+let (code, mapNum, mapDescription) = evaluateAST flatDomainAST DomainString
+//printfn "%s" code
+
+// flattened Domain AST -> Lattice Operations
+let lattOps = evaluateASTCalls flatDomainAST
+//printfn "%s" lattOps
+
+// Write results to files
+File.WriteAllText("Domain.fs", code)
+File.WriteAllText("Operations.fs", lattOps)
+
+// Load geenrated code + standard ops
 #load "LattOps.fs"                      // Lattice Opreations: Union, Intersection, Subset, Superset
-#load "Domain.fs"                       // Domain Specification: Generated code and call traces for LattOps
+#load "Domain.fs"                       // Domain Specification: Generated code
 
 printfn "Domain Generation Done"
+
+(*-----------------------------------------------------------------*)
+(*--------------------------DOMAIN-WORK----------------------------*)
+(*-----------------------------------------------------------------*)
+
+// Verify Nature of domain: Safe or graph?
+#load "DomainChecker.fs"                   // Check if domain is valid: return domain type, mapnr and mapdecriptor
+let (isSafe, mNum, mapDescriptor) = domCheck flatDomainAST
+//printfn "%A" (isSafe, mNum, mapDescriptor)    // Debugging correct mapdescriptor
+
+// IF safe auto generate bot and top elements
+open FsCheck
+#load "GeneratorGenerator.fs"           // Create code to get top and bottom if it is a safe domain 
+
+printfn "%A\n%A\n%A\n%A" Nodes Variables Arrays Identifiers
+// printfn "%i, %A" mapNum mapDescription   // Debugging: Parameters
+let latticeCalculator = outputCode mapNum mapDescription
+File.WriteAllText("LatticeStates.fs", latticeCalculator)
+
+#load "LatticeStates.fs"                // Create bot and top
+
+// Quickchecking domain properties extension?
+
+printfn "Domain Verification Done"
 
 (*-----------------------------------------------------------------*)
 (*---------------------TRANSFER-FUNCTION-MODULE--------------------*)
@@ -98,11 +129,15 @@ printfn "Domain Generation Done"
 
 #load "TransferFunctions.fs"        // Transfer Function Specification + 
                                     // Direction, combination op, iota, init
-
+                                    // NEED subset_s if unsafe!!!!!
+                                    
+#load "Operations.fs"                   // Operation Specification: Generated call traces for LattOps
+                                    
 (*                          QuickChecking                          *)
 //insert QuickChecking folder stuff here
 
 printfn "Transfer Function Done"
+
 
 (*-----------------------------------------------------------------*)
 (*-------------------------ANALYSIS-MODULE-------------------------*)

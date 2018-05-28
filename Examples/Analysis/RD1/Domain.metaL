@@ -1,1 +1,1 @@
-P(VAR * [Q U {QM}] * Q)
+P(IDENT * [Q U {QM}] * Q)

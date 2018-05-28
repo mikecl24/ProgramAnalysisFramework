@@ -15,12 +15,8 @@ type List1 =
 
 type Powerset1 = List1 Set
 
-type Union1 = 
-    | Var1 of Var 
-    | Arr1 of Arr 
 
-
-type Map1 = Map<Var,Powerset1>
+type Map1 = Map<Identifier, Powerset1>
 
 type sigma = Map1
 

@@ -1,4 +1,4 @@
-P(VAR * [Q U {QM1}] * Q) * P(ARR * [Q U {QM2}] * Q)
+P(VAR * [Q * Q U {QM1}]) * P(ARR * [Q * Q U {QM2}])
 
-Problem with same label elements, gets inferred to be in first list! (either have to say List2.QM or unique names)
-Reusing parts could be nice :)
+Since QM (?) only happens in start, it doesnt need the node, so reformulated to either two nodes or QM
+Reusing parts could still be nice :)

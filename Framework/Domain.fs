@@ -3,29 +3,46 @@ module Domain
 
 // Generated Code Section: Domain type
 (*
-Q -> [ [VAR U ARR] -> P({Plus; Zero; Minus}) ]
+Q -> P(VAR * [Q U {QM1}] * Q) * P(ARR * [Q U {QM2}] * Q)
 *)
 
 
+type List2 =
+    | QM2
+
+
+type Union2 =
+    | Node3 of Node 
+    | List2 of List2
+
+
+type Record2 = {
+    Arr2 : Arr ;
+    Union2 : Union2;
+    Node4 : Node ;
+}
+
+type Powerset2 = Record2 Set
+
 type List1 =
-    | Plus
-    | Zero
-    | Minus
+    | QM1
 
 
-type Powerset1 = List1 Set
-
-type Union1 = 
-    | Var2 of Var 
-    | Arr2 of Arr 
+type Union1 =
+    | Node1 of Node 
+    | List1 of List1
 
 
-type Map1 = Map<Union1,Powerset1>
+type Record1 = {
+    Var2 : Var ;
+    Union1 : Union1;
+    Node2 : Node ;
+}
 
-type sigma = Map1
+type Powerset1 = Record1 Set
+
+type ComplexDomain = Powerset1 * Powerset2 
+
+type sigma = ComplexDomain
 
 type AnalysisResult = Map<Node, sigma>
-let subsetOP x = subset_m (subset_pw) x 
-let supersetOP x = superset_m (superset_pw) x 
-let unionOP x = union_m (union_pw) x 
-let intersectOP x = intersect_m (intersect_pw) x 

@@ -1,4 +1,4 @@
-P([VAR U ARR] * [Q U {QM}] * Q)
+P(VAR * [Q U {QM1}] * Q) * P(ARR * [Q U {QM2}] * Q)
 
-Spec for RD when first term is a union.
-Slightly more verbose because of union, but clear when its an array or variable
+Problem with same label elements, gets inferred to be in first list! (either have to say List2.QM or unique names)
+Reusing parts could be nice :)

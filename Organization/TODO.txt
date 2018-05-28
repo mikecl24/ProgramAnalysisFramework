@@ -1,28 +1,20 @@
-Questions:
-    Requirement that initial and final nodes are different needed? (in PG definition)
+Done: Generating bot and top
+Reworked metal
+
+
+op_s specification into tf!
+Merge QCheck
+UPDATE EXAMPLES!!!!
+Report Work
+Lit revciew: tools conf... 
+    esop acm...
+SSR eksempel
 
 Generating Bottom:
     metaL join languages
     SimpleSet
     Generating top?????? (maybe use duality? Can you always do so?)
-
-Done:
-    Extensions  P( -> ), P( P() )
-    Signs Example
-    Graph extension parsing
-
-Next Meeting:
-    Conclusion
-    Graph work
-    SSR eksempel
-    Code finish -> Merge QCheck
-    Report
-    Lit revciew: tools conf... 
-        esop acm...
-
-consolidateAST graphs
-gen calls and domain graphs
-
+    
 Improve Signs example boolean TF?
 
 Test backward analysis! might be taking wrong node as last

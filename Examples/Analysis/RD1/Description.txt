@@ -1,3 +1,3 @@
-P(VAR * [Q U {QM}] * Q)
+P(IDENT * [Q U {QM}] * Q)
 
-Spec for RD when ARR is forced to be VARS (simpler domain, but complicates TF)
+Spec for RD when first term is ident.

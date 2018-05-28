@@ -1,6 +1,5 @@
 %{
 open System
-open System.Collections.Generic
 open Types
 let mutable vartemp = new List<Var>()
 let mutable arrtemp = new List<Arr>()

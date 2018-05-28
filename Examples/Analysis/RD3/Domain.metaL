@@ -1,1 +1,1 @@
-P(VAR * [Q U {QM}] * Q) * P(ARR * [Q U {QM}] * Q)
+P(VAR * [Q * Q U {QM1}]) * P(ARR * [Q * Q U {QM2}])

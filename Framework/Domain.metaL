@@ -1,1 +1,1 @@
-[ [VAR U ARR] -> P({Plus; Zero; Minus}) ]
+P(VAR * [Q U {QM1}] * Q) * P(ARR * [Q U {QM2}] * Q)

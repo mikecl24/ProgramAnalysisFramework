@@ -1,7 +1,5 @@
 [<AutoOpen>]
 module CallGenerator
-open System.Runtime.InteropServices
-open System.Security.AccessControl
 
 let fst4 (a, b, c, d) = a
 let snd4 (a, b, c, d) = b
@@ -9,6 +7,7 @@ let trd4 (a, b, c, d) = c
 let frt4 (a, b, c, d) = d
 
 let format (sub, sup, uni, inter) = 
+    "[<AutoOpen>]\nmodule Operations\n" +
     "let subsetOP x = " + sub + " x \n" +
     "let supersetOP x = " + sup + " x \n" +
     "let unionOP x = " + uni + " x \n" +
@@ -23,7 +22,7 @@ let rec getCalls dom =
                                             "union_m (" + trd4 x + ")", 
                                             "intersect_m (" + frt4 x + ")"
                                             )
-
+    | CartesianDom (_)                  -> failwith "Error: Attempt to generate calls in a non-consolidated domain (Cartesian Dom)"
     | CartesianListDom(fListDom)        ->  match fListDom.Length with
                                             | 2 ->  let x1 = getCalls fListDom.[0] 
                                                     let x2 = getCalls fListDom.[1] in
@@ -43,9 +42,6 @@ let rec getCalls dom =
                                                     "intersect_p3 (" + frt4 x1 + ", " + frt4 x2 + ", " + frt4 x3 + ")"
                                                     )
                                             | _ -> failwith "Error: Cartesian domains with maximum 3 terms (for now)"
-    | _                                 ->  ("not a programmed case","","","")
-
+    | SetDom(_)                         -> ("subset_s", "superset_s", "union_s", "intersect_s")
 let evaluateASTCalls dom = format (getCalls dom)
 
-// subset_p2 (subset_n1, subset_n2) =
-// subset_p2 (subset_pw, subset_m (subset_pw)) ( (Set.empty, Map.empty.Add(1, Set.empty.Add(2))) , (Set.empty, Map.empty.Add(1, Set.empty.Add(2).Add(1))))

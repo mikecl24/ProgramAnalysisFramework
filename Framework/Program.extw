@@ -11,4 +11,5 @@ else
         fi;
         x := x-1
     od
-fi
+fi;
+A[0] := 0

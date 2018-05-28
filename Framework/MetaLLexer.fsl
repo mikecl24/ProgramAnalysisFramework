@@ -4,7 +4,6 @@ module MetaLLexer
 open System
 open MetaLParser
 open Microsoft.FSharp.Text.Lexing
-open System.Text
 
 }
 
@@ -19,14 +18,13 @@ rule tokenize = parse
 | whitespace    { tokenize lexbuf }
 | newline       { lexbuf.EndPos <- lexbuf.EndPos.NextLine; tokenize lexbuf; }
 | 'P'           { POWERSET }
-| '|'           { GOP }
-| '!'           { GRAPH }
 | '('           { LBRA }
 | ')'           { RBRA }
 | "->"          { TFS }
 | "*"           { CART }
 | "VAR"         { VARSET }
 | "ARR"         { ARRSET }
+| "IDENT"       { IDENTSET }
 | "Q"           { QSET }
 | "INT"         { INTSET } 
 | "STR"         { STRSET }

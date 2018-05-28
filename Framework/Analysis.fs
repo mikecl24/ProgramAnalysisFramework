@@ -36,6 +36,7 @@ let getCombinator (op : AnalysisOp) =
 let updateAnalysisResult (p : AnalysisResult, q : AnalysisResult) : AnalysisResult = 
     Map(Seq.concat [ (Map.toSeq p) ; (Map.toSeq q) ])
 
+// Initialization for single node init
 let rec initializeSigma (nList : Node list, prevMap : AnalysisResult, node : Node) : AnalysisResult =
     match nList with
     | []    ->  prevMap
@@ -43,7 +44,6 @@ let rec initializeSigma (nList : Node list, prevMap : AnalysisResult, node : Nod
                     initializeSigma (xs, (updateAnalysisResult (prevMap, (Map.empty.Add(x, iota)))), node)
                 else
                     initializeSigma (xs, (updateAnalysisResult (prevMap, (Map.empty.Add(x, init)))), node)
-   
 
 let rec analysis (worklist : Edge list, edges : Edge list, sigmaMap : AnalysisResult, compOP, combOP) : AnalysisResult = 
     match worklist with

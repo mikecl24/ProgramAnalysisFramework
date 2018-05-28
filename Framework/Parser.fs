@@ -1,24 +1,23 @@
 [<AutoOpen>]
 module Parser
+open System.Runtime.InteropServices
 
 // Reorders the list of edges by creation order
-let rec reverse inList acc=
+let rec reverse (inList : 'a list) : 'a list=
     match inList with
-    | [] -> acc
-    | [x] -> x::acc
-    | head::tail -> reverse tail (head::acc)
+    | []    ->  []
+    | _     ->  List.rev inList
 
-let parse input =
-    let lexbuf = LexBuffer<char>.FromString input
-    let result = ExtWParser.start ExtWLexer.tokenize lexbuf
-    result
-
-let ParseString inputString : Statement list =
+// Use the ExtW parser on a string
+let ParseString (input : string) : Statement list =
     try
-    parse inputString 
+        let lexbuf = LexBuffer<char>.FromString input
+        ExtWParser.start ExtWLexer.tokenize lexbuf 
     with e -> failwith "Error parsing program: Invalid code input"
 
+// Convert a sequence to a list
 let toList s = Set.fold (fun l se -> se::l) [] s
 
-let uniqueVars varmut = 
-    reverse (toList (Set.ofSeq varmut)) []
+// Get the unique values in a sequence in the same order
+let uniqueSeq (input : 'a seq) : 'a list = 
+    reverse (toList (Set.ofSeq input))

@@ -4,7 +4,6 @@ module ExtWLexer
 open System
 open ExtWParser
 open Microsoft.FSharp.Text.Lexing
-open System.Text
 
 }
 

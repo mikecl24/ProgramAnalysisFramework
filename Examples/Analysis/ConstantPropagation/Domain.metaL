@@ -1,1 +1,1 @@
-! [ VAR -> ( {Bot; Top} U INT ) ] !
+[ VAR -> [ [{Bot; Top} U INT ] ] ]
