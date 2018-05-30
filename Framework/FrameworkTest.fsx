@@ -116,12 +116,14 @@ open FsCheck
 // printfn "%i, %A" mapNum mapDescription   // Debugging: Parameters
 let latticeCalculator = outputCode mapNum mapDescription
 File.WriteAllText("LatticeStates.fs", latticeCalculator)
-
+ (*
 printfn "Calculating Bot and Top...    (may take some time)"
 #load "LatticeStates.fs"                // Create bot and top
 
 printfn "Example bot: %A" bot
 printfn "Example top: %A" top
+*)
+
 // Quickchecking domain properties extension?
 
 printfn "Domain Verification Done"

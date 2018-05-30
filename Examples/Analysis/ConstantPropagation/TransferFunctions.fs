@@ -9,8 +9,8 @@ let rec genSigma xs uVal : sigma =
     | []        ->  Map.empty
     | a :: b    ->  Map.fold (fun acc key value -> Map.add key value acc) (Map.empty.Add(a, uVal)) (genSigma b uVal)
 
-let bot = genSigma Variables (List1 Bot)
-let top = genSigma Variables (List1 Top)
+let bot : sigma = genSigma Variables (List1 Bot)
+let top : sigma = genSigma Variables (List1 Top)
 
 printfn "Top is: %A" top
 printfn "Bot is: %A" bot

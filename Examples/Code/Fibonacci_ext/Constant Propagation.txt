@@ -1,0 +1,42 @@
+Node 0   ->
+map [(Var "x", List1 Top); (Var "y", List1 Top)]
+
+
+Node 1   ->
+map [(Var "x", Int1 3); (Var "y", List1 Top)]
+
+
+Node 2   ->
+map [(Var "x", Int1 3); (Var "y", Int1 1)]
+
+
+Node 3   ->
+map [(Var "x", Int1 3); (Var "y", Int1 1)]
+
+
+Node 4   ->
+map [(Var "x", List1 Top); (Var "y", List1 Top)]
+
+
+Node 5   ->
+map [(Var "x", List1 Top); (Var "y", List1 Top)]
+
+
+Node 6   ->
+map [(Var "x", List1 Top); (Var "y", List1 Top)]
+
+
+Node 7   ->
+map [(Var "x", List1 Top); (Var "y", List1 Top)]
+
+
+Node 8   ->
+map [(Var "x", List1 Top); (Var "y", List1 Top)]
+
+
+Node 9   ->
+map [(Var "x", List1 Top); (Var "y", List1 Top)]
+
+
+Node 10  ->
+map [(Var "x", List1 Top); (Var "y", List1 Top)]

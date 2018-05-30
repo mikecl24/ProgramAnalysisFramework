@@ -1,15 +1,2 @@
-x := 3;
-y := 1;
-if x <= 0 then 
-    y:= 0;
-else
-    while x > 0 do
-        if x = 1 then
-            skip 
-        else
-            y := y*x
-        fi;
-        x := x-1
-    od
-fi;
-A[0] := y
+x := 11;
+x := x*(0-3)
