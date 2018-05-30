@@ -1,1 +1,1 @@
-P(VAR * [Q U {QM1}] * Q) * P(ARR * [Q U {QM2}] * Q)
+[ IDENT -> P({Plus; Zero; Minus}) ]

@@ -1,0 +1,155 @@
+Node 0   ->
+(set [{Var2 = Var "x";
+       Union1 = List1 QM1;}; {Var2 = Var "y";
+                              Union1 = List1 QM1;}], set [{Arr2 = Arr "A";
+                                                           Union2 = List2 QM2;}])
+
+
+Node 1   ->
+(set [{Var2 = Var "x";
+       Union1 = Record2 {Node1 = Node 1;
+                         Node2 = Node 0;};}; {Var2 = Var "y";
+                                              Union1 = List1 QM1;}],
+ set [{Arr2 = Arr "A";
+       Union2 = List2 QM2;}])
+
+
+Node 2   ->
+(set
+   [{Var2 = Var "x";
+     Union1 = Record2 {Node1 = Node 1;
+                       Node2 = Node 0;};}; {Var2 = Var "y";
+                                            Union1 = Record2 {Node1 = Node 2;
+                                                              Node2 = Node 1;};}],
+ set [{Arr2 = Arr "A";
+       Union2 = List2 QM2;}])
+
+
+Node 3   ->
+(set
+   [{Var2 = Var "x";
+     Union1 = Record2 {Node1 = Node 1;
+                       Node2 = Node 0;};}; {Var2 = Var "y";
+                                            Union1 = Record2 {Node1 = Node 2;
+                                                              Node2 = Node 1;};}],
+ set [{Arr2 = Arr "A";
+       Union2 = List2 QM2;}])
+
+
+Node 4   ->
+(set
+   [{Var2 = Var "x";
+     Union1 = Record2 {Node1 = Node 1;
+                       Node2 = Node 0;};}; {Var2 = Var "x";
+                                            Union1 = Record2 {Node1 = Node 5;
+                                                              Node2 = Node 8;};};
+    {Var2 = Var "y";
+     Union1 = Record2 {Node1 = Node 2;
+                       Node2 = Node 1;};}; {Var2 = Var "y";
+                                            Union1 = Record2 {Node1 = Node 4;
+                                                              Node2 = Node 3;};};
+    {Var2 = Var "y";
+     Union1 = Record2 {Node1 = Node 8;
+                       Node2 = Node 9;};}], set [{Arr2 = Arr "A";
+                                                  Union2 = List2 QM2;}])
+
+
+Node 5   ->
+(set
+   [{Var2 = Var "x";
+     Union1 = Record2 {Node1 = Node 1;
+                       Node2 = Node 0;};}; {Var2 = Var "x";
+                                            Union1 = Record2 {Node1 = Node 5;
+                                                              Node2 = Node 8;};};
+    {Var2 = Var "y";
+     Union1 = Record2 {Node1 = Node 2;
+                       Node2 = Node 1;};}; {Var2 = Var "y";
+                                            Union1 = Record2 {Node1 = Node 8;
+                                                              Node2 = Node 9;};}],
+ set [{Arr2 = Arr "A";
+       Union2 = List2 QM2;}])
+
+
+Node 6   ->
+(set
+   [{Var2 = Var "x";
+     Union1 = Record2 {Node1 = Node 1;
+                       Node2 = Node 0;};}; {Var2 = Var "x";
+                                            Union1 = Record2 {Node1 = Node 5;
+                                                              Node2 = Node 8;};};
+    {Var2 = Var "y";
+     Union1 = Record2 {Node1 = Node 2;
+                       Node2 = Node 1;};}; {Var2 = Var "y";
+                                            Union1 = Record2 {Node1 = Node 8;
+                                                              Node2 = Node 9;};}],
+ set [{Arr2 = Arr "A";
+       Union2 = List2 QM2;}])
+
+
+Node 7   ->
+(set
+   [{Var2 = Var "x";
+     Union1 = Record2 {Node1 = Node 1;
+                       Node2 = Node 0;};}; {Var2 = Var "x";
+                                            Union1 = Record2 {Node1 = Node 5;
+                                                              Node2 = Node 8;};};
+    {Var2 = Var "y";
+     Union1 = Record2 {Node1 = Node 2;
+                       Node2 = Node 1;};}; {Var2 = Var "y";
+                                            Union1 = Record2 {Node1 = Node 8;
+                                                              Node2 = Node 9;};}],
+ set [{Arr2 = Arr "A";
+       Union2 = List2 QM2;}])
+
+
+Node 8   ->
+(set
+   [{Var2 = Var "x";
+     Union1 = Record2 {Node1 = Node 1;
+                       Node2 = Node 0;};}; {Var2 = Var "x";
+                                            Union1 = Record2 {Node1 = Node 5;
+                                                              Node2 = Node 8;};};
+    {Var2 = Var "y";
+     Union1 = Record2 {Node1 = Node 2;
+                       Node2 = Node 1;};}; {Var2 = Var "y";
+                                            Union1 = Record2 {Node1 = Node 8;
+                                                              Node2 = Node 9;};}],
+ set [{Arr2 = Arr "A";
+       Union2 = List2 QM2;}])
+
+
+Node 9   ->
+(set
+   [{Var2 = Var "x";
+     Union1 = Record2 {Node1 = Node 1;
+                       Node2 = Node 0;};}; {Var2 = Var "x";
+                                            Union1 = Record2 {Node1 = Node 5;
+                                                              Node2 = Node 8;};};
+    {Var2 = Var "y";
+     Union1 = Record2 {Node1 = Node 2;
+                       Node2 = Node 1;};}; {Var2 = Var "y";
+                                            Union1 = Record2 {Node1 = Node 8;
+                                                              Node2 = Node 9;};}],
+ set [{Arr2 = Arr "A";
+       Union2 = List2 QM2;}])
+
+
+Node 10  ->
+(set
+   [{Var2 = Var "x";
+     Union1 = Record2 {Node1 = Node 1;
+                       Node2 = Node 0;};}; {Var2 = Var "x";
+                                            Union1 = Record2 {Node1 = Node 5;
+                                                              Node2 = Node 8;};};
+    {Var2 = Var "y";
+     Union1 = Record2 {Node1 = Node 2;
+                       Node2 = Node 1;};}; {Var2 = Var "y";
+                                            Union1 = Record2 {Node1 = Node 4;
+                                                              Node2 = Node 3;};};
+    {Var2 = Var "y";
+     Union1 = Record2 {Node1 = Node 8;
+                       Node2 = Node 9;};}],
+ set [{Arr2 = Arr "A";
+       Union2 = Record4 {Node3 = Node 10;
+                         Node4 = Node 4;};}; {Arr2 = Arr "A";
+                                              Union2 = List2 QM2;}])

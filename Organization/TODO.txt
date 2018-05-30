@@ -1,6 +1,7 @@
+RD2 : SSets must not be empty when used!!
+
 Done: Generating bot and top
 Reworked metal
-
 
 op_s specification into tf!
 Merge QCheck

@@ -1,0 +1,112 @@
+Node 0   ->
+(map [(Var "x", set [List1 QM1]); (Var "y", set [List1 QM1])],
+ map [(Arr "A", set [List2 QM2])])
+
+
+Node 1   ->
+(map [(Var "x", set [Record1 {Node1 = Node 1;
+                              Node2 = Node 0;}]); (Var "y", set [List1 QM1])],
+ map [(Arr "A", set [List2 QM2])])
+
+
+Node 2   ->
+(map
+   [(Var "x", set [Record1 {Node1 = Node 1;
+                            Node2 = Node 0;}]);
+    (Var "y", set [Record1 {Node1 = Node 2;
+                            Node2 = Node 1;}])],
+ map [(Arr "A", set [List2 QM2])])
+
+
+Node 3   ->
+(map
+   [(Var "x", set [Record1 {Node1 = Node 1;
+                            Node2 = Node 0;}]);
+    (Var "y", set [Record1 {Node1 = Node 2;
+                            Node2 = Node 1;}])],
+ map [(Arr "A", set [List2 QM2])])
+
+
+Node 4   ->
+(map
+   [(Var "x", set [Record1 {Node1 = Node 1;
+                            Node2 = Node 0;}; Record1 {Node1 = Node 5;
+                                                       Node2 = Node 8;}]);
+    (Var "y",
+     set
+       [Record1 {Node1 = Node 2;
+                 Node2 = Node 1;}; Record1 {Node1 = Node 4;
+                                            Node2 = Node 3;};
+        Record1 {Node1 = Node 8;
+                 Node2 = Node 9;}])], map [(Arr "A", set [List2 QM2])])
+
+
+Node 5   ->
+(map
+   [(Var "x", set [Record1 {Node1 = Node 1;
+                            Node2 = Node 0;}; Record1 {Node1 = Node 5;
+                                                       Node2 = Node 8;}]);
+    (Var "y", set [Record1 {Node1 = Node 2;
+                            Node2 = Node 1;}; Record1 {Node1 = Node 8;
+                                                       Node2 = Node 9;}])],
+ map [(Arr "A", set [List2 QM2])])
+
+
+Node 6   ->
+(map
+   [(Var "x", set [Record1 {Node1 = Node 1;
+                            Node2 = Node 0;}; Record1 {Node1 = Node 5;
+                                                       Node2 = Node 8;}]);
+    (Var "y", set [Record1 {Node1 = Node 2;
+                            Node2 = Node 1;}; Record1 {Node1 = Node 8;
+                                                       Node2 = Node 9;}])],
+ map [(Arr "A", set [List2 QM2])])
+
+
+Node 7   ->
+(map
+   [(Var "x", set [Record1 {Node1 = Node 1;
+                            Node2 = Node 0;}; Record1 {Node1 = Node 5;
+                                                       Node2 = Node 8;}]);
+    (Var "y", set [Record1 {Node1 = Node 2;
+                            Node2 = Node 1;}; Record1 {Node1 = Node 8;
+                                                       Node2 = Node 9;}])],
+ map [(Arr "A", set [List2 QM2])])
+
+
+Node 8   ->
+(map
+   [(Var "x", set [Record1 {Node1 = Node 1;
+                            Node2 = Node 0;}; Record1 {Node1 = Node 5;
+                                                       Node2 = Node 8;}]);
+    (Var "y", set [Record1 {Node1 = Node 2;
+                            Node2 = Node 1;}; Record1 {Node1 = Node 8;
+                                                       Node2 = Node 9;}])],
+ map [(Arr "A", set [List2 QM2])])
+
+
+Node 9   ->
+(map
+   [(Var "x", set [Record1 {Node1 = Node 1;
+                            Node2 = Node 0;}; Record1 {Node1 = Node 5;
+                                                       Node2 = Node 8;}]);
+    (Var "y", set [Record1 {Node1 = Node 2;
+                            Node2 = Node 1;}; Record1 {Node1 = Node 8;
+                                                       Node2 = Node 9;}])],
+ map [(Arr "A", set [List2 QM2])])
+
+
+Node 10  ->
+(map
+   [(Var "x", set [Record1 {Node1 = Node 1;
+                            Node2 = Node 0;}; Record1 {Node1 = Node 5;
+                                                       Node2 = Node 8;}]);
+    (Var "y",
+     set
+       [Record1 {Node1 = Node 2;
+                 Node2 = Node 1;}; Record1 {Node1 = Node 4;
+                                            Node2 = Node 3;};
+        Record1 {Node1 = Node 8;
+                 Node2 = Node 9;}])],
+ map [(Arr "A", set [Record2 {Node3 = Node 10;
+                              Node4 = Node 4;}; List2 QM2])])

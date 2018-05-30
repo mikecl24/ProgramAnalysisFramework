@@ -2,6 +2,17 @@
 module Analysis
 open System.Runtime.CompilerServices
 
+
+let getInit op = 
+    match op with
+    | LUB   -> bot
+    | GLB   -> top
+
+
+// Init
+
+let init : sigma = getInit operation  //Set.empty
+// printfn "Init (bot/top): %A" init
 let reverseEdge (e : Edge) : Edge = 
     {Q1 = e.Q2;
     Q2 = e.Q1;

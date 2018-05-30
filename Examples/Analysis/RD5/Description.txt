@@ -1,3 +1,3 @@
-[VAR U ARR] -> P([Q * Q U {QM}])
+[IDENT -> P([Q * Q U {QM}])]
 
-Single map with complex map set
+Single map using the IDENT set

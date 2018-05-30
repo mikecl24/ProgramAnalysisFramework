@@ -98,10 +98,10 @@ printfn "Top as generated:\n%A" bot
 
 let mutable x = 1
 let test num = num+1
+
 let test2 = test x
 
-printfn "%A" (test2)
+printfn "%A" (test x)
 
 x <- 3
-
-printfn "%A" (test2)
+printfn "%A" (test x)

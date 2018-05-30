@@ -13,11 +13,6 @@ let rec genIotaA (arrs, oldIota) =
     | [] -> oldIota
     | arr::next -> genIotaA (next, (Set.union oldIota (Set.empty.Add({Ident1 = Arr1 arr; Union1 = List1(QM); Node2 = Node(0)}))))
 
-let getInit op = 
-    match op with
-    | LUB   -> bot
-    | GLB   -> top
-
 (*            Analysis Type            *)
 // Direction
 let direction : AnalysisDirection = Forward
@@ -26,10 +21,6 @@ let operation : AnalysisOp = LUB
 // Iota
 let iota : sigma = Set.union (genIotaV (Variables, Set.empty)) (genIotaA (Arrays, Set.empty))
 //printfn "Iota:\n%A\n" (Seq.toList iota)
-// Init
-
-let init : sigma = getInit operation  //Set.empty
-printfn "Init (bot/top): %A" init
 
 
 //Helper code

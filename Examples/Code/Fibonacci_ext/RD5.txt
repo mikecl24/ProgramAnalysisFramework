@@ -1,0 +1,114 @@
+Node 0   ->
+map
+  [(Var1 (Var "x"), set [List1 QM]); (Var1 (Var "y"), set [List1 QM]);
+   (Arr1 (Arr "A"), set [List1 QM])]
+
+
+Node 1   ->
+map
+  [(Var1 (Var "x"), set [Record1 {Node1 = Node 1;
+                                  Node2 = Node 0;}]);
+   (Var1 (Var "y"), set [List1 QM]); (Arr1 (Arr "A"), set [List1 QM])]
+
+
+Node 2   ->
+map
+  [(Var1 (Var "x"), set [Record1 {Node1 = Node 1;
+                                  Node2 = Node 0;}]);
+   (Var1 (Var "y"), set [Record1 {Node1 = Node 2;
+                                  Node2 = Node 1;}]);
+   (Arr1 (Arr "A"), set [List1 QM])]
+
+
+Node 3   ->
+map
+  [(Var1 (Var "x"), set [Record1 {Node1 = Node 1;
+                                  Node2 = Node 0;}]);
+   (Var1 (Var "y"), set [Record1 {Node1 = Node 2;
+                                  Node2 = Node 1;}]);
+   (Arr1 (Arr "A"), set [List1 QM])]
+
+
+Node 4   ->
+map
+  [(Var1 (Var "x"), set [Record1 {Node1 = Node 1;
+                                  Node2 = Node 0;}; Record1 {Node1 = Node 5;
+                                                             Node2 = Node 8;}]);
+   (Var1 (Var "y"),
+    set
+      [Record1 {Node1 = Node 2;
+                Node2 = Node 1;}; Record1 {Node1 = Node 4;
+                                           Node2 = Node 3;};
+       Record1 {Node1 = Node 8;
+                Node2 = Node 9;}]); (Arr1 (Arr "A"), set [List1 QM])]
+
+
+Node 5   ->
+map
+  [(Var1 (Var "x"), set [Record1 {Node1 = Node 1;
+                                  Node2 = Node 0;}; Record1 {Node1 = Node 5;
+                                                             Node2 = Node 8;}]);
+   (Var1 (Var "y"), set [Record1 {Node1 = Node 2;
+                                  Node2 = Node 1;}; Record1 {Node1 = Node 8;
+                                                             Node2 = Node 9;}]);
+   (Arr1 (Arr "A"), set [List1 QM])]
+
+
+Node 6   ->
+map
+  [(Var1 (Var "x"), set [Record1 {Node1 = Node 1;
+                                  Node2 = Node 0;}; Record1 {Node1 = Node 5;
+                                                             Node2 = Node 8;}]);
+   (Var1 (Var "y"), set [Record1 {Node1 = Node 2;
+                                  Node2 = Node 1;}; Record1 {Node1 = Node 8;
+                                                             Node2 = Node 9;}]);
+   (Arr1 (Arr "A"), set [List1 QM])]
+
+
+Node 7   ->
+map
+  [(Var1 (Var "x"), set [Record1 {Node1 = Node 1;
+                                  Node2 = Node 0;}; Record1 {Node1 = Node 5;
+                                                             Node2 = Node 8;}]);
+   (Var1 (Var "y"), set [Record1 {Node1 = Node 2;
+                                  Node2 = Node 1;}; Record1 {Node1 = Node 8;
+                                                             Node2 = Node 9;}]);
+   (Arr1 (Arr "A"), set [List1 QM])]
+
+
+Node 8   ->
+map
+  [(Var1 (Var "x"), set [Record1 {Node1 = Node 1;
+                                  Node2 = Node 0;}; Record1 {Node1 = Node 5;
+                                                             Node2 = Node 8;}]);
+   (Var1 (Var "y"), set [Record1 {Node1 = Node 2;
+                                  Node2 = Node 1;}; Record1 {Node1 = Node 8;
+                                                             Node2 = Node 9;}]);
+   (Arr1 (Arr "A"), set [List1 QM])]
+
+
+Node 9   ->
+map
+  [(Var1 (Var "x"), set [Record1 {Node1 = Node 1;
+                                  Node2 = Node 0;}; Record1 {Node1 = Node 5;
+                                                             Node2 = Node 8;}]);
+   (Var1 (Var "y"), set [Record1 {Node1 = Node 2;
+                                  Node2 = Node 1;}; Record1 {Node1 = Node 8;
+                                                             Node2 = Node 9;}]);
+   (Arr1 (Arr "A"), set [List1 QM])]
+
+
+Node 10  ->
+map
+  [(Var1 (Var "x"), set [Record1 {Node1 = Node 1;
+                                  Node2 = Node 0;}; Record1 {Node1 = Node 5;
+                                                             Node2 = Node 8;}]);
+   (Var1 (Var "y"),
+    set
+      [Record1 {Node1 = Node 2;
+                Node2 = Node 1;}; Record1 {Node1 = Node 4;
+                                           Node2 = Node 3;};
+       Record1 {Node1 = Node 8;
+                Node2 = Node 9;}]);
+   (Arr1 (Arr "A"), set [Record1 {Node1 = Node 10;
+                                  Node2 = Node 4;}; List1 QM])]

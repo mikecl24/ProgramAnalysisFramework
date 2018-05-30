@@ -1,1 +1,1 @@
-[ [VAR U ARR] -> P({Plus; Zero; Minus}) ]
+[ IDENT -> P({Plus; Zero; Minus}) ]

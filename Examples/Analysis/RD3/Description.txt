@@ -1,4 +1,3 @@
 P(VAR * [Q * Q U {QM1}]) * P(ARR * [Q * Q U {QM2}])
 
 Since QM (?) only happens in start, it doesnt need the node, so reformulated to either two nodes or QM
-Reusing parts could still be nice :)

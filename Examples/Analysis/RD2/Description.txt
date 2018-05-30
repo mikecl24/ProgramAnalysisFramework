@@ -1,4 +1,5 @@
 P(VAR * [Q U {QM1}] * Q) * P(ARR * [Q U {QM2}] * Q)
 
-Problem with same label elements, gets inferred to be in first list! (either have to say List2.QM or unique names)
-Reusing parts could be nice :)
+Note that elements are unique in the domain (QM1/QM2). 
+Since VAR and ARR are used, then the program must contain at least one variable and one array.
+Uses the Cartesian product of domains semantics to separate into a tuple for each case.

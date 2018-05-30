@@ -16,16 +16,6 @@ let rec genIotaA (arrs, oldIota) =
     | [] -> oldIota
     | arr::next -> genIotaA (next, (Map.fold (fun acc key value -> Map.add key value acc) oldIota (Map.empty.Add(Arr1 arr, iotaValue))))
 
-let rec genInitV (vars, oldIota) =
-    match vars with
-    | [] -> oldIota
-    | var::next -> genInitV (next, (Map.fold (fun acc key value -> Map.add key value acc) oldIota (Map.empty.Add(Var1 var, initValue))))
-
-
-let rec genInitA (arrs, oldIota) =
-    match arrs with
-    | [] -> oldIota
-    | arr::next -> genInitA (next, (Map.fold (fun acc key value -> Map.add key value acc) oldIota (Map.empty.Add(Arr1 arr, initValue))))
 
 
 (*            Analysis Type            *)
@@ -36,9 +26,6 @@ let operation : AnalysisOp = LUB
 // Iota
 let iota : sigma = (Map.fold (fun acc key value -> Map.add key value acc) (genIotaV (Variables, Map.empty)) (genIotaA (Arrays, Map.empty)))
 //printfn "Iota:\n%A\n" iota
-// Init
-let init : sigma = (Map.fold (fun acc key value -> Map.add key value acc) (genInitV (Variables, Map.empty)) (genInitA (Arrays, Map.empty)))
-//printfn "Init:\n%A\n" init
  
 
 //Helper code
