@@ -40,7 +40,7 @@ type GeneratorsTop =
           override x.Shrinker t = Seq.empty }
     static member Map1() = 
       {new Arbitrary<Map1>() with
-          override x.Generator = createAnalysis Identifiers.Length Identifiers ( Arb.generate<Powerset1> |> Gen.sample 1000000 1000000 |> Set.ofList |> Set.fold (fun l se -> se::l) [] )
+          override x.Generator = createAnalysis Variables.Length Variables ( Arb.generate<Union1> |> Gen.sample 1000000 1000000 |> Set.ofList |> Set.fold (fun l se -> se::l) [] )
           override x.Shrinker t = Seq.empty }
 
 Arb.register<GeneratorsTop>() |> ignore
@@ -71,7 +71,7 @@ type GeneratorsBot =
           override x.Shrinker t = Seq.empty }
     static member Map1() = 
       {new Arbitrary<Map1>() with
-          override x.Generator = Gen.elements [createAnalysisB Identifiers (Arb.generate<Powerset1> |> Gen.sample 100 1).[0]]
+          override x.Generator = Gen.elements [createAnalysisB Variables (Arb.generate<Union1> |> Gen.sample 100 1).[0]]
           override x.Shrinker t = Seq.empty }
     static member AnalysisResult() = 
       {new Arbitrary<AnalysisResult>() with

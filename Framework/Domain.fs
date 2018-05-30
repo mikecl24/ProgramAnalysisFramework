@@ -3,19 +3,21 @@ module Domain
 
 // Generated Code Section: Domain type
 (*
-Q -> [ IDENT -> P({Plus; Zero; Minus}) ]
+Q -> [ VAR -> [ [{Bot; Top} U INT ] ] ]
 *)
 
 
 type List1 =
-    | Plus
-    | Zero
-    | Minus
+    | Bot
+    | Top
 
 
-type Powerset1 = List1 Set
+type Union1 = 
+    | List1 of List1
+    | Int1 of int 
 
-type Map1 = Map<Ident,Powerset1>
+
+type Map1 = Map<Var,Union1>
 
 type sigma = Map1
 
