@@ -1,0 +1,17 @@
+
+let TF_Analysis (inSigma : sigma, edge : Edge) : sigma = 
+    match Set.count inSigma with
+    | 0     -> Set.empty.Add({Ident1 = Var1 (Var "x"); Union1 = Node1 (Node 0); Node2 = Node 1})
+    | _             -> Set.empty
+
+
+Result
+    
+Checking Monotonicity for Program sized programs in TF_test1
+Falsifiable, after 6 tests (0 shrinks) (StdGen (1901932966,296458904)):
+Original:
+(set [], set [{Ident1 = Var1 (Var "var0");
+               Union1 = Node1 (Node 19);
+               Node2 = Node 14;}], {Q1 = Node 10;
+                                    Q2 = Node 2;
+                                    Action = SkipCommand;})
