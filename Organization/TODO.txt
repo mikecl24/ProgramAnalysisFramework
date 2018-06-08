@@ -1,47 +1,16 @@
-RD2 : SSets must not be empty when used!!
-
-Done: Generating bot and top
-Reworked metal
-Generator generators & mutables
 30 min presentation
+Code: Post link to repository?
 
-Isomorphism specify symbol
-draft
+Code Work
+    Finish interval analysis
+    Improved quickchecking accuracy: Generate pairs satisfying precondition
+    (SSR example) 
+    (Worklist stuff)
 
-Improved quickchecking accuracy
-
-Citing new prog analysis book
-
-op_s specification into tf!
-Merge QCheck
-UPDATE EXAMPLES!!!!
 Report Work
-Lit revciew: tools conf... 
-    esop acm...
-SSR eksempel
-
-Generating Bottom:
-    metaL join languages
-    SimpleSet
-    Generating top?????? (maybe use duality? Can you always do so?)
-    
-Improve Signs example boolean TF?
-
-Test backward analysis! might be taking wrong node as last
-
-MetaL rework: graphs/sets
-
-Examples code:
-    Code using arrays (array sum?)
-
-Unify QuickChecking into Framework
-Work on Quickchecking
-Report: Define reader
-
-Worklist: Efficient/spec?
-
-Analysis module:
-    write using lattice operations as parameters union...
-    
-Manual work:
-    subset_pN
+    Intro: deifne reader
+    TF specification (op_s/bot/top optionally, tfs, parameters in parameter file)
+    Quickchecking examples of failure
+    Lit revciew: tools conf... 
+        esop acm...
+    Extra code example
