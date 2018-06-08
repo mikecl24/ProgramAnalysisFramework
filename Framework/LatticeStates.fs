@@ -38,15 +38,12 @@ type GeneratorsTop =
       {new Arbitrary<Set<'a>>() with
           override x.Generator = Gen.elements [ Set.ofList (Arb.generate<'a> |> Gen.sample 1000000000 500000)] //hopefully enough :D MAX INT ish
           override x.Shrinker t = Seq.empty }
-    static member Map1() = 
-      {new Arbitrary<Map1>() with
-          override x.Generator = createAnalysis Identifiers.Length Identifiers ( Arb.generate<Union1> |> Gen.sample 1000000 1000000 |> Set.ofList |> Set.fold (fun l se -> se::l) [] )
-          override x.Shrinker t = Seq.empty }
 
 Arb.register<GeneratorsTop>() |> ignore
 
 let top = (Arb.generate<sigma> |> Gen.sample 10 1).[0]
 // printfn "Top as generated:\n%A" top
+
 
 type GeneratorsBot =
     static member Node() =
@@ -69,10 +66,6 @@ type GeneratorsBot =
       {new Arbitrary<Set<'a>>() with
           override x.Generator = Gen.elements [Set.empty]
           override x.Shrinker t = Seq.empty }
-    static member Map1() = 
-      {new Arbitrary<Map1>() with
-          override x.Generator = Gen.elements [createAnalysisB Identifiers (Arb.generate<Union1> |> Gen.sample 100 1).[0]]
-          override x.Shrinker t = Seq.empty }
     static member AnalysisResult() = 
       {new Arbitrary<AnalysisResult>() with
           override x.Generator = Gen.elements [createAnalysisB Nodes (Arb.generate<sigma> |> Gen.sample 100 1).[0]]
@@ -82,3 +75,4 @@ Arb.register<GeneratorsBot>() |> ignore
 
 let bot = (Arb.generate<sigma> |> Gen.sample 0 1).[0]
 // printfn "Bot as generated:\n%A" (Seq.toList bot)
+

@@ -1,123 +1,17 @@
 [<AutoOpen>]
 module TransferFunctions
-open System.Runtime.InteropServices
-open System
-
-// Graph domain Specification
-// Generate a map from a list and a value to assign to
-let rec genSigma xs uVal : sigma = 
-    match xs with
-    | []        ->  Map.empty
-    | a :: b    ->  Map.fold (fun acc key value -> Map.add key value acc) (Map.empty.Add(a, uVal)) (genSigma b uVal)
-
-let bot : sigma = genSigma Identifiers (List1 Bot)
-let top : sigma = genSigma Identifiers (Record1 {Union2 = List2 NegInf; Union3 = List3 PlusInf})
-
-printfn "Top is: %A" top
-printfn "Bot is: %A" bot
-
-let subset_u2 (a, b) : bool =
-    match (a,b) with
-    | (x, y) when x = y             -> true
-    | (List2 NegInf, _)             -> false
-    | (_, List2 NegInf)             -> true
-    | (Int1 x, Int1 y)              -> x>y
-
-let subset_u3 (a, b) : bool =
-    match (a,b) with
-    | (x, y) when x = y             -> true
-    | (List3 PlusInf, _)            -> false
-    | (_, List3 PlusInf)            -> true
-    | (Int2 x, Int2 y)              -> x<y
-
-let superset_u2 (a, b) : bool =
-    match (a,b) with
-    | (x, y) when x = y             -> true
-    | (List2 NegInf, _)             -> true
-    | (_, List2 NegInf)             -> false
-    | (Int1 x, Int1 y)              -> x<y
-
-let superset_u3 (a, b) : bool =
-    match (a,b) with
-    | (x, y) when x = y             -> true
-    | (List3 PlusInf, _)            -> true
-    | (_, List3 PlusInf)            -> false
-    | (Int2 x, Int2 y)              -> x>y
-let union_u2 (a, b) : Union2 =
-    match (a,b) with
-    | (x, y) when x = y             -> a
-    | (List2 NegInf, _)             -> a
-    | (_, List2 NegInf)             -> b
-    | (Int1 x, Int1 y)  when x<y    -> a
-    | (Int1 x, Int1 y)  when x>y    -> b
-    | _                             -> failwith "Error: Forgotten case in union_u2"
-
-let union_u3 (a, b) : Union3 =
-    match (a,b) with
-    | (x, y) when x = y             -> a
-    | (List3 PlusInf, _)            -> a
-    | (_, List3 PlusInf)            -> b
-    | (Int2 x, Int2 y)  when x>y    -> a
-    | (Int2 x, Int2 y)  when x<y    -> b
-    | _                             -> failwith "Error: Forgotten case in union_u3"
- 
-let intersect_u2 (a, b) : Union2 =
-    match (a,b) with
-    | (x, y) when x = y             -> a
-    | (List2 NegInf, _)             -> b
-    | (_, List2 NegInf)             -> a
-    | (Int1 x, Int1 y)  when x<y    -> b
-    | (Int1 x, Int1 y)  when x>y    -> a
-    | _                             -> failwith "Error: Forgotten case in intersect_u2"
-
-let intersect_u3 (a, b) : Union3 =
-    match (a,b) with
-    | (x, y) when x = y             -> a
-    | (List3 PlusInf, _)            -> b
-    | (_, List3 PlusInf)            -> a
-    | (Int2 x, Int2 y)  when x>y    -> b
-    | (Int2 x, Int2 y)  when x<y    -> a
-    | _                             -> failwith "Error: Forgotten case in intersect_u3"
-
-// subset op for constant propagation lattice
-let subset_s (set1, set2) : bool =
-    match (set1, set2) with
-    | (x, y) when x = y                                                         -> true
-    | (List1 Bot, _)                                                            -> true
-    | (_, List1 Bot)                                                            -> false
-    | (Record1 {Union2 = List2 NegInf; Union3 = List3 PlusInf}, _)              -> false
-    | (_, Record1 {Union2 = List2 NegInf; Union3 = List3 PlusInf})              -> true
-    | (Record1 {Union2 = x1; Union3 = y1}, Record1 {Union2 = x2; Union3 = y2})  -> subset_u2 (x1, x2) && subset_u3 (y1, y2)
-
-// superset op for constant propagation lattice
-let superset_s (set1, set2) : bool = 
-    match (set1, set2) with
-    | (x, y) when x = y                                                         -> true
-    | (List1 Bot, _)                                                            -> false
-    | (_, List1 Bot)                                                            -> true
-    | (Record1 {Union2 = List2 NegInf; Union3 = List3 PlusInf}, _)              -> true
-    | (_, Record1 {Union2 = List2 NegInf; Union3 = List3 PlusInf})              -> false
-    | (Record1 {Union2 = x1; Union3 = y1}, Record1 {Union2 = x2; Union3 = y2})  -> superset_u2 (x1, x2) && superset_u3 (y1, y2)
-
-let union_s (set1, set2) = 
-    match (set1, set2) with
-    | (x, y) when x = y                                                         -> set1
-    | (List1 Bot, _)                                                            -> set2
-    | (_, List1 Bot)                                                            -> set1
-    | (Record1 {Union2 = List2 NegInf; Union3 = List3 PlusInf}, _)              -> set1
-    | (_, Record1 {Union2 = List2 NegInf; Union3 = List3 PlusInf})              -> set2
-    | (Record1 {Union2 = x1; Union3 = y1}, Record1 {Union2 = x2; Union3 = y2})  -> Record1 {Union2 = union_u2 (x1, x2); Union3 = union_u3 (y1, y2)}
-
-let intersect_s (set1, set2) = 
-    match (set1, set2) with
-    | (x, y) when x = y                                                         -> set1
-    | (List1 Bot, _)                                                            -> set1
-    | (_, List1 Bot)                                                            -> set2
-    | (Record1 {Union2 = List2 NegInf; Union3 = List3 PlusInf}, _)              -> set2
-    | (_, Record1 {Union2 = List2 NegInf; Union3 = List3 PlusInf})              -> set1
-    | (Record1 {Union2 = x1; Union3 = y1}, Record1 {Union2 = x2; Union3 = y2})  -> Record1 {Union2 = intersect_u2 (x1, x2); Union3 = intersect_u3 (y1, y2)}
 
 //Helper code
+let rec genIotaV (vars, oldIota) =
+    match vars with
+    | [] -> oldIota
+    | var::next -> genIotaV (next, (Set.union oldIota (Set.empty.Add({Ident1 = Var1 var; Union1 = List1(QM); Node2 = Node(0)}))))
+
+
+let rec genIotaA (arrs, oldIota) =
+    match arrs with
+    | [] -> oldIota
+    | arr::next -> genIotaA (next, (Set.union oldIota (Set.empty.Add({Ident1 = Arr1 arr; Union1 = List1(QM); Node2 = Node(0)}))))
 
 (*            Analysis Type            *)
 // Direction
@@ -125,152 +19,20 @@ let direction : AnalysisDirection = Forward
 // Combination operator
 let operation : AnalysisOp = LUB
 // Iota
-let iota : sigma = genSigma Identifiers (Record1 {Union2 = List2 NegInf; Union3 = List3 PlusInf})
+let iota : sigma = Set.union (genIotaV (Variables, Set.empty)) (genIotaA (Arrays, Set.empty))
 //printfn "Iota:\n%A\n" (Seq.toList iota)
 
+
 //Helper code
-let minI = -10
-let maxI = 10
-let evalSum_u2 (a, b) = 
-    match (a,b) with
-    | (List2 NegInf, _)                 -> a
-    | (_, List2 NegInf)                 -> b
-    | (Int1 x, Int1 y) when x+y<minI    -> List2 NegInf
-    | (Int1 x, Int1 y) when x+y>maxI    -> Int1 maxI
-    | (Int1 x, Int1 y)                  -> Int1 (x+y) 
-
-let evalSum_u3 (a, b) = 
-    match (a,b) with
-    | (List3 PlusInf, _)                -> a
-    | (_, List3 PlusInf)                -> b
-    | (Int2 x, Int2 y) when x+y>maxI    -> List3 PlusInf
-    | (Int2 x, Int2 y) when x+y<minI    -> Int2 minI
-    | (Int2 x, Int2 y)                  -> Int2 (x+y) 
-
-let evalMin_u2 (a, b) = 
-    match (a,b) with
-    | (List2 NegInf, _)                 -> a
-    | (_, List3 PlusInf)                -> List2 NegInf
-    | (Int1 x, Int2 y) when x-y<minI    -> List2 NegInf
-    | (Int1 x, Int2 y) when x-y>maxI    -> Int1 maxI
-    | (Int1 x, Int2 y)                  -> Int1 (x-y) 
-
-let evalMin_u3 (a : Union3, b : Union2) = 
-    match (a,b) with
-    | (Int2 x, Int1 y) when x-y>maxI    -> List3 PlusInf
-    | (Int2 x, Int1 y) when x-y<minI    -> Int2 minI
-    | (Int2 x, Int1 y)                  -> Int2 (x-y)
-    | (List3 PlusInf, _)                -> a
-    | (_, List2 NegInf)                 -> List3 PlusInf
-
-let multMin (a, b, c, d)= min (a*c) (min (a*d) (min (b*c) (b*d)))
-let multMax (a, b, c, d)= max (a*c) (max (a*d) (max (b*c) (b*d)))
-
-let max (a, b, c, d) = 
-    let i = multMax (a, b, c, d) in
-    match i with
-    | x when x>maxI -> List3 PlusInf
-    | x when x<minI -> Int2 minI
-    | a             -> Int2 a
-
-let min (a, b, c, d) = 
-    let i = multMin (a, b, c, d) in
-    match i with
-    | x when x<minI -> List2 NegInf
-    | x when x>maxI -> Int1 maxI
-    | a             -> Int1 a
-
-let evalMult_u2 (a, b, c, d) = 
-    match (a,b, c, d) with
-    | (List2 NegInf, _, _, List3 PlusInf)                       -> List2 NegInf
-    | (_, List3 PlusInf, List2 NegInf, _)                       -> List2 NegInf
-    | (List2 NegInf, _, _, Int2 x) when x>0                     -> List2 NegInf
-    | (Int1 x, _, _, List3 PlusInf) when x<0                    -> List2 NegInf
-    | (_, List3 PlusInf, Int1 x, _) when x<0                    -> List2 NegInf
-    | (_, Int2 x, List2 NegInf, _) when x>0                     -> List2 NegInf
-    | (Int1 x, _, _, Int2 y) when x*y<minI                      -> List2 NegInf
-    | (_, Int2 x, Int1 y, _) when x*y<minI                      -> List2 NegInf
-    | (Int1 x, _, Int1 y, _) when x*y<minI                      -> List2 NegInf
-    | (_, Int2 x, _, Int2 y) when x*y<minI                      -> List2 NegInf
-    | (Int1 w, Int2 x, Int1 y, Int2 z)                          -> min (w, x, y, z)
-    | (List2 NegInf, Int2 x, Int1 y, Int2 z)                    -> min (minI-1, x, y, z)
-    | (Int1 w, Int2 x, List2 NegInf, Int2 z)                    -> min (w, x, minI-1, z)
-    | (Int1 w, List3 PlusInf, Int1 y, Int2 z)                   -> min (w, maxI+1, y, z)
-    | (Int1 w, Int2 x, Int1 y, List3 PlusInf)                   -> min (w, x, y, maxI+1)
-    | (List2 NegInf, List3 PlusInf, Int1 y, Int2 z)             -> min (minI-1, maxI+1, y, z)
-    | (List2 NegInf, Int2 x, List2 NegInf, Int2 z)              -> min (minI-1, x, minI-1, z)
-    | (Int1 w, List3 PlusInf, Int1 y, List3 PlusInf)            -> min (w, maxI+1, y, maxI+1)
-    | (Int1 w, Int2 x, List2 NegInf, List3 PlusInf)             -> min (w, x, minI-1, maxI+1)
-
-let evalMult_u3 (a , b, c, d) = 
-    match (a,b, c, d) with
-    | (List2 NegInf, _, List2 NegInf, _)                        -> List3 PlusInf
-    | (List2 NegInf, _, Int1 x, _) when x<0                     -> List3 PlusInf
-    | (Int1 x, _, List2 NegInf, _) when x<0                     -> List3 PlusInf
-    | (_, List3 PlusInf, _, List3 PlusInf)                      -> List3 PlusInf
-    | (_, List3 PlusInf, _, Int2 x) when x>0                    -> List3 PlusInf
-    | (_, Int2 x, _, List3 PlusInf) when x>0                    -> List3 PlusInf
-    | (Int1 x, _, _, Int2 y) when x*y>maxI                      -> List3 PlusInf
-    | (_, Int2 x, Int1 y, _) when x*y>maxI                      -> List3 PlusInf
-    | (Int1 x, _, Int1 y, _) when x*y>maxI                      -> List3 PlusInf
-    | (_, Int2 x, _, Int2 y) when x*y>maxI                      -> List3 PlusInf
-    | (Int1 w, Int2 x, Int1 y, Int2 z)                          -> max (w, x, y, z)
-    | (List2 NegInf, Int2 x, Int1 y, Int2 z)                    -> max (minI-1, x, y, z)
-    | (Int1 w, Int2 x, List2 NegInf, Int2 z)                    -> max (w, x, minI-1, z)
-    | (Int1 w, List3 PlusInf, Int1 y, Int2 z)                   -> max (w, maxI+1, y, z)
-    | (Int1 w, Int2 x, Int1 y, List3 PlusInf)                   -> max (w, x, y, maxI+1)
-    | (List2 NegInf, List3 PlusInf, Int1 y, Int2 z)             -> max (minI-1, maxI+1, y, z)
-    | (List2 NegInf, Int2 x, Int1 y, List3 PlusInf)             -> max (minI-1, x, y, maxI+1)
-    | (Int1 w, List3 PlusInf, List2 NegInf, Int2 z)             -> max (w, maxI+1, minI-1, z)
-    | (Int1 w, Int2 x, List2 NegInf, List3 PlusInf)             -> max (w, x, minI-1, maxI+1)
-
-
-let evalSum (u1 : Union1, u2 : Union1) : Union1 = 
-    match (u1, u2) with
-    | (List1 Bot, _)                                                            -> List1 Bot
-    | (_, List1 Bot)                                                            -> List1 Bot
-    | (Record1 {Union2 = x1; Union3 = y1}, Record1 {Union2 = x2; Union3 = y2})  -> Record1 {Union2 = evalSum_u2 (x1, x2); Union3 = evalSum_u3 (y1, y2)}
-    
-let evalMin (u1 : Union1, u2 : Union1) : Union1 = 
-    match (u1, u2) with
-    | (List1 Bot, _)                                                            -> List1 Bot
-    | (_, List1 Bot)                                                            -> List1 Bot
-    | (Record1 {Union2 = x1; Union3 = y1}, Record1 {Union2 = x2; Union3 = y2})  -> Record1 {Union2 = evalMin_u2 (x1, y2); Union3 = evalMin_u3 (y1, x2)}
-
-let evalMult (u1 : Union1, u2 : Union1) : Union1 = 
-    match (u1, u2) with
-    | (List1 Bot, _)                                                            -> List1 Bot
-    | (_, List1 Bot)                                                            -> List1 Bot
-    | (Record1 {Union2 = x1; Union3 = y1}, Record1 {Union2 = x2; Union3 = y2})  -> Record1 {Union2 = evalMult_u2 (x1, y1, x2, y2); Union3 = evalMult_u3 (x1, y1, x2, y2)}
-
-// let evalDiv (u1 : Union1, u2 : Union1) : Union1 = 
-//     match (u1, u2) with
-
-// let evalUmin (u : Union1) : Union1 = 
-//     match u with
-
-let rec evalA (a:aexp, s:sigma) : Union1 =  
-    match a with
-    | VarExpr(v)            -> s.[Var1 v]
-    | NumExpr(i) when i<minI-> Record1 {Union2 = List2 NegInf; Union3 = Int2 minI}
-    | NumExpr(i) when i>maxI-> Record1 {Union2 = Int1 maxI; Union3 = List3 PlusInf}
-    | NumExpr(i)            -> Record1 {Union2 = Int1 i; Union3 = Int2 i}
-    | ArrExpr(aname, aex)   -> s.[Arr1 aname]
-    | SumExpr(a1, a2)       -> evalSum ((evalA (a1,s)), (evalA (a2, s)))
-    | MinExpr(a1, a2)       -> evalMin ((evalA (a1,s)), (evalA (a2, s)))
-    | MultExpr(a1, a2)      -> evalMult ((evalA (a1,s)), (evalA (a2, s)))
-    | DivExpr(a1, a2)       -> List1 Bot//evalDiv ((evalA (a1,s)), (evalA (a2, s)))
-    | UMinExpr(a)           -> List1 Bot//evalUmin (evalA (a,s))
-
-let getA ast = 
-    match ast with
-    |   AssignCommand (a, b)        -> b
-    |   ArrAssignCommand(a, b, c)   -> c
-    |   _                           -> failwith "Cannot extract variable from non-variable assignment"
+let rec remove (inSet, outSet, killCond) = 
+    match inSet with
+    | [] -> outSet
+    | x::xs when x.Ident1=killCond -> remove (xs, outSet, killCond)
+    | x::xs -> remove (xs, (Set.union outSet (Set.empty.Add(x))), killCond)
 
 let getVar ast = 
     match ast with
-    |   AssignCommand (a, b)        -> a
+    |   AssignCommand (a, b)         -> a
     |   _                           -> failwith "Cannot extract variable from non-variable assignment"
 
 let getArr ast = 
@@ -281,11 +43,9 @@ let getArr ast =
 (*            TRANSFER FUNCTIONS            *)
 let TF_Boolean (inSigma : sigma, edge : Edge) : sigma = inSigma
 
-let TF_Assignment (inSigma : sigma, edge : Edge) : sigma = inSigma.Add(Var1 (getVar edge.Action), evalA (getA edge.Action, inSigma))
+let TF_Assignment (inSigma : sigma, edge : Edge) : sigma = (Set.union (Set.empty.Add({Ident1 = Var1 (getVar edge.Action); Union1 = Node1(edge.Q2); Node2 = edge.Q1})) (remove ((Set.toList inSigma), Set.empty, (Var1 (getVar edge.Action)))))
 
 let TF_Skip (inSigma : sigma, edge : Edge) : sigma = inSigma
 
 // May not kill in arrays
-let TF_ArrayAssignment (inSigma : sigma, edge : Edge) : sigma = inSigma.Add(Arr1 (getArr edge.Action), 
-                                                                                union_s (evalA (getA edge.Action, inSigma), inSigma.[Arr1 (getArr edge.Action)])
-                                                                            )
+let TF_ArrayAssignment (inSigma : sigma, edge : Edge) : sigma = (Set.union (Set.empty.Add({Ident1 = Arr1 (getArr edge.Action); Union1 = Node1(edge.Q2) ;Node2 = edge.Q1})) inSigma)

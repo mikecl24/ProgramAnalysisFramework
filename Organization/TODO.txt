@@ -2,6 +2,15 @@ RD2 : SSets must not be empty when used!!
 
 Done: Generating bot and top
 Reworked metal
+Generator generators & mutables
+30 min presentation
+
+Isomorphism specify symbol
+draft
+
+Improved quickchecking accuracy
+
+Citing new prog analysis book
 
 op_s specification into tf!
 Merge QCheck

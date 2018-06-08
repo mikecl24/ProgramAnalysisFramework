@@ -43,12 +43,13 @@ type GeneratorsTop =
           override x.Shrinker t = Seq.empty }
 " 
 
+//Replace me!!
 let rec customT m (mapDescriptor : Map<int, (string*string*string)>) = 
     match m with
     |   a when a=1  -> ""
     |   a when a>1  -> "    static member Map" + (a-1).ToString() + "() = 
       {new Arbitrary<Map"+ (a-1).ToString() + ">() with
-          override x.Generator = createAnalysis " + fst3 (mapDescriptor.[a-1]) + ".Length " + fst3 (mapDescriptor.[a-1]) +  " ( Arb.generate<" + trd3 (mapDescriptor.[a-1]) + "> |> Gen.sample 1000000 1000000 |> Set.ofList |> Set.fold (fun l se -> se::l) [] )\n          override x.Shrinker t = Seq.empty }\n" + (customT (a-1) mapDescriptor)
+          override x.Generator = createAnalysis " + fst3 (mapDescriptor.[a-1]) + ".Length " + fst3 (mapDescriptor.[a-1]) +  " ( Arb.generate<" + trd3 (mapDescriptor.[a-1]) + "> |> Gen.listOfLength " + fst3 (mapDescriptor.[a-1]) + ".Length |> Gen.sample 1000000 1).[0] \n          override x.Shrinker t = Seq.empty }\n " + (customT (a-1) mapDescriptor)
     |   _  -> failwith "Error: Invalid map amount!"
 
 let rec customB m (mapDescriptor : Map<int, (string*string*string)>) = 
@@ -65,6 +66,7 @@ Arb.register<GeneratorsTop>() |> ignore
 
 let top = (Arb.generate<sigma> |> Gen.sample 10 1).[0]
 // printfn ""Top as generated:\n%A"" top
+
 
 type GeneratorsBot =
     static member Node() =
@@ -98,5 +100,6 @@ Arb.register<GeneratorsBot>() |> ignore
 
 let bot = (Arb.generate<sigma> |> Gen.sample 0 1).[0]
 // printfn ""Bot as generated:\n%A"" (Seq.toList bot)
+
 "
 let outputCode m mapDescriptor = header + (customT m mapDescriptor) + middle + (customB m mapDescriptor) + final

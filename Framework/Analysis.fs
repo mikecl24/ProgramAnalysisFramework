@@ -16,8 +16,7 @@ let init : sigma = getInit operation  //Set.empty
 let reverseEdge (e : Edge) : Edge = 
     {Q1 = e.Q2;
     Q2 = e.Q1;
-    Action = e.Action;
-    Type = e.Type}
+    Action = e.Action}
 
 let rec reverseEdges (old : Edge list) : Edge list = 
     match old with
@@ -56,26 +55,27 @@ let rec initializeSigma (nList : Node list, prevMap : AnalysisResult, node : Nod
                 else
                     initializeSigma (xs, (updateAnalysisResult (prevMap, (Map.empty.Add(x, init)))), node)
 
+// The patern matching is the only part dependant on the language!
 let rec analysis (worklist : Edge list, edges : Edge list, sigmaMap : AnalysisResult, compOP, combOP) : AnalysisResult = 
     match worklist with
     | []        ->  sigmaMap
-    | e1::es    ->  match e1.Type with
-                    | Boolean           ->  if (compOP ((TF_Boolean (sigmaMap.[e1.Q1], e1)), sigmaMap.[e1.Q2])) then 
-                                                analysis (es, edges, sigmaMap, compOP, combOP)
-                                            else
-                                                analysis (edges, edges, (sigmaMap.Add(e1.Q2 ,combOP (((TF_Boolean (sigmaMap.[e1.Q1], e1))), sigmaMap.[e1.Q2]))), compOP, combOP)
-                    | Assignment        ->  if (compOP ((TF_Assignment (sigmaMap.[e1.Q1], e1)), sigmaMap.[e1.Q2])) then 
-                                                analysis (es, edges, sigmaMap, compOP, combOP)
-                                            else
-                                                analysis (edges, edges, (sigmaMap.Add(e1.Q2 ,combOP (((TF_Assignment (sigmaMap.[e1.Q1], e1))), sigmaMap.[e1.Q2]))), compOP, combOP)
-                    | Skip              ->  if (compOP ((TF_Skip (sigmaMap.[e1.Q1], e1)), sigmaMap.[e1.Q2])) then 
-                                                analysis (es, edges, sigmaMap, compOP, combOP)
-                                            else
-                                                analysis (edges, edges, (sigmaMap.Add(e1.Q2 ,combOP (((TF_Skip (sigmaMap.[e1.Q1], e1))), sigmaMap.[e1.Q2]))), compOP, combOP)
-                    | ArrayAssignment   ->  if (compOP ((TF_ArrayAssignment (sigmaMap.[e1.Q1], e1)), sigmaMap.[e1.Q2])) then 
-                                                analysis (es, edges, sigmaMap, compOP, combOP)
-                                            else
-                                                analysis (edges, edges, (sigmaMap.Add(e1.Q2 ,combOP (((TF_ArrayAssignment (sigmaMap.[e1.Q1], e1))), sigmaMap.[e1.Q2]))), compOP, combOP)
+    | e1::es    ->  match e1.Action with
+                    | BoolCommand(b)                ->  if (compOP ((TF_Boolean (sigmaMap.[e1.Q1], e1)), sigmaMap.[e1.Q2])) then 
+                                                            analysis (es, edges, sigmaMap, compOP, combOP)
+                                                        else
+                                                        analysis (edges, edges, (sigmaMap.Add(e1.Q2 ,combOP (((TF_Boolean (sigmaMap.[e1.Q1], e1))), sigmaMap.[e1.Q2]))), compOP, combOP)
+                    | AssignCommand(v, a)           ->  if (compOP ((TF_Assignment (sigmaMap.[e1.Q1], e1)), sigmaMap.[e1.Q2])) then 
+                                                            analysis (es, edges, sigmaMap, compOP, combOP)
+                                                        else
+                                                            analysis (edges, edges, (sigmaMap.Add(e1.Q2 ,combOP (((TF_Assignment (sigmaMap.[e1.Q1], e1))), sigmaMap.[e1.Q2]))), compOP, combOP)
+                    | SkipCommand                   ->  if (compOP ((TF_Skip (sigmaMap.[e1.Q1], e1)), sigmaMap.[e1.Q2])) then 
+                                                            analysis (es, edges, sigmaMap, compOP, combOP)
+                                                        else
+                                                            analysis (edges, edges, (sigmaMap.Add(e1.Q2 ,combOP (((TF_Skip (sigmaMap.[e1.Q1], e1))), sigmaMap.[e1.Q2]))), compOP, combOP)
+                    | ArrAssignCommand(a, a1, a2)   ->  if (compOP ((TF_ArrayAssignment (sigmaMap.[e1.Q1], e1)), sigmaMap.[e1.Q2])) then 
+                                                            analysis (es, edges, sigmaMap, compOP, combOP)
+                                                        else
+                                                            analysis (edges, edges, (sigmaMap.Add(e1.Q2 ,combOP (((TF_ArrayAssignment (sigmaMap.[e1.Q1], e1))), sigmaMap.[e1.Q2]))), compOP, combOP)
 
 let AnalyseEdges (edgesList: Edge list) : AnalysisResult = 
     let start = initializeSigma (Nodes, (Map.empty), (getFirstNode direction))

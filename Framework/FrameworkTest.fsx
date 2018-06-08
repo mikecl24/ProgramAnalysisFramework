@@ -106,23 +106,25 @@ printfn "Domain Generation Done"
 // Verify Nature of domain: Safe or graph?
 #load "DomainChecker.fs"                   // Check if domain is valid: return domain type, mapnr and mapdecriptor
 let (isSafe, mNum, mapDescriptor) = domCheck flatDomainAST
-//printfn "%A" (isSafe, mNum, mapDescriptor)    // Debugging correct mapdescriptor
+// printfn "%A" (isSafe, mNum, mapDescriptor)    // Debugging correct mapdescriptor
 
 // IF safe auto generate bot and top elements
 open FsCheck
 #load "GeneratorGenerator.fs"           // Create code to get top and bottom if it is a safe domain 
 
-// printfn "%A\n%A\n%A\n%A" Nodes Variables Arrays Identifiers
+//printfn "%A\n%A\n%A\n%A" Nodes Variables Arrays Identifiers
 // printfn "%i, %A" mapNum mapDescription   // Debugging: Parameters
 let latticeCalculator = outputCode mapNum mapDescription
 File.WriteAllText("LatticeStates.fs", latticeCalculator)
- (*
+
 printfn "Calculating Bot and Top...    (may take some time)"
 #load "LatticeStates.fs"                // Create bot and top
 
-printfn "Example bot: %A" bot
-printfn "Example top: %A" top
-*)
+if isSafe then
+    printfn "Generated bot: %A" bot
+    printfn "Generated top: %A" top
+else
+    printfn "Graph Domain: Provide bot and top in TransferFuctions.fs"
 
 // Quickchecking domain properties extension?
 
@@ -139,9 +141,18 @@ printfn "Domain Verification Done"
 #load "Operations.fs"                   // Operation Specification: Generated call traces for LattOps
                                     
 (*                          QuickChecking                          *)
-//insert QuickChecking folder stuff here
+// Generate QuickChecker executable
+// Must be executed on the side:
+//      Generators is a mutable in the library
+//      Standard set generator was lost when using FsCheck to gen top/bot
+//      No unregister/reset on generators, thus only doable by fresh run
 
-printfn "Transfer Function Done"
+#load "QCheckGenerator.fs"
+let parameters = File.ReadAllText("QCheckParameters.txt")
+File.WriteAllText("GenQuickChecker.fsx", (assemble parameters mapNum mapDescription))
+printfn "Quickchecking verification program generated in GenQuickChecker.fsx (must be run separately)"
+
+printfn "Transfer Function Loading Done"
 
 
 (*-----------------------------------------------------------------*)

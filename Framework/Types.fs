@@ -62,14 +62,13 @@ type Statement =
     { commandAST : command;
     s_type : StatementType}
 
-type TFtypes = 
-    | Boolean
-    | Assignment
-    | Skip
-    | ArrayAssignment
+// type TFtypes = 
+//     | Boolean
+//     | Assignment
+//     | Skip
+//     | ArrayAssignment
 
 type Edge = 
     {Q1 : Node;
     Q2 : Node;
-    Action : command;
-    Type : TFtypes}
+    Action : command}
