@@ -103,10 +103,12 @@ type CustomGeneratorSmall =
 
 Arb.register<CustomGeneratorSmall>()
 
-let checkMonotonicity1 (x:sigma, y:sigma, e:Edge) = (subsetOP (x, y))  ==> (lazy (subsetOP ((TF_Analysis (x, e)), (TF_Analysis (y, e)))))
+let checkMonotonicity1s (x:sigma, y:sigma, e:Edge) = (subsetOP (x, y))  ==> (lazy (subsetOP ((TF_Analysis (x, e)), (TF_Analysis (y, e)))))
+let checkMonotonicity2s (x:sigma, y:sigma, e:Edge) = (supersetOP (x, y))  ==> (lazy (supersetOP ((TF_Analysis (x, e)), (TF_Analysis (y, e)))))
 
 printfn "Checking Monotonicity for Small sized programs"
-Check.Quick checkMonotonicity1
+Check.Quick checkMonotonicity1s
+Check.Quick checkMonotonicity2s
 
 (*      GENERATORS MEDIUM       *)
 type CustomGeneratorMedium =
@@ -126,10 +128,12 @@ type CustomGeneratorMedium =
 
 Arb.register<CustomGeneratorMedium>()
 
-let checkMonotonicity2 (x:sigma, y:sigma, e:Edge) = (subsetOP (x, y))  ==> (lazy (subsetOP ((TF_Analysis (x, e)), (TF_Analysis (y, e)))))
+let checkMonotonicity1m (x:sigma, y:sigma, e:Edge) = (subsetOP (x, y))  ==> (lazy (subsetOP ((TF_Analysis (x, e)), (TF_Analysis (y, e)))))
+let checkMonotonicity2m (x:sigma, y:sigma, e:Edge) = (supersetOP (x, y))  ==> (lazy (supersetOP ((TF_Analysis (x, e)), (TF_Analysis (y, e)))))
 
 printfn "Checking Monotonicity for Medium sized programs"
-Check.Quick checkMonotonicity2
+Check.Quick checkMonotonicity1m
+Check.Quick checkMonotonicity2m
 
 (*      GENERATORS LARGE       *)
 type CustomGeneratorLarge =
@@ -149,8 +153,10 @@ type CustomGeneratorLarge =
 
 Arb.register<CustomGeneratorLarge>()
 
-let checkMonotonicity3 (x:sigma, y:sigma, e:Edge) = (subsetOP (x, y))  ==> (lazy (subsetOP ((TF_Analysis (x, e)), (TF_Analysis (y, e)))))
+let checkMonotonicity1l (x:sigma, y:sigma, e:Edge) = (subsetOP (x, y))  ==> (lazy (subsetOP ((TF_Analysis (x, e)), (TF_Analysis (y, e)))))
+let checkMonotonicity2l (x:sigma, y:sigma, e:Edge) = (supersetOP (x, y))  ==> (lazy (supersetOP ((TF_Analysis (x, e)), (TF_Analysis (y, e)))))
 
 printfn "Checking Monotonicity for Large sized programs"
-Check.Quick checkMonotonicity3
+Check.Quick checkMonotonicity1l
+Check.Quick checkMonotonicity2l
 

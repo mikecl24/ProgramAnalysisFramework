@@ -1,17 +1,21 @@
+Code: Post link to repository? Handin zip?
 
-30 min presentation
-Code: Post link to repository?
+Code Progress: Mutability of library -> two runs
 
-Code Work
-    Finish interval analysis
-    Improved quickchecking accuracy: Generate pairs satisfying precondition
-    (SSR example) 
-    (Worklist stuff)
 
-Report Work
-    Intro: deifne reader
-    TF specification (op_s/bot/top optionally, tfs, parameters in parameter file)
-    Quickchecking examples of failure
-    Lit revciew: tools conf... 
-        esop acm...
-    Extra code example
+TODO:
+
+    Code Work
+        Finish interval analysis
+        
+    Report Work
+        TF specification (op_s/bot/top optionally, tfs, parameters in parameter file)
+        Domain: For each rule, show generated type
+            example generated domains
+        Quickchecking examples of failure
+        Implementation: testing
+        Conclusion: new version of fscheck
+        Appendix: running 1 page
+        Future work: Errors in parser
+       
+    30 min presentation: SSR development
