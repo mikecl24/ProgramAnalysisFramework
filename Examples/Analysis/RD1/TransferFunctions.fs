@@ -1,7 +1,7 @@
 [<AutoOpen>]
 module TransferFunctions
 
-//Helper code
+// Helper code
 let rec genIotaV (vars, oldIota) =
     match vars with
     | [] -> oldIota
@@ -20,10 +20,9 @@ let direction : AnalysisDirection = Forward
 let operation : AnalysisOp = LUB
 // Iota
 let iota : sigma = Set.union (genIotaV (Variables, Set.empty)) (genIotaA (Arrays, Set.empty))
-//printfn "Iota:\n%A\n" (Seq.toList iota)
 
 
-//Helper code
+// Helper code
 let rec remove (inSet, outSet, killCond) = 
     match inSet with
     | [] -> outSet

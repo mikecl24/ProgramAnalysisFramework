@@ -13,9 +13,10 @@ TODO:
         Domain: For each rule, show generated type
             example generated domains
         Quickchecking examples of failure
-        Implementation: testing
+        Implementation: testing, error handling
         Conclusion: new version of fscheck
         Appendix: running 1 page
-        Future work: Errors in parser
+        Future work: Errors in parser, gen pairs to fullfill conditions (hard?), custom generators
+        Notes on extraction of SSets, and their availability
        
     30 min presentation: SSR development

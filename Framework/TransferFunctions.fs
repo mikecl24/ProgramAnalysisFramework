@@ -20,7 +20,6 @@ let direction : AnalysisDirection = Forward
 let operation : AnalysisOp = LUB
 // Iota
 let iota : sigma = Set.union (genIotaV (Variables, Set.empty)) (genIotaA (Arrays, Set.empty))
-//printfn "Iota:\n%A\n" (Seq.toList iota)
 
 
 //Helper code
