@@ -1,12 +1,12 @@
-Code: Post link to repository? Handin zip?
+Code:   Make repository public
+        Handin zip
 
-Code Progress: Mutability of library -> two runs
 
 
 TODO:
 
     Code Work
-        Finish interval analysis
+        Add generated domains to example repositories and update results while at it
         
     Report Work
         TF specification (op_s/bot/top optionally, tfs, parameters in parameter file)

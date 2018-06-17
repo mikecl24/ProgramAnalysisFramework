@@ -1,1 +1,1 @@
-P(IDENT * [Q U {QM}] * Q)
+[ IDENT -> [ [ {Bot} U [INT U {NegInf}] * [INT U {PlusInf}] ] ] ]
