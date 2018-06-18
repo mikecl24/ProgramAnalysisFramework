@@ -1,22 +1,25 @@
 [<AutoOpen>]
 module TransferFunctions
 
-// Graph domain Specification
+// Analysis Range
+let minI = -10
+let maxI = 10
+
+(*      Graph domain Specification      *)
+
+// Helper functions
 // Generate a map from a list and a value to assign to
 let rec genSigma xs uVal : sigma = 
     match xs with
     | []        ->  Map.empty
     | a :: b    ->  Map.fold (fun acc key value -> Map.add key value acc) (Map.empty.Add(a, uVal)) (genSigma b uVal)
 
+// bot and top elements 
 let bot : sigma = genSigma Identifiers (List1 Bot)
 let top : sigma = genSigma Identifiers (Record1 {Union2 = List2 NegInf; Union3 = List3 PlusInf})
 
 printfn "Top is: %A" top
 printfn "Bot is: %A" bot
-
-// Analysis Range
-let minI = -10
-let maxI = 10
 
 // Validity Check: If inside range, pass, else bottom
 let chk (interval:Union1): Union1 = 
@@ -26,6 +29,7 @@ let chk (interval:Union1): Union1 =
     | Record1 {Union2 = Int1 x; Union3 = Int2 y} when x>y   -> List1 Bot
     | a                                                     -> a
 
+// Helper operators: Function for each part of the record
 let subset_u2 (a, b) : bool =
     match (a,b) with
     | (x, y) when x = y             -> true
@@ -89,7 +93,9 @@ let intersect_u3 (a, b) : Union3 =
     | (Int2 x, Int2 y)  when x<y    -> a
     | _                             -> failwith "Error: Forgotten case in intersect_u3"
 
-// subset op for constant propagation lattice
+(*      Custom Operators for a GRAPH domain         *)
+
+// subset op for interval lattice
 let subset_s (set1, set2) : bool =
     match (chk(set1), chk(set2)) with
     | (x, y) when x = y                                                         -> true
@@ -99,7 +105,7 @@ let subset_s (set1, set2) : bool =
     | (_, Record1 {Union2 = List2 NegInf; Union3 = List3 PlusInf})              -> true
     | (Record1 {Union2 = x1; Union3 = y1}, Record1 {Union2 = x2; Union3 = y2})  -> subset_u2 (x1, x2) && subset_u3 (y1, y2)
 
-// superset op for constant propagation lattice
+// superset op for interval lattice
 let superset_s (set1, set2) : bool = 
     match (chk(set1), chk(set2)) with
     | (x, y) when x = y                                                         -> true
@@ -109,6 +115,7 @@ let superset_s (set1, set2) : bool =
     | (_, Record1 {Union2 = List2 NegInf; Union3 = List3 PlusInf})              -> false
     | (Record1 {Union2 = x1; Union3 = y1}, Record1 {Union2 = x2; Union3 = y2})  -> superset_u2 (x1, x2) && superset_u3 (y1, y2)
 
+// union op for interval lattice
 let union_s (set1, set2) = 
     match (chk(set1), chk(set2)) with
     | (x, y) when x = y                                                         -> set1
@@ -118,6 +125,7 @@ let union_s (set1, set2) =
     | (_, Record1 {Union2 = List2 NegInf; Union3 = List3 PlusInf})              -> set2
     | (Record1 {Union2 = x1; Union3 = y1}, Record1 {Union2 = x2; Union3 = y2})  -> Record1 {Union2 = union_u2 (x1, x2); Union3 = union_u3 (y1, y2)}
 
+// intersect op for interval lattice
 let intersect_s (set1, set2) = 
     match (chk(set1), chk(set2)) with
     | (x, y) when x = y                                                         -> set1
@@ -127,7 +135,6 @@ let intersect_s (set1, set2) =
     | (_, Record1 {Union2 = List2 NegInf; Union3 = List3 PlusInf})              -> set1
     | (Record1 {Union2 = x1; Union3 = y1}, Record1 {Union2 = x2; Union3 = y2})  -> Record1 {Union2 = intersect_u2 (x1, x2); Union3 = intersect_u3 (y1, y2)}
 
-//Helper code
 
 (*            Analysis Type            *)
 // Direction
@@ -136,9 +143,8 @@ let direction : AnalysisDirection = Forward
 let operation : AnalysisOp = LUB
 // Iota
 let iota : sigma = genSigma Identifiers (Record1 {Union2 = List2 NegInf; Union3 = List3 PlusInf})
-//printfn "Iota:\n%A\n" (Seq.toList iota)
 
-//Helper code
+// Helper code: Operation evaluation
 let evalSum_u2 (a, b) = 
     match (a,b) with
     | (List2 NegInf, _)                 -> a
@@ -260,7 +266,6 @@ let rec evalDiv_u3 (a, b, c, d) =
     | (Int1 w, Int2 x, Int1 y, List3 PlusInf)                   -> max (Int2 0) (maxD (w, x, y, maxI+1))
     | (List2 NegInf, Int2 x, Int1 y, List3 PlusInf)             -> max (Int2 0) (maxD (minI-1, x, y, maxI+1))
     | (Int1 w, List3 PlusInf, List2 NegInf, Int2 z)             -> max (Int2 0) (maxD (w, maxI+1, minI-1, z))
-    
     | (Int1 w, Int2 x, List2 NegInf, List3 PlusInf)             -> let i = max (Int2 0) (maxD (w, x, minI-1, maxI+1))
                                                                    if 1<maxI && 1>minI then
                                                                         let i2 = max (maxD (w, x, 1, 1)) i
@@ -274,7 +279,6 @@ let rec evalDiv_u3 (a, b, c, d) =
                                                                         else
                                                                             i
                                                                    
-    
 let rec evalDiv_u2 (a, b, c, d) = 
     match (a, b, c, d) with
     | (_, _, Int1 0, _) when minI<1                             -> evalDiv_u2 (a, b, Int1 1, d)
@@ -293,9 +297,6 @@ let rec evalDiv_u2 (a, b, c, d) =
     | (List2 NegInf, Int2 x, List2 NegInf, Int2 z)              -> min (Int1 0) (minD (minI-1, x, minI-1, z))
     | (Int1 w, List3 PlusInf, Int1 y, List3 PlusInf)            -> min (Int1 0) (minD (w, maxI+1, y, maxI+1))
     | (Int1 w, Int2 x, List2 NegInf, List3 PlusInf)             -> min (Int1 0) (minD (w, x, minI-1, maxI+1))
-
-
-
 
 let umin_u2 (u:Union3) : Union2 = 
     match u with
@@ -373,11 +374,12 @@ let getArr ast =
 (*            TRANSFER FUNCTIONS            *)
 let TF_Boolean (inSigma : sigma, edge : Edge) : sigma = inSigma
 
-let TF_Assignment (inSigma : sigma, edge : Edge) : sigma = inSigma.Add(Var1 (getVar edge.Action), evalA (getA edge.Action, inSigma))
+let TF_Assignment (inSigma : sigma, edge : Edge) : sigma = 
+    inSigma.Add(Var1 (getVar edge.Action), evalA (getA edge.Action, inSigma))
 
 let TF_Skip (inSigma : sigma, edge : Edge) : sigma = inSigma
 
 // May not kill in arrays
-let TF_ArrayAssignment (inSigma : sigma, edge : Edge) : sigma = inSigma.Add(Arr1 (getArr edge.Action), 
-                                                                                union_s (evalA (getA edge.Action, inSigma), inSigma.[Arr1 (getArr edge.Action)])
-                                                                            )
+let TF_ArrayAssignment (inSigma : sigma, edge : Edge) : sigma = 
+    inSigma.Add(Arr1 (getArr edge.Action), 
+        union_s (evalA (getA edge.Action, inSigma), inSigma.[Arr1 (getArr edge.Action)]))

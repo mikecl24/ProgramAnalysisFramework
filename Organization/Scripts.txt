@@ -1,18 +1,12 @@
 Adding enviroment paths:
-$env:Path += ";C:\Users\0x18\Documents\Visual Studio 2017\Projects\Parser\packages\FsLexYacc.7.0.6\build"
-$env:Path += ";C:\Program Files (x86)\Microsoft SDKs\F#\10.1\Framework\v4.0"
+    $env:Path += ";...\FsLexYacc.7.0.6\build"                       // Location of fslex.exe and fsyacc.exe
+    $env:Path += ";...\Microsoft SDKs\F#\10.1\Framework\v4.0"       // Location of fsi.exe
 
-cd ..\..\Users\0x18\Documents\F18\Thesis\F#\Parser\
-cd ..\..\Users\0x18\Documents\F18\Thesis\F#\DomainGeneration\
 
-Rebuilding the parser:
-rm ExtW*.fs; rm *.fsi; fslex.exe .\ExtWLexer.fsl --unicode; fsyacc.exe .\ExtWParser.fsp --module ExtWParser;
-fsi.exe .\FrameworkTest.fsx
+Rebuilding the ExtW lexer/parser:
+    rm ExtW*.fs; rm *.fsi; fslex.exe .\ExtWLexer.fsl --unicode; fsyacc.exe .\ExtWParser.fsp --module ExtWParser;
+    fsi.exe .\FrameworkTest.fsx
 
-fslex.exe .\MetaLLexer.fsl --unicode; fsyacc.exe .\MetaLParser.fsp --module MetaLParser;
-
-Git VC:
-git add *
-git commit -m "Something"
-git push -u master master
+Compiling MetaL lexer/parser:
+    fslex.exe .\MetaLLexer.fsl --unicode; fsyacc.exe .\MetaLParser.fsp --module MetaLParser;
 

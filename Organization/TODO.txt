@@ -1,7 +1,4 @@
-Code:   Make repository public
-        Handin zip
-
-
+Code:   Handin zip
 
 TODO:
 
@@ -9,10 +6,12 @@ TODO:
         Add generated domains to example repositories and update results while at it
         
     Report Work
-        TF specification (op_s/bot/top optionally, tfs, parameters in parameter file)
-        Domain: For each rule, show generated type
-            example generated domains
-        Quickchecking examples of failure
+        TF specification (parameters in parameter file)
+        Domain: 
+            For each rule, show generated type
+            Example generated domains
+            Extensions
+        QuickChecking examples of failure
         Implementation: testing, error handling
         Conclusion: new version of fscheck
         Appendix: running 1 page
