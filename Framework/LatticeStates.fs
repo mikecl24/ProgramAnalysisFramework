@@ -38,11 +38,7 @@ type GeneratorsTop =
       {new Arbitrary<Set<'a>>() with
           override x.Generator = Gen.elements [ Set.ofList (Arb.generate<'a> |> Gen.sample 1000000000 500000)] //hopefully enough :D MAX INT ish
           override x.Shrinker t = Seq.empty }
-    static member Map1() = 
-      {new Arbitrary<Map1>() with
-          override x.Generator = createAnalysis Identifiers.Length Identifiers ( Arb.generate<Union1> |> Gen.listOfLength Identifiers.Length |> Gen.sample 1000000 1).[0] 
-          override x.Shrinker t = Seq.empty }
- 
+
 Arb.register<GeneratorsTop>() |> ignore
 
 let top = (Arb.generate<sigma> |> Gen.sample 10 1).[0]
@@ -69,10 +65,6 @@ type GeneratorsBot =
     static member Set() =
       {new Arbitrary<Set<'a>>() with
           override x.Generator = Gen.elements [Set.empty]
-          override x.Shrinker t = Seq.empty }
-    static member Map1() = 
-      {new Arbitrary<Map1>() with
-          override x.Generator = Gen.elements [createAnalysisB Identifiers (Arb.generate<Union1> |> Gen.sample 100 1).[0]]
           override x.Shrinker t = Seq.empty }
     static member AnalysisResult() = 
       {new Arbitrary<AnalysisResult>() with

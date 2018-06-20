@@ -1,3 +1,8 @@
 P(VAR * [Q * Q U {QM1}]) * P(ARR * [Q * Q U {QM2}])
 
-Since QM (?) only happens in start, it doesnt need the node, so reformulated to either two nodes or QM
+Reaching Definitions Analysis: 
+    Last edge (pair of nodes) where each variable and array may have been modified.
+    May also be a question mark (QM) if the variable may not have been modified since the start of the code
+
+
+Since QM (?) only happens in start, it doesn't need the node, so reformulated to either two nodes or QM

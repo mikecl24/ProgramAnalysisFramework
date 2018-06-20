@@ -1,3 +1,8 @@
 P(IDENT * [Q U {QM}] * Q)
 
-Domain using IDENT, and prefering the use of powersets
+Reaching Definitions Analysis: 
+    Last edge (pair of nodes) where each variable and array may have been modified.
+    May also be a question mark (QM) if the variable may not have been modified since the start of the code
+    
+
+Domain using IDENT, and preferring the use of Powersets

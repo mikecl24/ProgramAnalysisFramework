@@ -104,7 +104,7 @@ printfn "Domain Generation Done"
 (*-----------------------------------------------------------------*)
 
 // Verify Nature of domain: Safe or graph?
-#load "DomainChecker.fs"                   // Check if domain is valid: return domain type, mapnr and mapdecriptor
+#load "DomainChecker.fs"                   // Check if domain is valid: return domain type, mapnr and mapdecriptor (last two for debugging)
 let (isSafe, mNum, mapDescriptor) = domCheck flatDomainAST
 // printfn "%A" (isSafe, mNum, mapDescriptor)    // Debugging correct mapdescriptor
 
@@ -126,8 +126,6 @@ if isSafe then
 else
     printfn "Graph Domain: Provide bot and top in TransferFuctions.fs"
 
-// Quickchecking domain properties extension?
-
 printfn "Domain Verification Done"
 
 (*-----------------------------------------------------------------*)
@@ -139,7 +137,9 @@ printfn "Domain Verification Done"
                                     // NEED subset_s if unsafe!!!!!
                                     
 #load "Operations.fs"                   // Operation Specification: Generated call traces for LattOps
-                                    
+
+// Quickchecking domain properties extension?
+
 (*                          QuickChecking                          *)
 // Generate QuickChecker executable
 // Must be executed on the side:

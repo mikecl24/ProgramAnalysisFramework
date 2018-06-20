@@ -1,0 +1,7 @@
+[ IDENT -> P({Plus; Zero; Minus}) ]
+
+Detection of signs Analysis: 
+    Mapping of arrays and variables to a set of possible signs that the identifier might be.
+    
+
+Single map using the IDENT set

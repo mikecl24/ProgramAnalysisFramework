@@ -1,0 +1,8 @@
+[ VAR -> [ [{Bot; Top} U INT ] ] ]
+
+Constant Propagation Analysis: 
+    Detecting if variables are a constant integer, and if so which.
+    
+
+Constant propagation only done on variables.
+This domain is a Graph Domain

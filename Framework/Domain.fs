@@ -3,44 +3,27 @@ module Domain
 
 // Generated Code Section: Domain type
 (*
-Q -> [ IDENT -> [ [ {Bot} U [INT U {NegInf}] * [INT U {PlusInf}] ] ] ]
+Q -> P(IDENT * [Q U {QM}] * Q)
 *)
 
 
 type List1 =
-    | Bot
+    | QM
 
 
-type List2 =
-    | NegInf
-
-
-type Union2 =
-    | Int1 of int 
-    | List2 of List2
-
-
-type List3 =
-    | PlusInf
-
-
-type Union3 =
-    | Int2 of int 
-    | List3 of List3
+type Union1 =
+    | Node1 of Node 
+    | List1 of List1
 
 
 type Record1 = {
-    Union2 : Union2;
-    Union3 : Union3;
+    Ident1 : Ident ;
+    Union1 : Union1;
+    Node2 : Node ;
 }
 
-type Union1 = 
-    | List1 of List1
-    | Record1 of Record1
+type Powerset1 = Record1 Set
 
-
-type Map1 = Map<Ident,Union1>
-
-type sigma = Map1
+type sigma = Powerset1
 
 type AnalysisResult = Map<Node, sigma>

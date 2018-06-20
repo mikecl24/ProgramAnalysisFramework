@@ -1,21 +1,19 @@
-Code:   Handin zip
-
 TODO:
-
+    
     Code Work
         Add generated domains to example repositories and update results while at it
         
+        
     Report Work
-        TF specification (parameters in parameter file)
+        Summary
+        Acknoledgements
         Domain: 
             For each rule, show generated type
             Example generated domains
-            Extensions
-        QuickChecking examples of failure
-        Implementation: testing, error handling
-        Conclusion: new version of fscheck
-        Appendix: running 1 page
-        Future work: Errors in parser, gen pairs to fullfill conditions (hard?), custom generators
-        Notes on extraction of SSets, and their availability
-       
-    30 min presentation: SSR development
+            Extensions  
+        Conclusion: 
+            new version of fscheck
+            Future work: Errors in parser, gen pairs to fulfil conditions (hard?), custom generators, extended domains, restructuring (language independent -> TF match edge, not analysis)
+        Signature
+
+30 min presentation: SSR development

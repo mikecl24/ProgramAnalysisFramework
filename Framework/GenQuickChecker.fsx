@@ -100,11 +100,6 @@ type CustomGeneratorSmall =
             override x.Generator = Gen.elements ArraysS 
             override x.Shrinker t = Seq.empty }
 
-    static member Map1() = 
-      {new Arbitrary<Map1>() with
-          override x.Generator = createAnalysis IdentifiersS.Length IdentifiersS ( Arb.generate<Union1> |> Gen.listOfLength IdentifiersS.Length |> Gen.sample 1000000 1).[0] 
-          override x.Shrinker t = Seq.empty }
- 
 
 Arb.register<CustomGeneratorSmall>()
 
@@ -129,11 +124,7 @@ type CustomGeneratorMedium =
       { new Arbitrary<Arr>() with
             override x.Generator = Gen.elements ArraysM
             override x.Shrinker t = Seq.empty }
-    static member Map1() = 
-      {new Arbitrary<Map1>() with
-          override x.Generator = createAnalysis IdentifiersM.Length IdentifiersM ( Arb.generate<Union1> |> Gen.listOfLength IdentifiersM.Length |> Gen.sample 1000000 1).[0] 
-          override x.Shrinker t = Seq.empty }
- 
+
 
 Arb.register<CustomGeneratorMedium>()
 
@@ -158,11 +149,7 @@ type CustomGeneratorLarge =
       { new Arbitrary<Arr>() with
             override x.Generator = Gen.elements ArraysL
             override x.Shrinker t = Seq.empty }
-    static member Map1() = 
-      {new Arbitrary<Map1>() with
-          override x.Generator = createAnalysis IdentifiersL.Length IdentifiersL ( Arb.generate<Union1> |> Gen.listOfLength IdentifiersL.Length |> Gen.sample 1000000 1).[0] 
-          override x.Shrinker t = Seq.empty }
- 
+
 
 Arb.register<CustomGeneratorLarge>()
 

@@ -1,0 +1,7 @@
+[ IDENT -> [ [ {Bot} U [INT U {NegInf}] * [INT U {PlusInf}] ] ] ]
+
+Interval Analysis: 
+    Mapping identifiers to a range or bottom
+    
+
+This domain is a Graph Domain
