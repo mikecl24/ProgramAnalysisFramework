@@ -15,3 +15,7 @@ User specified files:
 Execute /Framework/FrameworkTest.fsx using F# Interactive to run the analysis.
 
 Execute /Framework/GenQuickChecker.fsx to verify the monotonicity of the transfer functions
+
+## Example Analyses ##
+
+Example Domain.metaL and TransferFunctions.fs can be found in /Examples/Analysis, with a short description.
